@@ -1,0 +1,1489 @@
+/* ============================================
+   BERANDA DYNAMIC REDESIGN - MODERN LAYOUT
+   File: beranda-dynamic.css
+   ============================================ */
+
+/* ============================================
+   1. HERO DYNAMIC - LAYERED & PARALLAX
+   ============================================ */
+
+.hero-dynamic {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    /* PILIHAN BACKGROUND - Pilih salah satu */
+
+    /* OPSI 1: Dark Brown Gradient - Elegant & Warm (AKTIF) */
+    background: linear-gradient(135deg, #1a1410 0%, #2a1f1a 50%, #3d2f27 100%);
+
+    /* OPSI 2: Solid Dark Brown - Simple & Professional */
+    /* background: #2a1f1a; */
+
+    /* OPSI 3: Warm Brown to Black - Dramatic & Sophisticated */
+    /* background: linear-gradient(180deg, #3d2f27 0%, #1a1410 100%); */
+
+    /* OPSI 4: Soft Brown Gradient - Subtle & Cozy */
+    /* background: linear-gradient(135deg, #2d241e 0%, #3a2f28 50%, #2d241e 100%); */
+
+    /* OPSI 5: Deep Chocolate - Rich & Luxury */
+    /* background: linear-gradient(135deg, #1f1612 0%, #2b1f1a 100%); */
+}
+
+/* Background Mesh Layer - OPSI POLOS */
+.hero-background-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    /* OPSI 1: Soft Radial Gradient - Subtle & Elegant (AKTIF) */
+    background:
+        radial-gradient(circle at 20% 30%, rgba(212, 149, 110, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(244, 164, 96, 0.05) 0%, transparent 50%);
+
+    /* OPSI 2: Completely Solid - Pure Dark Brown (Uncomment untuk menggunakan) */
+    /* background: #2a1f1a; */
+
+    /* OPSI 3: No Background - Totally Transparent (Uncomment untuk menggunakan) */
+    /* background: transparent; */
+
+    z-index: 1;
+}
+
+/* Pattern Overlay - DIHAPUS MOTIF DIAGONAL */
+.hero-pattern-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    /* MOTIF DIAGONAL DIHAPUS - Background Polos */
+    background: transparent;
+
+    /* ALTERNATIF: Vignette Halus untuk Depth (Uncomment jika ingin) */
+    /* background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.2) 100%); */
+
+    z-index: 2;
+}
+
+/* Content Layer */
+.hero-content-layer {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    padding: 0 2rem;
+}
+
+.hero-dynamic .hero-content {
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+    animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-dynamic .hero-title {
+    font-size: 4rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.hero-dynamic .hero-company {
+    background: linear-gradient(135deg, #D4956E 0%, #F4A460 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-dynamic .hero-description {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.8;
+    margin-bottom: 3rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-dynamic .hero-cta {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-bottom: 4rem;
+}
+
+.btn-hero {
+    padding: 1.2rem 3rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.btn-hero-primary {
+    background: linear-gradient(135deg, #D4956E 0%, #B8704D 100%);
+    color: #ffffff;
+    box-shadow: 0 10px 30px rgba(212, 149, 110, 0.4);
+}
+
+.btn-hero-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(212, 149, 110, 0.5);
+}
+
+.btn-hero-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.btn-hero-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-3px);
+}
+
+/* Hero Stats */
+.hero-dynamic .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-dynamic .stat-card {
+    padding: 2rem 1.5rem;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.hero-dynamic .stat-card:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-5px);
+}
+
+.hero-dynamic .stat-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #D4956E 0%, #F4A460 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+}
+
+.hero-dynamic .stat-label {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Floating Elements */
+.hero-floating-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.float-circle,
+.float-square,
+.float-triangle {
+    position: absolute;
+    opacity: 0.05;
+}
+
+.float-circle {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #D4956E, #F4A460);
+    top: 10%;
+    right: 5%;
+    animation: float 20s infinite ease-in-out;
+}
+
+.float-square {
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(135deg, #F4A460, #E8BBA8);
+    top: 60%;
+    left: 10%;
+    transform: rotate(45deg);
+    animation: float 15s infinite ease-in-out reverse;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-30px) rotate(5deg);
+    }
+}
+
+/* ============================================
+   2. SERVICES ASYMMETRIC GRID
+   ============================================ */
+
+.services-dynamic {
+    padding: 6rem 0;
+    background: linear-gradient(180deg, #F9FAFB 0%, #FFFFFF 100%);
+    position: relative;
+}
+
+.services-dynamic .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.services-dynamic .section-header h2 {
+    font-size: 2.75rem;
+    font-weight: 700;
+    color: #2D3748;
+    line-height: 1.3;
+    margin-bottom: 1rem;
+}
+
+.services-dynamic .section-header h2 span {
+    display: inline-block;
+}
+
+.services-dynamic .section-header p {
+    font-size: 1.1rem;
+    color: #6B7280;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.services-asymmetric-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    grid-template-rows: repeat(2, 1fr);
+    gap: 2rem;
+    margin-top: 4rem;
+}
+
+.service-card-featured {
+    grid-row: span 2;
+    background: #ffffff;
+    border-radius: 28px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.service-card-featured::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: transparent;
+    pointer-events: none;
+}
+
+.service-card-featured:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.service-card-featured .popular-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #FF6B84 0%, #EE5A6F 100%);
+    color: #ffffff;
+    padding: 10px 24px;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    z-index: 10;
+    box-shadow: 0 4px 16px rgba(238, 90, 111, 0.4);
+}
+
+.service-card-featured .service-image {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 28px 28px 0 0;
+}
+
+.service-card-featured .service-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.service-card-featured:hover .service-image img {
+    transform: scale(1.05);
+}
+
+.service-card-featured .service-content {
+    padding: 2.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.service-card-featured .service-icon-inline {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.service-card-featured .service-icon-inline h3 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #3D5467;
+    margin: 0;
+}
+
+.service-card-featured p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #6B7280;
+    margin-bottom: 1.5rem;
+}
+
+.service-card-featured .service-features {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0;
+}
+
+.service-card-featured .service-features li {
+    padding: 0.5rem 0;
+    color: #4A5568;
+    font-size: 0.95rem;
+}
+
+.service-card-featured .service-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #8B6F47 0%, #6B5435 100%);
+    color: #ffffff;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.3s ease;
+    margin-top: auto;
+}
+
+.service-card-featured .service-btn:hover {
+    background: linear-gradient(135deg, #6B5435 0%, #4A3520 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 111, 71, 0.3);
+}
+
+.service-card-small {
+    background: #F8F9FA;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #E5E7EB;
+}
+
+.service-card-small:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+    border-color: #D1D5DB;
+}
+
+.service-card-small .service-image-small {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.service-card-small .service-image-small img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.service-card-small:hover .service-image-small img {
+    transform: scale(1.05);
+}
+
+.service-card-small .service-content-small {
+    padding: 2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.service-card-small .service-icon-inline {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.service-card-small .service-icon-inline h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #2D3748;
+    margin: 0;
+}
+
+.service-card-small p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #6B7280;
+    margin-bottom: 1.5rem;
+    flex: 1;
+}
+
+.service-card-small .service-btn-small {
+    display: inline-block;
+    background: transparent;
+    color: #9B7655;
+    padding: 0.875rem 1.75rem;
+    border-radius: 12px;
+    border: 2px solid #9B7655;
+    text-decoration: none;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.service-card-small .service-btn-small:hover {
+    background: #9B7655;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(155, 118, 85, 0.3);
+}
+
+/* ============================================
+   3. PROFESSIONAL SECTION SEPARATORS
+   ============================================ */
+
+/* Elegant border separator between sections */
+section:not(:last-of-type) {
+    border-bottom: 1px solid rgba(212, 149, 110, 0.12);
+    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.5);
+}
+
+/* Alternative: Gradient separator for specific sections */
+.section-separator {
+    height: 2px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(212, 149, 110, 0.2) 20%,
+            rgba(184, 112, 77, 0.3) 50%,
+            rgba(212, 149, 110, 0.2) 80%,
+            transparent 100%);
+    margin: 0 auto;
+    max-width: 80%;
+}
+
+/* Subtle shadow separator */
+.shadow-separator {
+    box-shadow: 0 8px 16px -8px rgba(42, 31, 26, 0.08);
+}
+
+/* ============================================
+   4. WHY US SPLIT SCREEN
+   ============================================ */
+
+.why-us-split {
+    padding: 0;
+    background: #ffffff;
+}
+
+.split-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 600px;
+}
+
+.split-image {
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.split-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 1;
+}
+
+.split-content {
+    padding: 6rem 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.split-content h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2a1f1a;
+    margin-bottom: 2rem;
+}
+
+.split-content .benefit-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.split-content .benefit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid rgba(212, 149, 110, 0.15);
+}
+
+.split-content .benefit-item:last-child {
+    border-bottom: none;
+}
+
+.split-content .benefit-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #F0D5C9 0%, #E8BBA8 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    color: #D4956E;
+    flex-shrink: 0;
+}
+
+.split-content .benefit-text h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #2a1f1a;
+    margin-bottom: 0.5rem;
+}
+
+.split-content .benefit-text p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #6B7280;
+    margin: 0;
+}
+
+/* ============================================
+   5. PAYMENT HORIZONTAL SCROLL
+   ============================================ */
+
+.payment-carousel {
+    padding: 6rem 0;
+    background: linear-gradient(180deg, #FFFFFF 0%, #FFF5F0 100%);
+    position: relative;
+}
+
+.horizontal-scroll-wrapper {
+    position: relative;
+    padding: 2rem 0;
+}
+
+.horizontal-scroll-container {
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding: 1rem 0 2rem;
+    -webkit-overflow-scrolling: touch;
+}
+
+.horizontal-scroll-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.horizontal-scroll-container::-webkit-scrollbar-track {
+    background: rgba(212, 149, 110, 0.1);
+    border-radius: 10px;
+}
+
+.horizontal-scroll-container::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #D4956E, #F4A460);
+    border-radius: 10px;
+}
+
+.payment-card-scroll {
+    flex: 0 0 350px;
+    scroll-snap-align: center;
+    background: #ffffff;
+    padding: 3rem 2.5rem;
+    border-radius: 24px;
+    border: 1px solid rgba(212, 149, 110, 0.2);
+    box-shadow: 0 10px 30px rgba(212, 149, 110, 0.1);
+    transition: all 0.3s ease;
+}
+
+.payment-card-scroll:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(212, 149, 110, 0.2);
+}
+
+.payment-card-scroll .payment-step-icon-wrapper {
+    margin-bottom: 2rem;
+}
+
+.payment-card-scroll .payment-step-icon-background {
+    width: 90px;
+    height: 90px;
+    background: linear-gradient(135deg, #F0D5C9 0%, #E8BBA8 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: #D4956E;
+    margin: 0 auto;
+}
+
+.payment-card-scroll h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2a1f1a;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.payment-card-scroll p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #6B7280;
+    text-align: center;
+}
+
+/* ============================================
+   6. TESTIMONIALS SLIDER
+   ============================================ */
+
+.testimonials-slider {
+    padding: 6rem 0;
+    background: #FFF5F0;
+    overflow: hidden;
+}
+
+.testimonial-carousel {
+    position: relative;
+    margin-top: 4rem;
+}
+
+.testimonial-track {
+    display: flex;
+    gap: 2rem;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.testimonial-slide {
+    flex: 0 0 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 4rem 3rem;
+    border-radius: 28px;
+    box-shadow: 0 20px 60px rgba(212, 149, 110, 0.15);
+}
+
+.testimonial-slide .testimonial-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.testimonial-slide .testimonial-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff;
+    flex-shrink: 0;
+}
+
+.testimonial-slide .testimonial-info h4 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2a1f1a;
+    margin-bottom: 0.5rem;
+}
+
+.testimonial-slide .testimonial-rating {
+    display: flex;
+    gap: 0.25rem;
+    color: #F4A460;
+    font-size: 1.2rem;
+}
+
+.testimonial-slide .testimonial-text {
+    font-size: 1.25rem;
+    line-height: 1.8;
+    color: #6B7280;
+    font-style: italic;
+}
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 3rem;
+}
+
+.carousel-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(212, 149, 110, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.carousel-dot.active {
+    background: #D4956E;
+    transform: scale(1.2);
+}
+
+/* ============================================
+   7. BOOKING TIMELINE - COMPACT VERSION
+   ============================================ */
+
+.booking-timeline {
+    padding: 3rem 0 2.5rem;
+    background: #ffffff;
+}
+
+.booking-timeline .section-header {
+    margin-bottom: 0.5rem;
+}
+
+.booking-timeline .section-header h2 {
+    margin-bottom: 0.8rem;
+}
+
+.booking-timeline .section-header p {
+    margin-bottom: 0;
+}
+
+.timeline-container {
+    position: relative;
+    max-width: 850px;
+    margin: 2rem auto 0;
+    padding-left: 3rem;
+}
+
+.timeline-line {
+    position: absolute;
+    left: 22px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, #D4956E 0%, #F4A460 100%);
+}
+
+.timeline-step {
+    position: relative;
+    padding: 0 0 1.2rem 1.5rem;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.timeline-step:last-child {
+    padding-bottom: 0;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: -2.55rem;
+    top: 0.3rem;
+    width: 46px;
+    height: 46px;
+    background: linear-gradient(135deg, #D4956E 0%, #F4A460 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(212, 149, 110, 0.35);
+    z-index: 2;
+}
+
+.timeline-content {
+    background: #FFF5F0;
+    padding: 1.5rem 1.8rem;
+    border-radius: 16px;
+    border-left: 3px solid #D4956E;
+    flex: 1;
+}
+
+.timeline-content h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #2a1f1a;
+    margin-bottom: 0.6rem;
+}
+
+.timeline-content p {
+    font-size: 0.98rem;
+    line-height: 1.6;
+    color: #6B7280;
+    margin: 0;
+}
+
+/* ============================================
+   8. GALLERY MASONRY - COMPACT & PREMIUM
+   ============================================ */
+
+.gallery-masonry {
+    padding: 3.5rem 0;
+    /* Reduced from 6rem for compact look */
+    background: linear-gradient(180deg, #FFF5F0 0%, #FFFFFF 100%);
+}
+
+.masonry-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-auto-rows: 220px;
+    /* Reduced height for compactness */
+    gap: 1rem;
+    /* Tighter gap */
+    margin-top: 2.5rem;
+    /* Reduced margin */
+}
+
+.masonry-item {
+    border-radius: 16px;
+    /* Slightly smaller radius */
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.masonry-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 40px rgba(212, 149, 110, 0.25);
+}
+
+.masonry-item.tall {
+    grid-row: span 2;
+}
+
+.masonry-item.wide {
+    grid-column: span 2;
+}
+
+.masonry-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.masonry-item:hover img {
+    transform: scale(1.08);
+}
+
+.masonry-item .gallery-new-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.masonry-item:hover .gallery-new-overlay {
+    opacity: 1;
+}
+
+.masonry-item .gallery-new-overlay h4 {
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* ============================================
+   9. LEGALITY COMPACT GRID
+   ============================================ */
+
+.legality-compact {
+    padding: 6rem 0;
+    background: #ffffff;
+}
+
+.legality-grid-2x2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+    max-width: 900px;
+    margin: 4rem auto 0;
+}
+
+.legality-item {
+    background: #FFF5F0;
+    padding: 3.5rem 3rem;
+    border-radius: 24px;
+    text-align: center;
+    border: 1px solid rgba(212, 149, 110, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.legality-item:hover {
+    transform: translateY(-8px) rotate(1deg);
+    box-shadow: 0 20px 50px rgba(212, 149, 110, 0.2);
+    border-color: rgba(212, 149, 110, 0.4);
+}
+
+.legality-item .legality-icon {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(135deg, #D4956E 0%, #F4A460 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: #ffffff;
+    margin: 0 auto 2rem;
+    box-shadow: 0 10px 30px rgba(212, 149, 110, 0.3);
+}
+
+.legality-item h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2a1f1a;
+    margin-bottom: 1rem;
+}
+
+.legality-item p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #6B7280;
+}
+
+/* ============================================
+   10. CTA DYNAMIC BANNER - COMPACT
+   ============================================ */
+
+.cta-dynamic {
+    position: relative;
+    padding: 4.5rem 0;
+    /* Reduced from 8rem */
+    overflow: hidden;
+}
+
+.cta-gradient-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #D4956E 0%, #B8704D 50%, #8B7355 100%);
+    z-index: 1;
+}
+
+.cta-gradient-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 70% 50%, rgba(244, 164, 96, 0.15) 0%, transparent 50%);
+}
+
+.cta-dynamic .container {
+    position: relative;
+    z-index: 2;
+}
+
+.cta-content-centered {
+    text-align: center;
+    max-width: 700px;
+    /* Reduced width for compactness */
+    margin: 0 auto;
+}
+
+.cta-content-centered h2 {
+    font-size: 2.5rem;
+    /* Reduced from 3rem */
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.cta-content-centered p {
+    font-size: 1.15rem;
+    /* Reduced from 1.3rem */
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    /* Reduced from 3rem */
+}
+
+.cta-content-centered .cta-closing-buttons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.cta-btn {
+    padding: 1rem 2.5rem;
+    /* Reduced padding */
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.cta-btn-primary {
+    background: #ffffff;
+    color: #D4956E;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.cta-btn-primary:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+}
+
+.cta-btn-secondary {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+.cta-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: #ffffff;
+    transform: translateY(-5px);
+}
+
+.cta-content-centered .cta-closing-footer {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+}
+
+/* ============================================
+   11. SCROLL ANIMATIONS
+   ============================================ */
+
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Compact section header utility */
+.section-header.compact {
+    margin-bottom: 1.5rem;
+}
+
+.section-header.compact h2 {
+    font-size: 2.2rem;
+    margin-bottom: 0.8rem;
+}
+
+.section-header.compact p {
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+.fade-in-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fade-in {
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+}
+
+.slide-in-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-in-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.slide-in-right {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-in-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* ============================================
+   12. RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 1024px) {
+    .hero-dynamic .hero-title {
+        font-size: 3rem;
+    }
+
+    .services-dynamic .section-header h2 {
+        font-size: 2.25rem;
+    }
+
+    .services-asymmetric-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        gap: 1.5rem;
+    }
+
+    .service-card-featured {
+        grid-row: span 1;
+    }
+
+    .service-card-featured .service-image {
+        height: 250px;
+    }
+
+    .service-card-featured .service-content {
+        padding: 2rem;
+    }
+
+    .service-card-small .service-image-small {
+        height: 180px;
+    }
+
+    .split-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .split-image {
+        min-height: 400px;
+    }
+
+    .split-content {
+        padding: 4rem 3rem;
+    }
+
+    .legality-grid-2x2 {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .cta-content-centered h2 {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-dynamic .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-dynamic .hero-cta {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .hero-dynamic .hero-stats {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .btn-hero {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .services-dynamic {
+        padding: 4rem 0;
+    }
+
+    .services-dynamic .section-header h2 {
+        font-size: 2rem;
+    }
+
+    .services-dynamic .section-header p {
+        font-size: 1rem;
+    }
+
+    .service-card-featured .service-image {
+        height: 220px;
+    }
+
+    .service-card-featured .service-content {
+        padding: 1.5rem;
+    }
+
+    .service-card-featured .service-icon-inline h3 {
+        font-size: 1.5rem;
+    }
+
+    .service-card-small .service-content-small {
+        padding: 1.5rem;
+    }
+
+    .service-card-small .service-icon-inline h3 {
+        font-size: 1.15rem;
+    }
+
+    .split-content {
+        padding: 3rem 2rem;
+    }
+
+    .split-content h2 {
+        font-size: 2rem;
+    }
+
+    .payment-card-scroll {
+        flex: 0 0 280px;
+    }
+
+    .testimonial-slide {
+        padding: 3rem 2rem;
+    }
+
+    .timeline-container {
+        padding-left: 2.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .timeline-marker {
+        width: 42px;
+        height: 42px;
+        left: -2.3rem;
+        font-size: 1.1rem;
+        top: 0.2rem;
+    }
+
+    .timeline-content {
+        padding: 1.3rem 1.5rem;
+    }
+
+    .timeline-content h3 {
+        font-size: 1.15rem;
+    }
+
+    .timeline-content p {
+        font-size: 0.95rem;
+    }
+
+    .masonry-grid {
+        grid-template-columns: 1fr;
+        grid-auto-rows: 200px;
+    }
+
+    .masonry-item.tall,
+    .masonry-item.wide {
+        grid-row: span 1;
+        grid-column: span 1;
+    }
+
+    .cta-content-centered h2 {
+        font-size: 2rem;
+    }
+
+    .cta-content-centered p {
+        font-size: 1.1rem;
+    }
+
+    .cta-content-centered .cta-closing-buttons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .cta-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 425px) {
+    .hero-dynamic {
+        min-height: 80vh;
+    }
+
+    .hero-dynamic .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-dynamic .hero-description {
+        font-size: 1rem;
+    }
+
+    .service-card-featured h3 {
+        font-size: 1.75rem;
+    }
+
+    .split-content h2 {
+        font-size: 1.75rem;
+    }
+
+    .split-content .benefit-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+
+    .payment-card-scroll {
+        flex: 0 0 260px;
+    }
+
+    .timeline-container {
+        padding-left: 2.2rem;
+        margin-top: 1.2rem;
+    }
+
+    .timeline-line {
+        left: 19px;
+    }
+
+    .timeline-marker {
+        width: 38px;
+        height: 38px;
+        left: -2.05rem;
+        font-size: 1rem;
+        top: 0.15rem;
+    }
+
+    .timeline-step {
+        padding: 0 0 1rem 1.2rem;
+    }
+
+    .timeline-content {
+        padding: 1.2rem 1.3rem;
+    }
+
+    .timeline-content h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .timeline-content p {
+        font-size: 0.92rem;
+        line-height: 1.55;
+    }
+
+    .cta-content-centered h2 {
+        font-size: 1.75rem;
+    }
+
+    .cta-btn {
+        padding: 1.2rem 2.5rem;
+        font-size: 1rem;
+    }
+}
+
+/* ============================================
+   13. FOOTER PREMIUM - COMPACT OVERRIDE
+   ============================================ */
+
+.footer-premium {
+    padding: 3rem 0 1.5rem !important;
+}
+
+.footer-grid-premium {
+    gap: 2rem !important;
+    margin-bottom: 2rem !important;
+}
+
+.footer-heading-premium {
+    font-size: 1.1rem !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.footer-text-premium,
+.footer-links-premium a {
+    font-size: 0.9rem !important;
+}
+
+.footer-contact-item {
+    margin-bottom: 1rem !important;
+}
+
+.footer-hours-box {
+    padding: 0.75rem !important;
+    margin-top: 0.5rem !important;
+}
+
+.footer-bottom-premium {
+    padding-top: 1.5rem !important;
+}
+
+/* ============================================
+   END OF BERANDA DYNAMIC REDESIGN
+   ============================================ */

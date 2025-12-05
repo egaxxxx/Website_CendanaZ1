@@ -1,0 +1,418 @@
+/* ============================================
+   PEMESANAN LANDSCAPE FORM - PREMIUM REDESIGN
+   Two Column Layout, Modern, Premium, Pastel
+   ============================================ */
+
+/* Booking Modal Overlay - Background Blur */
+.booking-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000 !important;
+}
+
+/* When modal is visible */
+.booking-modal-overlay[style*="display: flex"],
+.booking-modal-overlay.show {
+    display: flex !important;
+}
+
+/* Booking Modal Landscape */
+.booking-modal-landscape {
+    width: 90%;
+    max-width: 1000px;
+    background: linear-gradient(135deg, #FFFFFF 0%, #FFF9F5 100%);
+    border-radius: 28px;
+    border: 1px solid rgba(212, 149, 110, 0.2);
+    box-shadow: 0 30px 80px rgba(184, 112, 77, 0.3), 0 15px 40px rgba(0, 0, 0, 0.1);
+    animation: slideInUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+.booking-modal-landscape .booking-modal-header {
+    padding: 2.5rem 2.5rem 2rem;
+    background: linear-gradient(135deg, #B8704D 0%, #D4956E 100%);
+    border-bottom: none;
+    text-align: left;
+    position: relative;
+}
+
+.booking-modal-landscape .booking-modal-header h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin: 0 0 0.5rem;
+    letter-spacing: 0.3px;
+}
+
+.booking-service-name {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+    font-weight: 500;
+}
+
+.booking-modal-landscape .close-modal-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    font-size: 2rem;
+    color: #FFFFFF;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.booking-modal-landscape .close-modal-btn:hover {
+    background: rgba(255, 255, 255, 0.35);
+    transform: rotate(90deg);
+}
+
+.booking-modal-landscape .booking-modal-body {
+    padding: 2.5rem;
+}
+
+/* Two Column Form Layout */
+.form-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.form-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-column-right {
+    /* Kolom kanan: layout flex untuk tanggal + textarea */
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Form Group dengan Full Width untuk Textarea */
+.form-group-fullwidth {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group-fullwidth .form-textarea {
+    width: 100%;
+    min-height: 140px;
+    flex: 1;
+}
+
+/* Form Group Styling */
+.booking-modal-landscape .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.booking-modal-landscape .form-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #2a1f1a;
+    text-transform: capitalize;
+    letter-spacing: 0.2px;
+}
+
+.booking-modal-landscape .form-input {
+    padding: 0.95rem 1.25rem;
+    border: 1.5px solid rgba(212, 149, 110, 0.25);
+    border-radius: 14px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 0.9rem;
+    background: rgba(255, 255, 255, 0.8);
+    color: #2a1f1a;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+}
+
+.booking-modal-landscape .form-input::placeholder {
+    color: #9CA3AF;
+}
+
+.booking-modal-landscape .form-input:hover {
+    border-color: rgba(212, 149, 110, 0.4);
+    background: #FFFFFF;
+}
+
+.booking-modal-landscape .form-input:focus {
+    border-color: #D4956E;
+    background: #FFFFFF;
+    box-shadow: 0 0 0 4px rgba(212, 149, 110, 0.15), inset 0 1px 2px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+}
+
+/* Select Dropdown Styling */
+.booking-modal-landscape .form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23B8704D' d='M10.293 3.293L6 7.586 1.707 3.293A1 1 0 00.293 4.707l5 5a1 1 0 001.414 0l5-5a1 1 0 10-1.414-1.414z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1.25rem center;
+    padding-right: 2.75rem;
+}
+
+.booking-modal-landscape .form-select option {
+    background: #FFFFFF;
+    color: #2a1f1a;
+    padding: 0.75rem;
+}
+
+.booking-modal-landscape .form-select option:checked {
+    background: linear-gradient(135deg, #D4956E 0%, #B8704D 100%);
+    color: #FFFFFF;
+}
+
+/* Textarea Styling */
+.booking-modal-landscape .form-textarea {
+    resize: vertical;
+    min-height: 140px;
+    max-height: 200px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.booking-modal-landscape .form-group-fullwidth .form-textarea {
+    width: 100%;
+    min-height: 160px;
+}
+
+.booking-modal-landscape .form-textarea::-webkit-scrollbar {
+    width: 6px;
+}
+
+.booking-modal-landscape .form-textarea::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.booking-modal-landscape .form-textarea::-webkit-scrollbar-thumb {
+    background: rgba(212, 149, 110, 0.3);
+    border-radius: 3px;
+}
+
+.booking-modal-landscape .form-textarea::-webkit-scrollbar-thumb:hover {
+    background: rgba(212, 149, 110, 0.5);
+}
+
+/* Form Actions - Landscape Bottom */
+.form-actions-landscape {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(212, 149, 110, 0.15);
+}
+
+.booking-modal-landscape .btn-cancel,
+.booking-modal-landscape .btn-submit {
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.booking-modal-landscape .btn-cancel {
+    background: rgba(212, 149, 110, 0.1);
+    color: #B8704D;
+    border: 1px solid rgba(212, 149, 110, 0.3);
+    min-width: 120px;
+}
+
+.booking-modal-landscape .btn-cancel:hover {
+    background: rgba(212, 149, 110, 0.2);
+    border-color: rgba(212, 149, 110, 0.5);
+    transform: translateY(-2px);
+}
+
+.booking-modal-landscape .btn-submit-whatsapp {
+    background: linear-gradient(135deg, #25D366 0%, #1FAE4D 100%);
+    color: #FFFFFF;
+    min-width: 200px;
+    box-shadow: 0 8px 20px rgba(37, 211, 102, 0.25);
+}
+
+.booking-modal-landscape .btn-submit-whatsapp:hover {
+    background: linear-gradient(135deg, #1FAE4D 0%, #158C3A 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(37, 211, 102, 0.4);
+}
+
+.booking-modal-landscape .btn-submit-whatsapp:active {
+    transform: translateY(-1px);
+}
+
+.booking-modal-landscape .btn-submit-whatsapp i {
+    font-size: 1.1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .booking-modal-landscape {
+        width: 95%;
+        max-width: 900px;
+    }
+
+    .form-columns {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .form-column {
+        gap: 1.25rem;
+    }
+
+    .booking-modal-landscape .booking-modal-body {
+        padding: 2rem;
+    }
+
+    .booking-modal-landscape .booking-modal-header {
+        padding: 2rem 2rem 1.5rem;
+    }
+
+    .form-group-fullwidth .form-textarea {
+        width: 100%;
+        min-height: 140px;
+    }
+}
+
+@media (max-width: 768px) {
+    .booking-modal-landscape {
+        width: 98%;
+        max-width: 100%;
+        border-radius: 24px;
+        max-height: 90vh;
+    }
+
+    .form-columns {
+        gap: 1.25rem;
+    }
+
+    .form-column {
+        gap: 1.1rem;
+    }
+
+    .booking-modal-landscape .booking-modal-body {
+        padding: 1.5rem;
+    }
+
+    .booking-modal-landscape .booking-modal-header {
+        padding: 1.75rem 1.5rem 1.25rem;
+    }
+
+    .booking-modal-landscape .booking-modal-header h3 {
+        font-size: 1.35rem;
+    }
+
+    .booking-modal-landscape .close-modal-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1.75rem;
+        top: 1.25rem;
+        right: 1.25rem;
+    }
+
+    .form-group-fullwidth .form-textarea {
+        min-height: 130px;
+    }
+
+    .form-actions-landscape {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .booking-modal-landscape .btn-cancel,
+    .booking-modal-landscape .btn-submit {
+        width: 100%;
+        min-width: auto;
+        padding: 0.9rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .booking-modal-landscape {
+        width: 100%;
+        border-radius: 20px;
+    }
+
+    .booking-modal-landscape .booking-modal-body {
+        padding: 1.25rem;
+    }
+
+    .booking-modal-landscape .booking-modal-header {
+        padding: 1.5rem 1.25rem 1rem;
+    }
+
+    .booking-modal-landscape .booking-modal-header h3 {
+        font-size: 1.2rem;
+    }
+
+    .booking-service-name {
+        font-size: 0.85rem;
+    }
+
+    .form-group label {
+        font-size: 0.85rem;
+    }
+
+    .booking-modal-landscape .form-input {
+        padding: 0.85rem 1rem;
+        font-size: 0.85rem;
+        border-radius: 12px;
+    }
+
+    .form-actions-landscape {
+        padding-top: 1rem;
+    }
+
+    .booking-modal-landscape .btn-cancel,
+    .booking-modal-landscape .btn-submit {
+        padding: 0.8rem 1.25rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Animation */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   END PEMESANAN LANDSCAPE FORM
+   ============================================ */

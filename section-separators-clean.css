@@ -1,0 +1,237 @@
+/* ============================================
+   MINIMALIST PROFESSIONAL SEPARATORS
+   Clean, subtle, dan benar-benar profesional
+   ============================================ */
+
+/* Hapus semua padding default section */
+section {
+    position: relative;
+}
+
+/* Tambah spacing minimal hanya untuk section tertentu */
+section+section {
+    margin-top: 5rem;
+}
+
+/* Border tipis yang terlihat jelas antar section */
+section+section::before {
+    content: '';
+    position: absolute;
+    top: -2.5rem;
+    left: 8%;
+    right: 8%;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(212, 149, 110, 0.15) 10%,
+            rgba(184, 112, 77, 0.2) 50%,
+            rgba(212, 149, 110, 0.15) 90%,
+            transparent 100%);
+    box-shadow: 0 1px 2px rgba(212, 149, 110, 0.1);
+}
+
+/* Untuk section dengan background khusus, hapus border */
+.hero+section::before,
+section.hero::before {
+    display: none;
+}
+
+/* Pembatas khusus untuk Why Us section */
+.why-us-section,
+.why-us-split {
+    margin-top: 5rem !important;
+    padding-top: 0;
+    position: relative;
+}
+
+.why-us-section::before,
+.why-us-split::before {
+    content: '';
+    position: absolute;
+    top: -2.5rem;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(212, 149, 110, 0.25) 20%,
+            rgba(184, 112, 77, 0.35) 50%,
+            rgba(212, 149, 110, 0.25) 80%,
+            transparent 100%);
+    box-shadow: 0 2px 6px rgba(212, 149, 110, 0.2);
+}
+
+.why-us-section::after,
+.why-us-split::after {
+    content: '';
+    position: absolute;
+    bottom: -2.5rem;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(212, 149, 110, 0.15) 50%,
+            transparent 100%);
+}
+
+/* ============================================
+   UTILITY CLASSES (jika diperlukan)
+   ============================================ */
+
+/* Gradient divider - VISIBLE */
+.gradient-divider {
+    height: 2px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(212, 149, 110, 0.18) 20%,
+            rgba(184, 112, 77, 0.25) 50%,
+            rgba(212, 149, 110, 0.18) 80%,
+            transparent 100%);
+    margin: 4rem auto;
+    max-width: 75%;
+    box-shadow: 0 1px 3px rgba(212, 149, 110, 0.1);
+}
+
+/* Pembatas visual untuk section penting */
+.services-section,
+.testimonials-new-section,
+.booking-steps-section,
+.gallery-new-section,
+.legality-security-section,
+.payment-methods-section,
+.payment-carousel {
+    position: relative;
+    padding-bottom: 4rem;
+}
+
+/* Pembatas khusus untuk Payment Methods */
+.payment-methods-section,
+.payment-carousel {
+    margin-top: 5rem;
+    padding-top: 4rem;
+}
+
+.payment-methods-section::before,
+.payment-carousel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 5%;
+    right: 5%;
+    height: 2px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(212, 149, 110, 0.22) 15%,
+            rgba(184, 112, 77, 0.3) 50%,
+            rgba(212, 149, 110, 0.22) 85%,
+            transparent 100%);
+    box-shadow: 0 2px 4px rgba(212, 149, 110, 0.15);
+}
+
+/* Border bawah untuk setiap section */
+.services-section::after,
+.booking-steps-section::after,
+.gallery-new-section::after,
+.legality-security-section::after,
+.payment-methods-section::after,
+.payment-carousel::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 8%;
+    right: 8%;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(212, 149, 110, 0.18) 50%,
+            transparent 100%);
+    box-shadow: 0 1px 2px rgba(212, 149, 110, 0.08);
+}
+
+/* Testimonials section dengan border lebih tebal */
+.testimonials-new-section {
+    padding: 4rem 0;
+}
+
+.testimonials-new-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 8%;
+    right: 8%;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(212, 149, 110, 0.18) 20%,
+            rgba(184, 112, 77, 0.22) 50%,
+            rgba(212, 149, 110, 0.18) 80%,
+            transparent 100%);
+}
+
+.testimonials-new-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 8%;
+    right: 8%;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(212, 149, 110, 0.15) 50%,
+            transparent 100%);
+}
+
+/* Spacing utilities */
+.spacing-section {
+    padding: 3rem 0;
+}
+
+.spacing-large {
+    padding: 5rem 0;
+}
+
+/* Container max-width untuk readability */
+.container-narrow {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+    section+section {
+        margin-top: 2.5rem;
+    }
+
+    section+section::before {
+        top: -1.25rem;
+        left: 5%;
+        right: 5%;
+    }
+
+    .gradient-divider {
+        margin: 2rem auto;
+        max-width: 80%;
+    }
+}
+
+/* ============================================
+   RESET CLASSES (untuk menghindari konflik)
+   ============================================ */
+
+.section-light,
+.section-warm,
+.glass-container,
+.section-card-style,
+.decorative-separator {
+    /* Reset ke default - tidak ada style berlebihan */
+    background: none !important;
+    backdrop-filter: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}

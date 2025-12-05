@@ -1,0 +1,358 @@
+/* ============================================
+   PROFESSIONAL SECTION SEPARATORS
+   untuk Website dengan Background Soft/Blur
+   ============================================ */
+
+/* ============================================
+   OPSI 1: CARD-BASED SECTIONS (RECOMMENDED)
+   Style modern dengan shadow dan border radius
+   ============================================ */
+
+/* Base section styling dengan spacing yang baik */
+section {
+    position: relative;
+}
+
+/* Override hanya untuk section dengan class spacing */
+section.spacing-section {
+    padding: 3rem 0;
+}
+
+/* Card-style untuk konten dalam section */
+.section-card-style {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 3rem 2.5rem;
+    box-shadow:
+        0 8px 32px rgba(42, 31, 26, 0.06),
+        0 2px 8px rgba(42, 31, 26, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(212, 149, 110, 0.1);
+    transition: all 0.3s ease;
+}
+
+.section-card-style:hover {
+    box-shadow:
+        0 12px 48px rgba(42, 31, 26, 0.08),
+        0 4px 12px rgba(42, 31, 26, 0.06);
+    transform: translateY(-2px);
+}
+
+/* ============================================
+   OPSI 2: SUBTLE SHADOW SEPARATOR
+   Garis shadow tipis antar section
+   ============================================ */
+
+.section-with-shadow-separator {
+    position: relative;
+    padding: 4rem 0;
+}
+
+.section-with-shadow-separator::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(212, 149, 110, 0.2) 50%,
+            transparent 100%);
+    box-shadow: 0 4px 12px rgba(212, 149, 110, 0.15);
+}
+
+/* ============================================
+   OPSI 3: GRADIENT DIVIDER LINE (MINIMALIST)
+   Garis SANGAT tipis dan subtle
+   ============================================ */
+
+.gradient-divider {
+    height: 1px;
+    width: 100%;
+    max-width: 70%;
+    margin: 2rem auto;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(212, 149, 110, 0.12) 50%,
+            transparent 100%);
+    position: relative;
+}
+
+/* ============================================
+   OPSI 4: DECORATIVE DOT DIVIDER
+   Separator dengan dots yang elegan
+   ============================================ */
+
+.dot-divider {
+    text-align: center;
+    padding: 2.5rem 0;
+    position: relative;
+}
+
+.dot-divider::before {
+    content: '◆';
+    display: inline-block;
+    color: rgba(212, 149, 110, 0.4);
+    font-size: 1rem;
+    letter-spacing: 1.5rem;
+    text-shadow: 0 2px 4px rgba(212, 149, 110, 0.2);
+}
+
+/* Alternatif dengan 3 dots */
+.dot-divider-simple::before {
+    content: '• • •';
+    color: rgba(212, 149, 110, 0.35);
+    font-size: 1.2rem;
+    letter-spacing: 0.8rem;
+}
+
+/* ============================================
+   OPSI 5: ALTERNATING BACKGROUND SECTIONS (SUBTLE)
+   Background SANGAT subtle untuk profesionalitas
+   ============================================ */
+
+/* Section dengan background terang - SANGAT SUBTLE */
+.section-light {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 4rem 0;
+    position: relative;
+}
+
+/* Section dengan background lebih gelap - SANGAT SUBTLE */
+.section-warm {
+    background: rgba(244, 231, 223, 0.08);
+    padding: 4rem 0;
+    position: relative;
+}
+
+/* Border halus di atas section untuk pembatas */
+.section-light::before,
+.section-warm::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 5%;
+    right: 5%;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(212, 149, 110, 0.08) 50%,
+            transparent 100%);
+}
+
+/* ============================================
+   OPSI 6: GLASSMORPHISM CONTAINER (SUBTLE)
+   Style modern TAPI lebih halus dan profesional
+   ============================================ */
+
+.glass-container {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid rgba(212, 149, 110, 0.08);
+    padding: 3rem 2.5rem;
+    box-shadow:
+        0 4px 16px rgba(42, 31, 26, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* ============================================
+   OPSI 7: DECORATIVE LINE WITH ICON (MINIMALIST)
+   DISEMBUNYIKAN - Terlalu mencolok
+   ============================================ */
+
+.decorative-separator {
+    position: relative;
+    text-align: center;
+    margin: 2rem 0;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(212, 149, 110, 0.1) 50%,
+            transparent 100%);
+}
+
+/* Icon dihapus untuk tampilan lebih profesional */
+
+/* ============================================
+   OPSI 8: MINIMAL BORDER WITH SPACING
+   Garis minimal dengan spacing yang ideal
+   ============================================ */
+
+.minimal-separator {
+    border-top: 1px solid rgba(212, 149, 110, 0.12);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+    margin: 3rem 0;
+    padding: 0;
+}
+
+/* ============================================
+   OPSI 9: ELEVATED SECTION
+   Section dengan elevation yang terlihat melayang
+   ============================================ */
+
+.elevated-section {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 28px;
+    padding: 4rem 3rem;
+    margin: 2rem 0;
+    box-shadow:
+        0 20px 60px rgba(42, 31, 26, 0.08),
+        0 8px 24px rgba(42, 31, 26, 0.04),
+        0 2px 8px rgba(42, 31, 26, 0.02),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(212, 149, 110, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.elevated-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg,
+            rgba(212, 149, 110, 0.4) 0%,
+            rgba(184, 112, 77, 0.6) 50%,
+            rgba(212, 149, 110, 0.4) 100%);
+}
+
+/* ============================================
+   OPSI 10: CONTENT WRAPPER WITH MARGIN
+   Pembungkus konten dengan jarak yang konsisten
+   ============================================ */
+
+.content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.content-section {
+    margin-bottom: 5rem;
+    position: relative;
+}
+
+.content-section:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: -2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(212, 149, 110, 0.15) 20%,
+            rgba(184, 112, 77, 0.25) 50%,
+            rgba(212, 149, 110, 0.15) 80%,
+            transparent 100%);
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 768px) {
+
+    .section-card-style,
+    .glass-container,
+    .elevated-section {
+        padding: 2rem 1.5rem;
+        border-radius: 16px;
+    }
+
+    .gradient-divider,
+    .content-section:not(:last-child)::after {
+        max-width: 90%;
+    }
+
+    section {
+        padding: 3rem 0;
+    }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/* Spacing utilities */
+.spacing-section {
+    padding: 4rem 0;
+}
+
+.spacing-section-large {
+    padding: 6rem 0;
+}
+
+.spacing-section-small {
+    padding: 2rem 0;
+}
+
+/* Container dengan max-width */
+.container-narrow {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.container-wide {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Smooth fade transition antar section */
+.fade-in-section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============================================
+   PROFESSIONAL CLEAN STYLE
+   Style minimalis yang benar-benar profesional
+   ============================================ */
+
+/* Hapus efek berlebihan dari section */
+.section-light,
+.section-warm {
+    background: transparent !important;
+}
+
+/* Ganti dengan border minimal yang sangat subtle */
+.section-light::before,
+.section-warm::before {
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(0, 0, 0, 0.03) 50%,
+            transparent 100%) !important;
+}
+
+/* Glass container yang lebih profesional */
+.glass-container {
+    background: transparent !important;
+    backdrop-filter: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+/* Divider yang lebih clean */
+.gradient-divider,
+.decorative-separator {
+    height: 1px;
+    background: rgba(0, 0, 0, 0.05);
+    max-width: 100%;
+    margin: 3rem 0;
+}

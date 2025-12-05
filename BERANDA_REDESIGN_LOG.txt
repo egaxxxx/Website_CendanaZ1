@@ -1,0 +1,91 @@
+===============================================
+BERANDA REDESIGN - SECTION LAYANAN UNGGULAN
+Tanggal: 5 Desember 2025
+===============================================
+
+PERUBAHAN UTAMA:
+-----------------
+
+1. JUDUL SECTION
+   - Dari: "Layanan Unggulan Kami"
+   - Menjadi: "Jelajahi Dunia, Kapan Saja & Dimana Saja"
+   - Subtitle: "Pilih moda transportasi favorit Anda dengan pelayanan premium."
+
+2. LAYOUT KARTU
+   - Layout berubah dari asymmetric grid menjadi card-based design
+   - 1 kartu besar (Pesawat) di kiri dengan gambar header
+   - 2 kartu kecil (Bus & Kapal) di kanan dengan gambar header
+   - Semua kartu menggunakan foto berkualitas tinggi
+
+3. DESAIN VISUAL
+   Kartu Pesawat (Featured):
+   - Background putih dengan gambar sayap pesawat
+   - Badge "Terpopuler" di pojok kanan atas (pink/coral)
+   - Icon emoji pesawat di judul
+   - List fitur dengan checkmark
+   - Tombol CTA coklat: "Cari Penerbangan →"
+
+   Kartu Bus & Kapal (Small):
+   - Background abu-abu terang (#F8F9FA)
+   - Gambar header untuk setiap card
+   - Icon emoji di judul
+   - Deskripsi singkat
+   - Tombol outline coklat: "Pesan Tiket Bus/Kapal"
+
+4. WARNA & STYLING
+   - Background section: Gradient abu-abu terang
+   - Kartu featured: Putih dengan shadow halus
+   - Kartu small: Abu-abu terang dengan border
+   - Badge Terpopuler: Gradient pink/coral (#FF6B84 → #EE5A6F)
+   - Tombol primary: Coklat gradient (#8B6F47 → #6B5435)
+   - Tombol secondary: Outline coklat (#9B7655)
+
+5. KONTEN
+   Pesawat:
+   - Judul: "✈️ Tiket Pesawat"
+   - Deskripsi: Fokus pada destinasi domestik & internasional
+   - Fitur: Penerbangan, Check-in, Garansi Harga
+   
+   Bus:
+   - Judul: "🚌 Tiket Bus Premium"
+   - Deskripsi: Armada terbaru dan fasilitas lengkap
+   
+   Kapal:
+   - Judul: "🚢 Tiket Kapal Laut"
+   - Deskripsi: Perjalanan laut antar pulau
+
+FILES DIUBAH:
+--------------
+1. /srv/http/Website-Cendana/index.php
+   - Update HTML section services
+   - Tambah struktur kartu baru dengan gambar
+   - Tambah badge "Terpopuler"
+   - Update konten teks dan tombol
+
+2. /srv/http/Website-Cendana/beranda-dynamic.css
+   - Update styling .services-asymmetric-grid
+   - Redesign .service-card-featured dengan gambar
+   - Redesign .service-card-small dengan gambar
+   - Tambah styling untuk .popular-badge
+   - Tambah styling untuk .service-image dan .service-image-small
+   - Update styling tombol
+   - Update responsive design untuk mobile
+
+RESPONSIVE DESIGN:
+-------------------
+- Desktop (>1024px): Layout 2 kolom (1.2fr + 1fr)
+- Tablet (768-1024px): Stack vertical, gambar tinggi 250px
+- Mobile (<768px): Stack vertical, gambar tinggi 220px
+
+HASIL:
+------
+Tampilan section "Layanan Unggulan" sekarang menampilkan:
+✓ Desain modern dengan card-based layout
+✓ Gambar header yang menarik untuk setiap layanan
+✓ Badge "Terpopuler" pada layanan pesawat
+✓ Emoji icon untuk visual yang friendly
+✓ Call-to-action button yang jelas
+✓ Responsive untuk semua ukuran layar
+✓ Sesuai dengan desain foto referensi
+
+===============================================

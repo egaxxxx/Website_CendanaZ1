@@ -1,0 +1,498 @@
+/* ================================================
+   CSS FOR NEW SECTIONS
+   Add these styles to the end of styles.css before media queries
+   ================================================ */
+
+/* ================================================
+   SECTION 2: TESTIMONI PELANGGAN
+   ================================================ */
+.testimonials-new-section {
+    background: var(--color-light-gray);
+    padding: var(--spacing-3xl) 0;
+    margin-top: var(--spacing-3xl);
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-2xl);
+}
+
+.testimonial-card {
+    background: white;
+    padding: var(--spacing-2xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(212, 149, 110, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+}
+
+.testimonial-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.testimonial-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.testimonial-info {
+    flex: 1;
+}
+
+.testimonial-info h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--color-dark);
+    font-weight: 600;
+}
+
+.testimonial-rating {
+    display: flex;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
+}
+
+.testimonial-rating .icon-star-fill {
+    color: #FFC107;
+    font-size: 0.9rem;
+}
+
+.testimonial-text {
+    color: var(--color-gray);
+    line-height: 1.6;
+    margin: 0;
+    font-size: 0.95rem;
+    flex: 1;
+}
+
+/* ================================================
+   SECTION 3: CARA PEMESANAN
+   ================================================ */
+.booking-steps-section {
+    padding: var(--spacing-3xl) 0;
+    background: white;
+    margin-top: var(--spacing-3xl);
+}
+
+.steps-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-2xl);
+}
+
+.step-card {
+    background: linear-gradient(135deg, rgba(212, 149, 110, 0.05) 0%, rgba(244, 164, 96, 0.05) 100%);
+    padding: var(--spacing-2xl);
+    border-radius: var(--radius-lg);
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    position: relative;
+    text-align: center;
+}
+
+.step-card:hover {
+    border-color: var(--color-primary);
+    background: linear-gradient(135deg, rgba(212, 149, 110, 0.1) 0%, rgba(244, 164, 96, 0.1) 100%);
+    box-shadow: 0 8px 24px rgba(212, 149, 110, 0.15);
+}
+
+.step-number {
+    position: absolute;
+    top: -16px;
+    right: -16px;
+    width: 48px;
+    height: 48px;
+    background: var(--color-primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(212, 149, 110, 0.3);
+}
+
+.step-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    background: white;
+    border-radius: var(--radius-md);
+    margin: 0 auto var(--spacing-lg);
+    box-shadow: 0 4px 12px rgba(212, 149, 110, 0.1);
+}
+
+.step-icon .icon {
+    font-size: 2.5rem;
+    color: var(--color-primary);
+}
+
+.step-card h3 {
+    margin: var(--spacing-md) 0;
+    color: var(--color-dark);
+    font-size: 1.35rem;
+}
+
+.step-card p {
+    color: var(--color-gray);
+    line-height: 1.6;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+/* ================================================
+   SECTION 4: GALERI FOTO
+   ================================================ */
+.gallery-new-section {
+    padding: var(--spacing-3xl) 0;
+    background: var(--color-light-gray);
+    margin-top: var(--spacing-3xl);
+}
+
+.gallery-new-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-2xl);
+}
+
+.gallery-new-item {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    height: 280px;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+}
+
+.gallery-new-image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.gallery-new-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gallery-new-item:hover .gallery-new-image img {
+    transform: scale(1.1);
+}
+
+.gallery-new-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
+    display: flex;
+    align-items: flex-end;
+    padding: var(--spacing-lg);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-new-item:hover .gallery-new-overlay {
+    opacity: 1;
+}
+
+.gallery-new-overlay h4 {
+    color: white;
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+/* ================================================
+   SECTION 6: LEGALITAS & KEAMANAN
+   ================================================ */
+.legality-security-section {
+    padding: var(--spacing-3xl) 0;
+    background: white;
+    margin-top: var(--spacing-3xl);
+}
+
+.legality-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-2xl);
+}
+
+.legality-card {
+    background: linear-gradient(135deg, #F8F6F3 0%, #FAF8F5 100%);
+    padding: var(--spacing-2xl);
+    border-radius: var(--radius-lg);
+    border: 2px solid rgba(212, 149, 110, 0.1);
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.legality-card:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(212, 149, 110, 0.15);
+}
+
+.legality-icon {
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--spacing-lg);
+    box-shadow: 0 8px 16px rgba(212, 149, 110, 0.2);
+}
+
+.legality-icon .icon {
+    font-size: 2rem;
+    color: white;
+}
+
+.legality-card h3 {
+    margin: 0 0 var(--spacing-md);
+    color: var(--color-dark);
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.legality-card p {
+    color: var(--color-gray);
+    line-height: 1.6;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+/* ================================================
+   SECTION 7: CTA PENUTUP
+   ================================================ */
+.cta-closing-section {
+    padding: var(--spacing-4xl) 0;
+    background: linear-gradient(135deg, #D4956E 0%, #B8704D 100%);
+    margin-top: var(--spacing-3xl);
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-closing-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.cta-closing-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    animation: fadeInUp 0.8s ease;
+}
+
+.cta-closing-title {
+    color: white;
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md);
+    font-weight: 700;
+}
+
+.cta-closing-subtitle {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 1.1rem;
+    margin: 0 0 var(--spacing-2xl);
+    line-height: 1.6;
+}
+
+.cta-closing-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-2xl);
+}
+
+.cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 1rem 2rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    border: 2px solid transparent;
+    cursor: pointer;
+}
+
+.cta-btn-primary {
+    background: white;
+    color: var(--color-primary);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.cta-btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
+
+.cta-btn-secondary {
+    background: transparent;
+    color: white;
+    border-color: white;
+}
+
+.cta-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-3px);
+}
+
+.cta-btn .icon {
+    font-size: 1.25rem;
+}
+
+.cta-closing-footer {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    margin: 0;
+    font-style: italic;
+}
+
+/* ================================================
+   RESPONSIVE ADJUSTMENTS FOR NEW SECTIONS
+   ================================================ */
+@media (max-width: 768px) {
+    .testimonials-grid,
+    .steps-container,
+    .gallery-new-grid,
+    .legality-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .cta-closing-title {
+        font-size: 1.75rem;
+    }
+
+    .cta-closing-subtitle {
+        font-size: 1rem;
+    }
+
+    .step-number {
+        width: 40px;
+        height: 40px;
+        font-size: 1.25rem;
+    }
+
+    .step-icon {
+        width: 64px;
+        height: 64px;
+    }
+
+    .step-icon .icon {
+        font-size: 2rem;
+    }
+
+    .gallery-new-item {
+        height: 240px;
+    }
+
+    .cta-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .testimonials-new-section,
+    .booking-steps-section,
+    .gallery-new-section,
+    .legality-security-section {
+        padding: var(--spacing-2xl) 0;
+    }
+
+    .cta-closing-section {
+        padding: var(--spacing-3xl) 0;
+    }
+}
+
+@media (max-width: 425px) {
+    .testimonials-grid,
+    .steps-container,
+    .gallery-new-grid,
+    .legality-grid {
+        gap: var(--spacing-sm);
+    }
+
+    .testimonial-card,
+    .step-card,
+    .legality-card {
+        padding: var(--spacing-lg);
+    }
+
+    .cta-closing-title {
+        font-size: 1.5rem;
+    }
+
+    .cta-closing-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .cta-btn {
+        padding: 0.875rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .step-number {
+        width: 36px;
+        height: 36px;
+        top: -12px;
+        right: -12px;
+        font-size: 1rem;
+    }
+
+    .legality-icon {
+        width: 64px;
+        height: 64px;
+    }
+
+    .legality-icon .icon {
+        font-size: 1.75rem;
+    }
+
+    .gallery-new-item {
+        height: 200px;
+    }
+}

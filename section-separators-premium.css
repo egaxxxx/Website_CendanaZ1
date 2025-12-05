@@ -1,0 +1,304 @@
+/* ============================================
+   PREMIUM SECTION DIVIDERS
+   Beberapa opsi desain divider profesional
+   dengan nuansa warm brown yang harmonis
+   ============================================ */
+
+/* ============================================
+   OPTION 1: SOLID LINE WITH GRADIENT FADE
+   Garis solid dengan fade di ujung
+   REKOMENDASI UTAMA ✨
+   ============================================ */
+
+.divider-solid section+section::before {
+    content: '';
+    position: absolute;
+    top: -2.5rem;
+    left: 5%;
+    right: 5%;
+    height: 1.5px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(138, 110, 90, 0.5) 5%,
+            rgba(107, 84, 71, 0.55) 50%,
+            rgba(138, 110, 90, 0.5) 95%,
+            transparent 100%);
+    box-shadow: 0 1px 3px rgba(107, 84, 71, 0.15);
+}
+
+/* Preview Visual:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Garis tegas, terlihat jelas, clean & modern
+   Warna: Dark Brown (#6B5447) dengan fade
+*/
+
+
+/* ============================================
+   OPTION 2: DOUBLE LINE ELEGANT
+   Dua garis tipis dengan spacing
+   Premium & Sophisticated
+   ============================================ */
+
+.divider-double section+section::before {
+    content: '';
+    position: absolute;
+    top: -3rem;
+    left: 8%;
+    right: 8%;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(178, 138, 106, 0.45) 10%,
+            rgba(138, 110, 90, 0.5) 50%,
+            rgba(178, 138, 106, 0.45) 90%,
+            transparent 100%);
+}
+
+.divider-double section+section::after {
+    content: '';
+    position: absolute;
+    top: -2rem;
+    left: 8%;
+    right: 8%;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(155, 133, 121, 0.35) 15%,
+            rgba(107, 84, 71, 0.4) 50%,
+            rgba(155, 133, 121, 0.35) 85%,
+            transparent 100%);
+}
+
+/* Preview Visual:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+              (spacing 1rem)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Dua garis elegan, kesan luxury & refined
+   Warna: Warm Bronze + Soft Brown blend
+*/
+
+
+/* ============================================
+   OPTION 3: GLOW LINE SUBTLE
+   Garis dengan efek cahaya lembut
+   Modern Premium dengan depth
+   ============================================ */
+
+.divider-glow section+section::before {
+    content: '';
+    position: absolute;
+    top: -2.5rem;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(178, 138, 106, 0.3) 15%,
+            rgba(138, 110, 90, 0.6) 50%,
+            rgba(178, 138, 106, 0.3) 85%,
+            transparent 100%);
+    box-shadow:
+        0 0 8px rgba(178, 138, 106, 0.4),
+        0 1px 2px rgba(107, 84, 71, 0.2),
+        0 -1px 2px rgba(255, 255, 255, 0.3);
+    filter: blur(0.3px);
+}
+
+/* Preview Visual:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   (dengan glow effect di sekitar garis)
+   Garis terlihat bercahaya lembut
+   Warna: Bronze dengan warm glow shadow
+*/
+
+
+/* ============================================
+   OPTION 4: SHADOW SEPARATOR (TANPA BORDER)
+   Hanya shadow untuk pemisah halus
+   Ultra Modern & Clean
+   ============================================ */
+
+.divider-shadow section+section {
+    box-shadow:
+        inset 0 15px 25px -15px rgba(107, 84, 71, 0.15),
+        inset 0 -2px 4px rgba(255, 255, 255, 0.6);
+}
+
+.divider-shadow section+section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(155, 133, 121, 0.25) 50%,
+            transparent 100%);
+}
+
+/* Preview Visual:
+▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔
+   (shadow membentuk depth impression)
+   Garis sangat subtle dengan bayangan lembut
+   Warna: Warm Grey Brown blend shadow
+*/
+
+
+/* ============================================
+   OPTION 5: GRADIENT BAR PREMIUM
+   Bar dengan gradient penuh dari kiri-kanan
+   Bold & Statement Piece
+   ============================================ */
+
+.divider-gradient section+section::before {
+    content: '';
+    position: absolute;
+    top: -2.5rem;
+    left: 3%;
+    right: 3%;
+    height: 2px;
+    background: linear-gradient(90deg,
+            rgba(212, 149, 110, 0.15) 0%,
+            rgba(178, 138, 106, 0.5) 20%,
+            rgba(138, 110, 90, 0.6) 40%,
+            rgba(107, 84, 71, 0.65) 50%,
+            rgba(138, 110, 90, 0.6) 60%,
+            rgba(178, 138, 106, 0.5) 80%,
+            rgba(212, 149, 110, 0.15) 100%);
+    box-shadow: 0 2px 6px rgba(107, 84, 71, 0.2);
+}
+
+/* Preview Visual:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Gradient smooth dari terang ke gelap
+   Warna: Full spectrum brown palette
+   Efek: Premium sophisticated dengan depth
+*/
+
+
+/* ============================================
+   OPTION 6: DOTTED ELEGANT LINE
+   Garis putus-putus elegan
+   Refined & Unique
+   ============================================ */
+
+.divider-dotted section+section::before {
+    content: '';
+    position: absolute;
+    top: -2.5rem;
+    left: 8%;
+    right: 8%;
+    height: 1.5px;
+    background-image: linear-gradient(to right,
+            rgba(138, 110, 90, 0.5) 40%,
+            transparent 40%,
+            transparent 60%,
+            rgba(138, 110, 90, 0.5) 60%);
+    background-size: 12px 1.5px;
+    background-repeat: repeat-x;
+}
+
+/* Preview Visual:
+━  ━  ━  ━  ━  ━  ━  ━  ━  ━  ━  ━  ━  ━  ━
+   Dots elegan dengan spacing teratur
+   Warna: Soft Dark Brown
+   Efek: Sophisticated & detail-oriented
+*/
+
+
+/* ============================================
+   SPESIAL: ENHANCED VERSION CURRENT DESIGN
+   Perbaikan dari design yang sudah ada
+   dengan kontras lebih tinggi
+   ============================================ */
+
+.divider-enhanced section+section::before {
+    content: '';
+    position: absolute;
+    top: -2.5rem;
+    left: 5%;
+    right: 5%;
+    height: 1.5px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(138, 110, 90, 0.45) 8%,
+            rgba(107, 84, 71, 0.55) 50%,
+            rgba(138, 110, 90, 0.45) 92%,
+            transparent 100%);
+    box-shadow:
+        0 1px 2px rgba(107, 84, 71, 0.2),
+        0 -1px 1px rgba(255, 255, 255, 0.4);
+}
+
+/* Untuk section penting seperti Why Us */
+.divider-enhanced .why-us-section::before,
+.divider-enhanced .why-us-split::before {
+    height: 2px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(138, 110, 90, 0.5) 15%,
+            rgba(107, 84, 71, 0.65) 50%,
+            rgba(138, 110, 90, 0.5) 85%,
+            transparent 100%);
+    box-shadow:
+        0 2px 6px rgba(107, 84, 71, 0.25),
+        0 -1px 2px rgba(255, 255, 255, 0.5);
+}
+
+/* Untuk section Payment Methods */
+.divider-enhanced .payment-methods-section::before,
+.divider-enhanced .payment-carousel::before {
+    height: 2px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(178, 138, 106, 0.45) 12%,
+            rgba(138, 110, 90, 0.6) 50%,
+            rgba(178, 138, 106, 0.45) 88%,
+            transparent 100%);
+    box-shadow:
+        0 2px 4px rgba(138, 110, 90, 0.2),
+        0 -1px 2px rgba(255, 255, 255, 0.4);
+}
+
+/* Preview Visual Enhanced:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   Garis lebih kontras dari design sebelumnya
+   Warna: Rich Dark Brown (#6B5447) dominan
+   Efek: Terlihat jelas + shadow depth
+*/
+
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/* Untuk section yang tidak perlu border */
+.no-divider::before,
+.no-divider::after {
+    display: none !important;
+}
+
+/* Hero section tidak perlu divider */
+.hero+section::before {
+    display: none;
+}
+
+section.hero::before {
+    display: none;
+}
+
+/* Spacing adjustment */
+section+section {
+    margin-top: 5rem;
+}
+
+/* Tambahan padding untuk section tertentu */
+.why-us-section,
+.why-us-split,
+.payment-methods-section,
+.payment-carousel,
+.testimonials-section,
+.booking-steps {
+    padding-bottom: 4rem;
+}

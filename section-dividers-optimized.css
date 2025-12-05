@@ -1,0 +1,298 @@
+/* ============================================
+   🎨 RECOMMENDED DIVIDER - READY TO USE
+   Implementasi langsung warna divider terbaik
+   untuk Website CV. Cendana Travel
+   ============================================ */
+
+/* ============================================
+   BASE CONFIGURATION
+   ============================================ */
+
+section {
+    position: relative;
+}
+
+section+section {
+    margin-top: 5rem;
+}
+
+/* Remove divider from hero section */
+.hero+section::before,
+section.hero::before {
+    display: none;
+}
+
+/* ============================================
+   DEFAULT DIVIDER - ALL SECTIONS
+   Rich Dark Brown dengan kontras optimal
+   ============================================ */
+
+section+section::before {
+    content: '';
+    position: absolute;
+    top: -2.5rem;
+    left: 5%;
+    right: 5%;
+    height: 1.5px;
+    /* Lebih tebal dari 1px */
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(138, 110, 90, 0.5) 5%,
+            /* Soft Dark Brown */
+            rgba(107, 84, 71, 0.55) 50%,
+            /* Rich Dark Brown - DARKEST */
+            rgba(138, 110, 90, 0.5) 95%,
+            /* Soft Dark Brown */
+            transparent 100%);
+    box-shadow: 0 1px 3px rgba(107, 84, 71, 0.15);
+    z-index: 1;
+}
+
+/* ============================================
+   ENHANCED DIVIDER - IMPORTANT SECTIONS
+   Untuk section yang perlu emphasis lebih
+   ============================================ */
+
+/* Why Us Section */
+.why-us-section::before,
+.why-us-split::before {
+    content: '';
+    position: absolute;
+    top: -2.5rem;
+    left: 3%;
+    right: 3%;
+    height: 2px;
+    /* Lebih tebal untuk visibility */
+    background: linear-gradient(90deg,
+            rgba(212, 149, 110, 0.15) 0%,
+            rgba(178, 138, 106, 0.5) 20%,
+            /* Warm Bronze */
+            rgba(138, 110, 90, 0.6) 40%,
+            /* Soft Dark Brown */
+            rgba(107, 84, 71, 0.65) 50%,
+            /* Rich Dark Brown - CENTER */
+            rgba(138, 110, 90, 0.6) 60%,
+            /* Soft Dark Brown */
+            rgba(178, 138, 106, 0.5) 80%,
+            /* Warm Bronze */
+            rgba(212, 149, 110, 0.15) 100%);
+    box-shadow: 0 2px 6px rgba(107, 84, 71, 0.2);
+    z-index: 1;
+}
+
+/* Payment Methods Section */
+.payment-methods-section::before,
+.payment-carousel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 3%;
+    right: 3%;
+    height: 2px;
+    background: linear-gradient(90deg,
+            rgba(212, 149, 110, 0.15) 0%,
+            rgba(178, 138, 106, 0.5) 20%,
+            rgba(138, 110, 90, 0.6) 40%,
+            rgba(107, 84, 71, 0.65) 50%,
+            rgba(138, 110, 90, 0.6) 60%,
+            rgba(178, 138, 106, 0.5) 80%,
+            rgba(212, 149, 110, 0.15) 100%);
+    box-shadow: 0 2px 6px rgba(107, 84, 71, 0.2);
+    z-index: 1;
+}
+
+/* Testimonials Section */
+.testimonials-section::before {
+    height: 2px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(138, 110, 90, 0.5) 8%,
+            rgba(107, 84, 71, 0.6) 50%,
+            rgba(138, 110, 90, 0.5) 92%,
+            transparent 100%);
+    box-shadow: 0 2px 4px rgba(107, 84, 71, 0.18);
+}
+
+/* Gallery Section */
+.gallery-section::before {
+    height: 1.5px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(155, 133, 121, 0.4) 10%,
+            /* Warm Grey Brown */
+            rgba(138, 110, 90, 0.5) 50%,
+            /* Soft Dark Brown */
+            rgba(155, 133, 121, 0.4) 90%,
+            transparent 100%);
+    box-shadow: 0 1px 2px rgba(138, 110, 90, 0.12);
+}
+
+/* ============================================
+   SUBTLE BOTTOM BORDERS
+   Untuk closure section
+   ============================================ */
+
+.why-us-section::after,
+.why-us-split::after,
+.payment-methods-section::after,
+.payment-carousel::after {
+    content: '';
+    position: absolute;
+    bottom: -2.5rem;
+    left: 8%;
+    right: 8%;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(155, 133, 121, 0.25) 30%,
+            rgba(138, 110, 90, 0.3) 50%,
+            rgba(155, 133, 121, 0.25) 70%,
+            transparent 100%);
+    z-index: 1;
+}
+
+/* ============================================
+   SPACING & PADDING ADJUSTMENTS
+   ============================================ */
+
+.why-us-section,
+.why-us-split,
+.payment-methods-section,
+.payment-carousel,
+.testimonials-section,
+.booking-steps,
+.gallery-section {
+    padding-bottom: 4rem;
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/* Remove divider from specific sections */
+.no-divider::before,
+.no-divider::after {
+    display: none !important;
+}
+
+/* Add extra spacing for sections with no divider */
+.no-divider {
+    margin-top: 6rem !important;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 768px) {
+    section+section {
+        margin-top: 4rem;
+    }
+
+    section+section::before {
+        top: -2rem;
+        left: 3%;
+        right: 3%;
+        height: 1.5px;
+    }
+
+    .why-us-section::before,
+    .why-us-split::before,
+    .payment-methods-section::before,
+    .payment-carousel::before,
+    .testimonials-section::before {
+        top: -2rem;
+        left: 2%;
+        right: 2%;
+        height: 1.5px;
+    }
+
+    .why-us-section,
+    .why-us-split,
+    .payment-methods-section,
+    .payment-carousel,
+    .testimonials-section,
+    .booking-steps,
+    .gallery-section {
+        padding-bottom: 3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    section+section {
+        margin-top: 3rem;
+    }
+
+    section+section::before {
+        top: -1.5rem;
+        left: 2%;
+        right: 2%;
+    }
+
+    .why-us-section::before,
+    .why-us-split::before,
+    .payment-methods-section::before,
+    .payment-carousel::before {
+        height: 1.5px;
+    }
+}
+
+/* ============================================
+   DARK MODE SUPPORT (Optional)
+   Uncomment jika website support dark mode
+   ============================================ */
+
+/*
+@media (prefers-color-scheme: dark) {
+    section + section::before {
+        background: linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(178, 138, 106, 0.4) 5%,
+            rgba(212, 149, 110, 0.5) 50%,
+            rgba(178, 138, 106, 0.4) 95%,
+            transparent 100%
+        );
+        box-shadow: 0 1px 3px rgba(212, 149, 110, 0.2);
+    }
+}
+*/
+
+/* ============================================
+   ANIMATION (Optional Enhancement)
+   Uncomment untuk subtle fade-in effect
+   ============================================ */
+
+/*
+section + section::before {
+    animation: fadeInDivider 0.6s ease-out;
+}
+
+@keyframes fadeInDivider {
+    from {
+        opacity: 0;
+        transform: scaleX(0);
+    }
+    to {
+        opacity: 1;
+        transform: scaleX(1);
+    }
+}
+*/
+
+/* ============================================
+   COLOR REFERENCE
+   ============================================ */
+
+/*
+Warna yang digunakan:
+- rgba(107, 84, 71)   - #6B5447 - Rich Dark Brown (Darkest)
+- rgba(138, 110, 90)  - #8A6E5A - Soft Dark Brown (Medium)
+- rgba(155, 133, 121) - #9B8579 - Warm Grey Brown (Light)
+- rgba(178, 138, 106) - #B28A6A - Warm Bronze (Highlight)
+- rgba(212, 149, 110) - #D4956E - Light Peach (Fade)
+
+Existing Website Colors:
+- rgba(212, 149, 110) - Primary Warm Peach Brown
+- rgba(184, 112, 77)  - Secondary Rich Orange Brown
+*/

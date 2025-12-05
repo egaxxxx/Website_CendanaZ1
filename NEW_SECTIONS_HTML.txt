@@ -1,0 +1,231 @@
+<!-- ============================================
+     NEW SECTIONS - HTML ONLY
+     Tambahkan antara section "Booking" dan "Footer"
+     ============================================ -->
+
+<!-- SECTION 2: TESTIMONI PELANGGAN -->
+<section class="testimonials-new-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Apa Kata Pelanggan Kami?</h2>
+            <p>Ribuan pelanggan puas telah mempercayai layanan kami untuk perjalanan mereka</p>
+        </div>
+
+        <div class="testimonials-grid">
+            <!-- Testimonial Card 1 -->
+            <article class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="testimonial-avatar" style="background: linear-gradient(135deg, #D4956E 0%, #B8704D 100%);">
+                        <span>EB</span>
+                    </div>
+                    <div class="testimonial-info">
+                        <h4>Eddy Batuna</h4>
+                        <div class="testimonial-rating">
+                            <i class="icon icon-star-fill"></i>
+                            <i class="icon icon-star-fill"></i>
+                            <i class="icon icon-star-fill"></i>
+                            <i class="icon icon-star-fill"></i>
+                            <i class="icon icon-star-fill"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="testimonial-text">Pelayanan luar biasa! Proses pemesanan mudah dan respon admin sangat cepat. Rekomendasi terbaik untuk travel ke Indonesia.</p>
+            </article>
+
+            <!-- Testimonial Card 2 -->
+            <article class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="testimonial-avatar" style="background: linear-gradient(135deg, #F4A460 0%, #D4956E 100%);">
+                        <span>AH</span>
+                    </div>
+                    <div class="testimonial-info">
+                        <h4>Ali Harsyah</h4>
+                        <div class="testimonial-rating">
+                            <i class="icon icon-star-fill"></i>
+                            <i class="icon icon-star-fill"></i>
+                            <i class="icon icon-star-fill"></i>
+                            <i class="icon icon-star-fill"></i>
+                            <i class="icon icon-star-fill"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="testimonial-text">Harga kompetitif dengan pelayanan terbaik. Tim sangat membantu dan responsif. Saya puas dengan layanan mereka!</p>
+            </article>
+
+            <!-- Testimonial Card 3 -->
+            <article class="testimonial-card">
+                <div class="testimonial-header">
+                    <div class="testimonial-avatar" style="background: linear-gradient(135deg, #8B7355 0%, #6B5344 100%);">
+                        <span>SA</span>
+                    </div>
+                    <div class="testimonial-info">
+                        <h4>Siti Aminah</h4>
+                        <div class="testimonial-rating">
+                            <i class="icon icon-star-fill"></i>
+                            <i class="icon icon-star-fill"></i>
+                            <i class="icon icon-star-fill"></i>
+                            <i class="icon icon-star-fill"></i>
+                            <i class="icon icon-star-fill"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="testimonial-text">Perjalanan pertama saya sangat memuaskan. Dari booking hingga sampai tujuan semuanya lancar. Terima kasih Cendana Travel!</p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION 3: CARA PEMESANAN -->
+<section class="booking-steps-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Bagaimana Cara Memesan?</h2>
+            <p>Proses pemesanan yang mudah dan cepat dalam 3 langkah sederhana</p>
+        </div>
+
+        <div class="steps-container">
+            <!-- Step 1 -->
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <div class="step-icon">
+                    <i class="icon icon-search"></i>
+                </div>
+                <h3>Pilih Layanan</h3>
+                <p>Kunjungi halaman Pemesanan dan pilih jenis transportasi yang Anda inginkan (pesawat, kapal, atau bus)</p>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <div class="step-icon">
+                    <i class="icon icon-whatsapp"></i>
+                </div>
+                <h3>Hubungi Admin</h3>
+                <p>Klik "Pesan Sekarang" dan isi form. Anda akan diarahkan ke WhatsApp admin kami untuk konfirmasi</p>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <div class="step-icon">
+                    <i class="icon icon-credit-card"></i>
+                </div>
+                <h3>Lakukan Pembayaran</h3>
+                <p>Lakukan pembayaran sesuai instruksi admin. Tiket Anda akan langsung dikirimkan setelah konfirmasi</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION 4: GALERI FOTO -->
+<section class="gallery-new-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Galeri Perjalanan</h2>
+            <p>Koleksi momen indah dari perjalanan bersama kami</p>
+        </div>
+
+        <div class="gallery-new-grid">
+            <!-- Gallery Item 1 -->
+            <article class="gallery-new-item">
+                <div class="gallery-new-image">
+                    <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Destinasi Pantai">
+                    <div class="gallery-new-overlay">
+                        <h4>Destinasi Pantai</h4>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Gallery Item 2 -->
+            <article class="gallery-new-item">
+                <div class="gallery-new-image">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Gunung Indah">
+                    <div class="gallery-new-overlay">
+                        <h4>Gunung Indah</h4>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Gallery Item 3 -->
+            <article class="gallery-new-item">
+                <div class="gallery-new-image">
+                    <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Petualangan Laut">
+                    <div class="gallery-new-overlay">
+                        <h4>Petualangan Laut</h4>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION 6: LEGALITAS & KEAMANAN -->
+<section class="legality-security-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Legalitas & Keamanan</h2>
+            <p>Kami menjamin keaslian dan keamanan dalam setiap transaksi</p>
+        </div>
+
+        <div class="legality-grid">
+            <!-- Card 1: Terdaftar Resmi -->
+            <article class="legality-card">
+                <div class="legality-icon">
+                    <i class="icon icon-certificate"></i>
+                </div>
+                <h3>Terdaftar Resmi</h3>
+                <p>CV. Cendana Travel adalah perusahaan travel yang terdaftar secara resmi di badan pemerintah yang kompeten</p>
+            </article>
+
+            <!-- Card 2: Lisensi Operasional -->
+            <article class="legality-card">
+                <div class="legality-icon">
+                    <i class="icon icon-license"></i>
+                </div>
+                <h3>Lisensi Operasional</h3>
+                <p>Kami memiliki lisensi operasional lengkap untuk menjalankan bisnis travel dengan izin yang sah</p>
+            </article>
+
+            <!-- Card 3: Transaksi Aman -->
+            <article class="legality-card">
+                <div class="legality-icon">
+                    <i class="icon icon-lock"></i>
+                </div>
+                <h3>Transaksi Aman</h3>
+                <p>Semua transaksi dilindungi dengan sistem keamanan terkini untuk melindungi data pribadi Anda</p>
+            </article>
+
+            <!-- Card 4: Perlindungan Data -->
+            <article class="legality-card">
+                <div class="legality-icon">
+                    <i class="icon icon-shield"></i>
+                </div>
+                <h3>Perlindungan Data</h3>
+                <p>Data pribadi pelanggan dijaga ketat sesuai dengan standar perlindungan data internasional</p>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION 7: CTA PENUTUP -->
+<section class="cta-closing-section">
+    <div class="container">
+        <div class="cta-closing-content">
+            <h2 class="cta-closing-title">Siap Memulai Perjalanan Anda?</h2>
+            <p class="cta-closing-subtitle">Jangan tunda lagi! Hubungi kami sekarang dan dapatkan penawaran terbaik untuk perjalanan impian Anda</p>
+            
+            <div class="cta-closing-buttons">
+                <a href="https://wa.me/<?php echo htmlspecialchars($companyInfoData['whatsapp']); ?>" class="cta-btn cta-btn-primary" target="_blank">
+                    <i class="icon icon-whatsapp"></i>
+                    <span>Chat WhatsApp Sekarang</span>
+                </a>
+                <a href="pemesanan.php" class="cta-btn cta-btn-secondary">
+                    <i class="icon icon-arrow-right"></i>
+                    <span>Lihat Paket Perjalanan</span>
+                </a>
+            </div>
+
+            <p class="cta-closing-footer">Tersedia 24/7 untuk melayani Anda</p>
+        </div>
+    </div>
+</section>

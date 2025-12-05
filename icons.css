@@ -1,0 +1,400 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css');
+
+/* ============================================
+ * PENGATURAN DASAR IKON
+ * ============================================ */
+.icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1em;
+    height: 1em;
+    min-width: 1em;
+    font-size: 1em;
+    color: inherit;
+    text-decoration: none;
+    vertical-align: middle;
+    font-style: normal;
+}
+
+.icon::before {
+    display: inline-block;
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900; /* Gunakan varian solid */
+    line-height: 1;
+    color: inherit;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================
+ * IKON TRANSPORTASI
+ * ============================================ */
+.icon-plane::before {
+    content: "\f072";
+}
+
+.icon-ship::before {
+    content: "\f21a";
+}
+
+.icon-bus::before {
+    content: "\f207";
+}
+
+/* ============================================
+ * IKON AKSI
+ * ============================================ */
+.icon-edit::before {
+    content: "\f044";
+}
+
+.icon-trash::before {
+    content: "\f1f8";
+}
+
+.icon-plus::before {
+    content: "\f067";
+}
+
+.icon-times::before {
+    content: "\f00d";
+}
+
+.icon-check::before {
+    content: "\f00c";
+}
+
+/* ============================================
+ * IKON UI UMUM
+ * ============================================ */
+.icon-moon::before {
+    content: "\f186";
+}
+
+.icon-sun::before {
+    content: "\f185";
+}
+
+.icon-menu::before {
+    content: "\f0c9";
+}
+
+.icon-home::before {
+    content: "\f015";
+}
+
+.icon-info::before {
+    content: "\f05a";
+}
+
+.icon-phone::before {
+    content: "\f095";
+}
+
+.icon-email::before,
+.icon-envelope::before {
+    content: "\f0e0";
+}
+
+.icon-tachometer-alt::before,
+.icon-dashboard::before {
+    content: "\f3fd";
+}
+
+.icon-user-shield::before {
+    content: "\f505";
+}
+
+.icon-eye::before {
+    content: "\f06e";
+}
+
+.icon-map-marker-alt::before {
+    content: "\f3c5";
+}
+
+.icon-clock::before {
+    content: "\f017";
+}
+
+.icon-map::before {
+    content: "\f279";
+}
+
+.icon-key::before {
+    content: "\f084";
+}
+
+.icon-exclamation-triangle::before {
+    content: "\f071";
+}
+
+.icon-route::before {
+    content: "\f4d7";
+}
+
+.icon-money::before {
+    content: "\f53a";
+}
+
+.icon-building::before {
+    content: "\f1ad";
+}
+
+.icon-star::before {
+    content: "\f005";
+}
+
+.icon-star-fill::before {
+    content: "\f005";
+}
+
+.icon-star-half::before {
+    content: "\f089";
+}
+
+.icon-external::before {
+    content: "\f35d";
+}
+
+.icon-map::before {
+    content: "\f279";
+}
+
+.icon-ticket::before {
+    content: "\f145";
+}
+
+.icon-search-plus::before {
+    content: "\f00e";
+}
+
+.icon-camera::before {
+    content: "\f030";
+}
+
+.icon-graduation-cap::before {
+    content: "\f19d";
+}
+
+.icon-question::before {
+    content: "\f128";
+}
+
+.icon-question-circle::before {
+    content: "\f059";
+}
+
+.icon-chevron-down::before {
+    content: "\f078";
+    font-weight: 900;
+}
+
+.icon-chevron-up::before {
+    content: "\f077";
+    font-weight: 900;
+}
+
+.icon-chevron-right::before {
+    content: "\f054";
+    font-weight: 900;
+}
+
+.icon-chevron-left::before {
+    content: "\f053";
+    font-weight: 900;
+}
+
+.icon-arrow-left::before {
+    content: "\f060";
+    font-weight: 900;
+}
+
+.icon-arrow-right::before {
+    content: "\f061";
+    font-weight: 900;
+}
+
+.icon-angle-left::before {
+    content: "\f104";
+    font-weight: 900;
+}
+
+.icon-angle-right::before {
+    content: "\f105";
+    font-weight: 900;
+}
+
+.icon-exclamation::before {
+    content: "\f12a";
+}
+
+.icon-sign-in::before {
+    content: "\f2f6";
+}
+
+.icon-logout::before {
+    content: "\f2f5";
+}
+
+/* ============================================
+ * IKON STATUS & ANIMASI
+ * ============================================ */
+.icon-spinner::before {
+    content: "\f110";
+}
+
+.icon-spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* ============================================
+ * IKON MEDIA SOSIAL / BRAND
+ * ============================================ */
+.icon-whatsapp::before {
+    font-family: 'Font Awesome 6 Brands';
+    font-weight: 400;
+    content: "\f232";
+    color: #25D366;
+}
+
+.icon-instagram::before {
+    font-family: 'Font Awesome 6 Brands';
+    font-weight: 400;
+    content: "\f16d";
+    color: inherit;
+}
+
+.icon-facebook::before {
+    font-family: 'Font Awesome 6 Brands';
+    font-weight: 400;
+    content: "\f09a";
+    color: inherit;
+}
+
+.icon-tiktok::before {
+    font-family: 'Font Awesome 6 Brands';
+    font-weight: 400;
+    content: "\e07b";
+    color: inherit;
+}
+
+.icon-camera::before {
+    content: "\f030";
+}
+
+/* ============================================
+ * IKON TRUST SECTION
+ * ============================================ */
+.icon-shield::before {
+    content: "\f3ed";
+}
+
+.icon-support::before,
+.icon-headset::before {
+    content: "\f095";
+}
+
+.icon-price-tag::before,
+.icon-tag::before {
+    content: "\f02b";
+}
+
+.icon-check-circle::before {
+    content: "\f058";
+}
+
+/* ============================================
+ * VARIAN UKURAN & WARNA
+ * ============================================ */
+.icon-sm {
+    font-size: 0.8em;
+}
+
+.icon-lg {
+    font-size: 1.2em;
+}
+
+.icon-xl {
+    font-size: 1.5em;
+}
+
+.icon-2x {
+    font-size: 2em;
+}
+
+.icon-3x {
+    font-size: 3em;
+}
+
+.icon-primary {
+    color: #3498db;
+}
+
+.icon-success {
+    color: #28a745;
+}
+
+.icon-danger {
+    color: #dc3545;
+}
+
+.icon-warning {
+    color: #ffc107;
+}
+
+.icon-info {
+    color: #17a2b8;
+}
+
+.icon-light {
+    color: #f8f9fa;
+}
+
+.icon-dark {
+    color: #343a40;
+}
+
+/* ============================================
+ * INTERAKSI & KONTEKS
+ * ============================================ */
+.icon-clickable:hover,
+button .icon:hover,
+a .icon:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+    transition: all 0.2s ease;
+}
+
+button .icon,
+a .icon {
+    pointer-events: none;
+}
+
+.btn .icon {
+    margin-right: 6px;
+}
+
+.btn-icon-only .icon {
+    margin-right: 0;
+}
+
+.header-controls .icon,
+.wa-header-btn .icon {
+    font-size: 1.2em;
+}
+
+.nav-menu .icon {
+    font-size: 1em;
+    margin-right: 6px;
+}

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cara Memesan - Redesign</title>
+    
+    <!-- Mengambil Font Keren dari Google Fonts (Poppins) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS RESET & GLOBAL STYLE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f3f4f6; /* Abu-abu muda yang bersih */
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* --- CONTAINER UTAMA --- */
+        section {
+            padding: 80px 20px;
+            max-width: 1200px; /* Membatasi lebar agar tidak terlalu melar di layar lebar */
+            margin: 0 auto;
+        }
+
+        /* --- JUDUL SECTION --- */
+        .header-section {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .header-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .header-section p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        /* --- LAYOUT ZIG-ZAG (INTI SOLUSI) --- */
+        .step-row {
+            display: flex;
+            align-items: center; /* Supaya vertikal center */
+            justify-content: space-between;
+            gap: 60px; /* Jarak antara teks dan gambar */
+            margin-bottom: 100px; /* Jarak antar langkah */
+        }
+
+        /* LOGIKA CSS UNTUK STEP GENAP (No. 2) */
+        /* Ini akan membalik posisi: Gambar di Kiri, Teks di Kanan */
+        .step-row:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        /* --- AREA TEKS --- */
+        .step-text {
+            flex: 1; /* Mengambil 50% ruang */
+            position: relative;
+        }
+
+        /* Angka Besar di Belakang Judul (Elemen Estetik) */
+        .step-number {
+            font-size: 5rem;
+            font-weight: 900;
+            color: #d4a373; /* Warna Coklat/Emas sesuai tema */
+            opacity: 0.2; /* Dibuat transparan */
+            position: absolute;
+            top: -50px;
+            left: -10px;
+            z-index: -1;
+        }
+
+        .step-text h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .step-text p {
+            font-size: 1rem;
+            color: #555;
+            text-align: justify;
+        }
+
+        /* --- AREA GAMBAR --- */
+        .step-image {
+            flex: 1; /* Mengambil 50% ruang */
+            display: flex;
+            justify-content: center;
+        }
+
+        .step-image img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 20px;
+            /* Memberikan bayangan agar terlihat timbul (Pop-up) */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); 
+            transition: transform 0.3s ease;
+        }
+
+        /* Efek saat gambar disentuh mouse */
+        .step-image img:hover {
+            transform: scale(1.02);
+        }
+
+        /* --- RESPONSIVE DESIGN (PENTING BUAT PAK RAJI) --- */
+        /* Jika layar HP atau Tablet (kurang dari 768px) */
+        @media (max-width: 768px) {
+            .step-row {
+                flex-direction: column-reverse !important; /* Gambar di atas, Teks di bawah */
+                gap: 20px;
+                margin-bottom: 60px;
+                text-align: center;
+            }
+
+            /* Reset posisi nomor untuk mobile */
+            .step-number {
+                position: static;
+                font-size: 3rem;
+                opacity: 1;
+                color: #d4a373;
+                margin-bottom: 10px;
+                display: block;
+            }
+
+            .step-text p {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <section>
+        <!-- Judul Utama -->
+        <div class="header-section">
+            <h2>Bagaimana Cara Memesan?</h2>
+            <p>Proses pemesanan tiket yang mudah dan cepat dalam 3 langkah sederhana.</p>
+        </div>
+
+        <!-- LANGKAH 1 (Teks Kiri - Gambar Kanan) -->
+        <div class="step-row">
+            <div class="step-text">
+                <span class="step-number">01</span>
+                <h3>Pilih Layanan</h3>
+                <p>Kunjungi halaman pemesanan utama kami. Di sana Anda dapat memilih jenis transportasi yang diinginkan (Pesawat, Kapal Laut, atau Bus) sesuai dengan tujuan dan kebutuhan perjalanan Anda.</p>
+            </div>
+            <div class="step-image">
+                <!-- Placeholder Gambar (Ganti src dengan gambar aslimu) -->
+                <img src="https://images.unsplash.com/photo-1494515855673-1020244e07f9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Pilih Layanan">
+            </div>
+        </div>
+
+        <!-- LANGKAH 2 (Gambar Kiri - Teks Kanan) -->
+        <!-- Otomatis dibalik oleh CSS :nth-child(even) -->
+        <div class="step-row">
+            <div class="step-text">
+                <span class="step-number">02</span>
+                <h3>Hubungi Admin</h3>
+                <p>Setelah memilih layanan, klik tombol "Pesan Sekarang". Isi formulir singkat dan Anda akan diarahkan otomatis ke WhatsApp admin kami untuk konfirmasi ketersediaan dan harga terkini.</p>
+            </div>
+            <div class="step-image">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Hubungi Admin">
+            </div>
+        </div>
+
+        <!-- LANGKAH 3 (Teks Kiri - Gambar Kanan) -->
+        <div class="step-row">
+            <div class="step-text">
+                <span class="step-number">03</span>
+                <h3>Lakukan Pembayaran</h3>
+                <p>Lakukan transfer pembayaran sesuai instruksi yang diberikan oleh admin. E-ticket resmi akan dikirimkan ke email atau WhatsApp Anda segera setelah pembayaran terkonfirmasi.</p>
+            </div>
+            <div class="step-image">
+                <img src="https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Pembayaran">
+            </div>
+        </div>
+
+    </section>
+
+</body>
+</html>

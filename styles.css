@@ -1,0 +1,3934 @@
+/* ============================================
+   MODERN & PREMIUM TRAVEL WEBSITE CSS
+   ============================================ */
+
+:root {
+    /* Color Palette - Warm, Natural, Premium */
+    --color-primary: #D4956E;
+    --color-primary-dark: #B8704D;
+    --color-primary-light: #E8BBA8;
+
+    --color-secondary: #8B7355;
+    --color-accent: #F4A460;
+
+    --color-dark: #1A1A1A;
+    --color-dark-gray: #2D2D2D;
+    --color-gray: #6B7280;
+    --color-light-gray: #F3F4F6;
+    --color-white: #FFFFFF;
+
+    --color-success: #10B981;
+    --color-error: #EF4444;
+    --color-warning: #F59E0B;
+
+    /* Typography */
+    --font-family: 'Inter', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-size-h1: 3.5rem;
+    --font-size-h2: 2.5rem;
+    --font-size-h3: 1.75rem;
+    --font-size-h4: 1.35rem;
+    --font-size-body: 1rem;
+    --font-size-small: 0.875rem;
+
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    --spacing-2xl: 4rem;
+    --spacing-3xl: 6rem;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+
+    /* Border Radius */
+    --radius-sm: 0.5rem;
+    --radius-md: 1rem;
+    --radius-lg: 1.5rem;
+    --radius-full: 9999px;
+}
+
+/* ============================================
+   GLOBAL STYLES
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-family);
+    color: var(--color-dark);
+    background-color: var(--color-white);
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-dark);
+}
+
+h1 {
+    font-size: var(--font-size-h1);
+}
+
+h2 {
+    font-size: var(--font-size-h2);
+}
+
+h3 {
+    font-size: var(--font-size-h3);
+}
+
+h4 {
+    font-size: var(--font-size-h4);
+}
+
+p {
+    margin-bottom: var(--spacing-md);
+    color: var(--color-gray);
+    font-size: var(--font-size-body);
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: var(--color-primary-dark);
+}
+
+/* ============================================
+   LAYOUT - GLOBAL CONTAINER
+   Unified padding untuk semua section
+   Sejajar dengan navbar
+   ============================================ */
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 2rem;
+    /* 32px - Fixed padding untuk alignment */
+    padding-right: 2rem;
+    /* 32px - Fixed padding untuk alignment */
+    box-sizing: border-box;
+}
+
+/* ============================================
+   PROFESSIONAL SECTION SEPARATORS
+   ============================================ */
+
+/* Global section separator - subtle and elegant */
+section {
+    position: relative;
+}
+
+/* Soft border between sections */
+section+section {
+    border-top: 1px solid rgba(212, 149, 110, 0.1);
+    box-shadow: 0 -1px 0 0 rgba(255, 255, 255, 0.8);
+}
+
+/* Alternative: Decorative gradient separator */
+.section-divider-line {
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(212, 149, 110, 0.15) 10%,
+            rgba(184, 112, 77, 0.25) 50%,
+            rgba(212, 149, 110, 0.15) 90%,
+            transparent 100%);
+    margin: 3rem auto;
+    max-width: 90%;
+}
+
+/* Dot separator style */
+.section-dots-separator {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.section-dots-separator::before {
+    content: '• • •';
+    color: rgba(212, 149, 110, 0.3);
+    font-size: 1.5rem;
+    letter-spacing: 0.5rem;
+}
+
+/* ============================================
+   RESPONSIVE CONTAINER
+   Sesuaikan padding untuk mobile
+   ============================================ */
+@media (max-width: 768px) {
+    .container {
+        max-width: 100%;
+        padding-left: 1rem;
+        /* 16px untuk mobile */
+        padding-right: 1rem;
+        /* 16px untuk mobile */
+    }
+
+    .booking-list-section .container {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+}
+
+/* ============================================
+   HEADER & NAVIGATION
+   ============================================ */
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    /* OPSI 1: Pure White - Clean & Minimalist */
+    /* background: #FFFFFF; */
+
+    /* OPSI 2: Warm Beige - Elegant & Soft */
+    /* background: #FAF8F5; */
+
+    /* OPSI 3: Light Brown Pastel - Premium & Cozy (AKTIF) */
+    background: #F5F1ED;
+
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+header.scrolled {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================
+   HEADER CONTAINER - SEJAJAR DENGAN KONTEN
+   ============================================ */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+    padding-left: 0;
+    /* Padding diatur oleh .container */
+    padding-right: 0;
+    /* Padding diatur oleh .container */
+    min-height: 70px;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.logo:hover {
+    transform: translateY(-2px);
+}
+
+nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    margin: 0 var(--spacing-lg);
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: var(--spacing-lg);
+}
+
+.nav-menu li a {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-dark);
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.nav-menu li a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--color-primary);
+    transition: width 0.3s ease;
+}
+
+.nav-menu li a:hover::after,
+.nav-menu li a.active::after {
+    width: 100%;
+}
+
+.nav-menu li a:hover {
+    color: var(--color-primary);
+}
+
+.header-controls {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: center;
+}
+
+.wa-header-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 0.5rem var(--spacing-md);
+    background: var(--color-primary);
+    color: white;
+    border-radius: var(--radius-full);
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.wa-header-btn:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.mobile-menu {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--color-dark);
+}
+
+@media (max-width: 768px) {
+    nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--color-white);
+        flex-direction: column;
+        padding: var(--spacing-lg);
+        box-shadow: var(--shadow-lg);
+    }
+
+    nav.active {
+        display: flex;
+    }
+
+    .nav-menu {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+
+    .mobile-menu {
+        display: block;
+    }
+
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    .wa-header-btn span {
+        display: none;
+    }
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+
+.hero {
+    position: relative;
+    height: 100vh;
+    min-height: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #F4A460 0%, #D4956E 50%, #8B7355 100%);
+    overflow: hidden;
+    margin-top: 70px;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="1200" height="600" fill="url(%23grid)" /></svg>');
+    opacity: 0.3;
+}
+
+.hero-overlay {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.hero-content {
+    width: 100%;
+    text-align: center;
+    color: var(--color-white);
+}
+
+.hero-title {
+    font-size: var(--font-size-h1);
+    font-weight: 800;
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.1;
+    animation: fadeInUp 0.8s ease;
+}
+
+.hero-company {
+    display: block;
+    font-size: 1.2em;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.hero-description {
+    font-size: 1.35rem;
+    margin-bottom: var(--spacing-2xl);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    color: rgba(255, 255, 255, 0.9);
+    animation: fadeInUp 0.8s ease 0.2s backwards;
+    font-weight: 300;
+}
+
+.hero-cta {
+    display: flex;
+    gap: var(--spacing-lg);
+    justify-content: center;
+    margin-bottom: var(--spacing-2xl);
+    animation: fadeInUp 0.8s ease 0.4s backwards;
+}
+
+.btn-hero {
+    padding: 1rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-hero-primary {
+    background: var(--color-white);
+    color: var(--color-primary);
+}
+
+.btn-hero-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.btn-hero-secondary {
+    background: transparent;
+    color: var(--color-white);
+    border: 2px solid var(--color-white);
+}
+
+.btn-hero-secondary:hover {
+    background: var(--color-white);
+    color: var(--color-primary);
+}
+
+.hero-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-lg);
+    max-width: 600px;
+    margin: 0 auto;
+    animation: fadeInUp 0.8s ease 0.6s backwards;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+    color: var(--color-white);
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-5px);
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: var(--spacing-sm);
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        min-height: 600px;
+        margin-top: 70px;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-description {
+        font-size: 1.1rem;
+    }
+
+    .hero-cta {
+        flex-direction: column;
+    }
+
+    .hero-stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
+   PAGE-SPECIFIC SPACING OVERRIDES (GALERI & FAQ)
+   ============================================ */
+
+.page-galeri .hero,
+.page-faq .hero {
+    /* Make Galeri & FAQ top section visually identical to Pemesanan */
+    position: relative;
+    height: auto;
+    min-height: 440px;
+    padding: calc(var(--spacing-2xl) + 70px) 0 var(--spacing-xl);
+    margin-top: 70px;
+    background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 50%, var(--color-secondary) 100%);
+    overflow: hidden;
+}
+
+.page-galeri .hero-title,
+.page-faq .hero-title {
+    margin-bottom: var(--spacing-md);
+    color: var(--color-white);
+    font-weight: 800;
+    line-height: 1.15;
+}
+
+.page-galeri .hero-description,
+.page-faq .hero-description {
+    margin-bottom: var(--spacing-lg);
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.page-galeri .section-header,
+.page-faq .section-header {
+    margin-bottom: var(--spacing-xl);
+}
+
+.page-galeri section,
+.page-faq section {
+    padding: var(--spacing-2xl) 0;
+}
+
+/* Subtle grid overlay to match brand style */
+/* Decorative circles overlay to mirror Pemesanan without HTML changes */
+.page-galeri .hero::before,
+.page-faq .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><pattern id="grid2gf" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/></pattern></defs><rect width="1200" height="600" fill="url(%23grid2gf)" /></svg>');
+    opacity: 0.25;
+}
+
+.page-galeri .hero::after,
+.page-faq .hero::after {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    filter: blur(6px);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.06);
+}
+
+/* Additional circles via child pseudo-elements for variety */
+.page-galeri .hero-overlay::before,
+.page-faq .hero-overlay::before {
+    content: '';
+    position: absolute;
+    bottom: 15%;
+    right: 12%;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    filter: blur(6px);
+}
+
+.page-galeri .hero-overlay::after,
+.page-faq .hero-overlay::after {
+    content: '';
+    position: absolute;
+    top: 55%;
+    right: 30%;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    filter: blur(6px);
+}
+
+/* ============================================
+   BOOKING HERO (PEMESANAN) STYLES
+   ============================================ */
+
+.booking-hero {
+    position: relative;
+    background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 50%, var(--color-secondary) 100%);
+    padding: calc(var(--spacing-2xl) + 70px) 0 var(--spacing-xl);
+    margin-top: 70px;
+}
+
+.booking-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><pattern id="grid2" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/></pattern></defs><rect width="1200" height="600" fill="url(%23grid2)" /></svg>');
+    opacity: 0.25;
+}
+
+.booking-hero .booking-hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+    color: var(--color-white);
+}
+
+.booking-hero-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.15;
+    font-weight: 800;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-white);
+}
+
+.booking-hero-subtitle {
+    font-size: 1.15rem;
+    max-width: 700px;
+    margin: 0 auto var(--spacing-lg);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.hero-decoration {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.decoration-circle {
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    filter: blur(6px);
+}
+
+.circle-1 {
+    top: 20%;
+    left: 10%;
+}
+
+.circle-2 {
+    bottom: 15%;
+    right: 12%;
+}
+
+.circle-3 {
+    top: 55%;
+    right: 30%;
+}
+
+@media (max-width: 768px) {
+    .booking-hero {
+        padding: calc(var(--spacing-xl) + 70px) 0 var(--spacing-lg);
+    }
+
+    .booking-hero-title {
+        font-size: 2rem;
+    }
+
+    .booking-hero-subtitle {
+        font-size: 1rem;
+    }
+}
+
+/* Tighten spacing under booking filter on Pemesanan */
+.page-pemesanan .booking-filter-section {
+    padding: var(--spacing-2xl) 0;
+}
+
+.page-pemesanan .filter-header {
+    margin-bottom: var(--spacing-xl);
+}
+
+/* ============================================
+   SECTIONS
+   ============================================ */
+
+section {
+    padding: var(--spacing-3xl) 0;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: var(--spacing-3xl);
+}
+
+.section-header h2 {
+    font-size: var(--font-size-h2);
+    margin-bottom: var(--spacing-md);
+}
+
+.section-header p {
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ============================================
+   SERVICES SECTION
+   ============================================ */
+
+.services-section {
+    background: var(--color-light-gray);
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.service-card {
+    background: var(--color-white);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-xl);
+}
+
+.service-card .icon {
+    font-size: 3rem;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-md);
+}
+
+.service-card h3 {
+    font-size: var(--font-size-h4);
+    margin-bottom: var(--spacing-md);
+}
+
+.service-card p {
+    color: var(--color-gray);
+    line-height: 1.8;
+}
+
+/* ============================================
+   TRANSPORT/BOOKING CARDS
+   ============================================ */
+
+.booking-section {
+    background: var(--color-light-gray);
+}
+
+.filter-tabs {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-2xl);
+    flex-wrap: wrap;
+}
+
+.filter-tab {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--color-gray);
+    background: var(--color-white);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    color: var(--color-dark);
+}
+
+.filter-tab:hover,
+.filter-tab.active {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: var(--color-white);
+}
+
+.transport-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.transport-card {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+}
+
+.transport-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+}
+
+.transport-card-image {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, #F4A460 0%, #D4956E 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-white);
+    font-size: 4rem;
+    overflow: hidden;
+}
+
+.transport-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.transport-card-content {
+    padding: var(--spacing-lg);
+}
+
+.transport-card h3 {
+    font-size: var(--font-size-h4);
+    margin-bottom: var(--spacing-sm);
+}
+
+.transport-card .description {
+    color: var(--color-gray);
+    font-size: 0.9rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.transport-card .price-range {
+    color: var(--color-primary);
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.btn-book-now {
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+}
+
+.btn-book-now:hover {
+    background: var(--color-primary-dark);
+    transform: scale(1.05);
+}
+
+/* ============================================
+   GALLERY SECTION
+   ============================================ */
+
+.gallery-section {
+    background: var(--color-light-gray);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    aspect-ratio: 1;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+    box-shadow: var(--shadow-xl);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+.gallery-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+}
+
+.gallery-overlay-content {
+    color: var(--color-white);
+    text-align: center;
+}
+
+/* ============================================
+   FAQ SECTION
+   ============================================ */
+
+.faq-section {
+    background: var(--color-light-gray);
+}
+
+.faq-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.faq-item {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.faq-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--color-dark);
+}
+
+.faq-item-icon {
+    font-size: 1.5rem;
+    color: var(--color-primary);
+    transition: transform 0.3s ease;
+}
+
+.faq-item.active .faq-item-icon {
+    transform: rotate(180deg);
+}
+
+.faq-item-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    margin-top: var(--spacing-md);
+}
+
+.faq-item.active .faq-item-content {
+    max-height: 500px;
+}
+
+/* ============================================
+   CONTACT SECTION
+   ============================================ */
+
+.contact-section {
+    background: var(--color-light-gray);
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-2xl);
+    align-items: center;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.contact-item {
+    display: flex;
+    gap: var(--spacing-lg);
+}
+
+.contact-item-icon {
+    font-size: 2rem;
+    color: var(--color-primary);
+    flex-shrink: 0;
+}
+
+.contact-item-content h3 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.contact-form {
+    background: var(--color-white);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    font-weight: 600;
+    color: var(--color-dark);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--color-gray);
+    border-radius: var(--radius-md);
+    font-family: var(--font-family);
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(212, 149, 110, 0.1);
+}
+
+@media (max-width: 768px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .faq-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
+   FLOATING WHATSAPP BUTTON - HIDDEN
+   ============================================ */
+
+.wa-float {
+    display: none !important;
+    /* HIDDEN - Tombol hijau dihapus */
+}
+
+.wa-float a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    color: var(--color-white);
+    font-size: 1.8rem;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+    transition: all 0.3s ease;
+}
+
+.wa-float a:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(37, 211, 102, 0.6);
+}
+
+@media (max-width: 768px) {
+    .wa-float {
+        bottom: 1rem;
+        right: 1rem;
+    }
+
+    .wa-float a {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+.text-center {
+    text-align: center;
+}
+
+.text-primary {
+    color: var(--color-primary);
+}
+
+.text-white {
+    color: var(--color-white);
+}
+
+.text-gray {
+    color: var(--color-gray);
+}
+
+.mt-1 {
+    margin-top: var(--spacing-md);
+}
+
+.mt-2 {
+    margin-top: var(--spacing-lg);
+}
+
+.mt-3 {
+    margin-top: var(--spacing-xl);
+}
+
+.mb-1 {
+    margin-bottom: var(--spacing-md);
+}
+
+.mb-2 {
+    margin-bottom: var(--spacing-lg);
+}
+
+.mb-3 {
+    margin-bottom: var(--spacing-xl);
+}
+
+.pt-3 {
+    padding-top: var(--spacing-xl);
+}
+
+.pb-3 {
+    padding-bottom: var(--spacing-xl);
+}
+
+/* ============================================
+   MODAL STYLES
+   ============================================ */
+
+.booking-modal-overlay,
+.admin-login-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease;
+}
+
+.booking-modal,
+.admin-login-modal {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-xl);
+    max-width: 500px;
+    width: 90%;
+    animation: slideInUp 0.3s ease;
+}
+
+.booking-modal-header,
+.admin-login-header {
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-light-gray);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.booking-modal-header h3,
+.admin-login-header h3 {
+    margin: 0;
+    font-size: var(--font-size-h3);
+}
+
+.close-modal-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--color-gray);
+    transition: color 0.3s ease;
+}
+
+.close-modal-btn:hover {
+    color: var(--color-dark);
+}
+
+.booking-modal-body,
+.admin-login-body {
+    padding: var(--spacing-lg);
+}
+
+/* ============================================
+   FORM STYLES
+   ============================================ */
+
+.form-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    font-weight: 600;
+    color: var(--color-dark);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--color-light-gray);
+    border-radius: var(--radius-md);
+    font-family: var(--font-family);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(212, 149, 110, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.required {
+    color: var(--color-error);
+}
+
+.form-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: flex-end;
+    margin-top: var(--spacing-2xl);
+}
+
+.btn-cancel,
+.btn-submit,
+.btn-submit-form {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-cancel {
+    background: var(--color-light-gray);
+    color: var(--color-dark);
+}
+
+.btn-cancel:hover {
+    background: var(--color-gray);
+    color: var(--color-white);
+}
+
+.btn-submit,
+.btn-submit-form {
+    background: var(--color-primary);
+    color: var(--color-white);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.btn-submit:hover,
+.btn-submit-form:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.password-input-group {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: center;
+}
+
+.password-input-group input {
+    flex: 1;
+}
+
+.toggle-password {
+    padding: 0.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-primary);
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+    color: var(--color-primary-dark);
+}
+
+.admin-login-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.btn-admin-login,
+.btn-admin-cancel {
+    flex: 1;
+    padding: 0.75rem;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-admin-login {
+    background: var(--color-primary);
+    color: var(--color-white);
+}
+
+.btn-admin-login:hover {
+    background: var(--color-primary-dark);
+}
+
+.btn-admin-cancel {
+    background: var(--color-light-gray);
+    color: var(--color-dark);
+}
+
+.btn-admin-cancel:hover {
+    background: var(--color-gray);
+    color: var(--color-white);
+}
+
+/* ============================================
+   FAQ ACCORDION STYLES
+   ============================================ */
+
+.faq-item {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+}
+
+.faq-item.active {
+    box-shadow: var(--shadow-lg);
+}
+
+.faq-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--color-dark);
+    font-size: 1rem;
+    text-align: left;
+    transition: color 0.3s ease;
+}
+
+.faq-item-header:hover {
+    color: var(--color-primary);
+}
+
+.faq-item-icon {
+    font-size: 1.2rem;
+    color: var(--color-primary);
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    margin-left: var(--spacing-md);
+}
+
+.faq-item.active .faq-item-icon {
+    transform: rotate(180deg);
+}
+
+.faq-item-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    margin-top: var(--spacing-md);
+}
+
+.faq-item.active .faq-item-content {
+    max-height: 500px;
+}
+
+.faq-item-content p {
+    color: var(--color-gray);
+    line-height: 1.8;
+    margin: 0;
+}
+
+/* ============================================
+   BOOKING SECTION STYLES
+   ============================================ */
+
+.booking-filter-section {
+    background: linear-gradient(180deg, #EFF1F4 0%, #E9ECEF 100%);
+    padding: var(--spacing-2xl) 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.filter-container {
+    text-align: center;
+}
+
+.filter-header {
+    margin-bottom: var(--spacing-2xl);
+    position: relative;
+}
+
+.filter-header::after {
+    content: '';
+    display: block;
+    width: 64px;
+    height: 3px;
+    border-radius: 3px;
+    background: var(--color-primary);
+    opacity: 0.15;
+    margin: var(--spacing-md) auto 0;
+}
+
+.filter-title {
+    font-size: var(--font-size-h2);
+    margin-bottom: var(--spacing-md);
+}
+
+.filter-subtitle {
+    color: var(--color-gray);
+    font-size: 1.1rem;
+}
+
+.filter-tabs {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.filter-tab {
+    padding: 1rem 1.5rem;
+    border: 2px solid var(--color-gray);
+    background: var(--color-white);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    color: var(--color-dark);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    position: relative;
+    min-width: 180px;
+    justify-content: center;
+}
+
+.filter-tab:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+}
+
+.filter-tab.active {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: var(--color-white);
+}
+
+.filter-tab-icon {
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.filter-tab-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    text-align: left;
+}
+
+.filter-tab-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.filter-tab-desc {
+    font-size: 0.75rem;
+    opacity: 0.8;
+    font-weight: 400;
+}
+
+.filter-tab-badge {
+    background: var(--color-accent);
+    color: var(--color-white);
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-left: var(--spacing-sm);
+}
+
+.filter-tab.active .filter-tab-badge {
+    background: var(--color-white);
+    color: var(--color-primary);
+}
+
+/* ============================================
+   BOOKING LIST SECTION - ENHANCED
+   ============================================ */
+
+.booking-list-section {
+    padding: var(--spacing-3xl) 0;
+    background: #FFFFFF;
+    min-height: 600px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* ============================================
+   BOOKING LIST SECTION - SEJAJAR DENGAN NAVBAR
+   Menggunakan padding yang sama dengan navbar
+   ============================================ */
+.booking-list-section .container {
+    /* Paksa padding yang sama dengan global container */
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+}
+
+.section-header-booking {
+    text-align: center;
+    margin-bottom: var(--spacing-3xl);
+    animation: fadeInUp 0.6s ease;
+    position: relative;
+}
+
+.section-header-booking::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    border-radius: 4px;
+    background: var(--color-primary);
+    opacity: 0.2;
+    margin: var(--spacing-md) auto 0;
+}
+
+.section-title-booking {
+    font-size: var(--font-size-h2);
+    margin-bottom: var(--spacing-md);
+    color: var(--color-dark);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.section-subtitle-booking {
+    color: var(--color-gray);
+    font-size: 1.1rem;
+    margin: 0;
+    font-weight: 400;
+}
+
+/* ============================================
+   TRANSPORT CARDS GRID - ALIGNED WITH NAVBAR
+   Grid sejajar dengan logo navbar
+   ============================================ */
+.transport-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 320px));
+    gap: 1.5rem;
+    /* 24px gap antar card */
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    justify-content: start;
+    /* Card rata kiri sejajar dengan logo navbar */
+}
+
+.transport-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-light-gray);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 400px;
+    max-width: 320px;
+    /* ✅ Batasi lebar maksimal */
+}
+
+.transport-card:hover {
+    transform: translateY(-12px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--color-primary);
+}
+
+.transport-card-image {
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(135deg, #F4A460 0%, #D4956E 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-white);
+    font-size: 3.5rem;
+    overflow: hidden;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.transport-card-image::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.05);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.transport-card:hover .transport-card-image::before {
+    opacity: 1;
+}
+
+.transport-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.transport-card:hover .transport-card-image img {
+    transform: scale(1.05);
+}
+
+.transport-card-content {
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: var(--spacing-md);
+    min-height: 0;
+}
+
+.transport-card h3 {
+    font-size: 1.35rem;
+    margin: 0;
+    color: var(--color-dark);
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.transport-card .description {
+    color: var(--color-gray);
+    font-size: 0.95rem;
+    margin: 0;
+    flex-grow: 1;
+    line-height: 1.6;
+}
+
+.transport-card .price-range {
+    color: var(--color-primary);
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.btn-book-now {
+    width: 100%;
+    padding: 0.85rem 1.5rem;
+    background: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    font-size: 0.95rem;
+    margin-top: auto;
+}
+
+.btn-book-now:hover {
+    background: var(--color-primary-dark);
+    transform: scale(1.03);
+    box-shadow: 0 4px 12px rgba(212, 149, 110, 0.3);
+}
+
+.btn-book-now:active {
+    transform: scale(0.98);
+}
+
+/* ============================================
+   COMPANY LOGO & PLACEHOLDER STYLES
+   ============================================ */
+
+/* ============================================
+   COMPANY LOGO WRAPPER - MENGISI PENUH
+   Logo header card tanpa ruang kosong
+   ============================================ */
+.company-logo-wrapper {
+    width: calc(100% + 2.5rem);
+    /* ✅ Tambah 2.5rem untuk background sedikit lebih lebar */
+
+    height: 160px;
+    background: linear-gradient(135deg, #F4A460 0%, #D4956E 100%);
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    /* ✅ MARGIN NEGATIF: Keluar dari padding card */
+    margin: -1rem -1.25rem 1rem -1.25rem;
+
+    /* ✅ NO PADDING: Gambar mengisi penuh */
+    padding: 0;
+}
+
+.company-logo {
+    /* ✅ FULL WIDTH & HEIGHT */
+    width: 100%;
+    height: 160px;
+    display: block;
+    /* Hilangkan spacing inline-element */
+
+    /* ✅ OBJECT FIT CONTAIN - Proporsi terjaga, tidak terdistorsi */
+    object-fit: contain;
+    object-position: center;
+
+    /* ✅ NO PADDING - Logo mengisi penuh area */
+    padding: 0;
+    margin: 0;
+
+    transition: transform 0.3s ease;
+}
+
+.company-logo-wrapper:hover .company-logo {
+    transform: scale(1.05);
+}
+
+.logo-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #F4A460 0%, #D4956E 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 2rem;
+    transition: all 0.3s ease;
+    filter: grayscale(100%) opacity(0.6);
+}
+
+.company-logo-wrapper:hover .logo-placeholder {
+    filter: grayscale(100%) opacity(0.8);
+    transform: scale(1.02);
+}
+
+/* ============================================
+   CONTACT FORM STYLES
+   ============================================ */
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2xl);
+}
+
+.contact-item {
+    display: flex;
+    gap: var(--spacing-lg);
+}
+
+.contact-item-icon {
+    font-size: 2rem;
+    color: var(--color-primary);
+    flex-shrink: 0;
+}
+
+.contact-item-content h3 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.contact-item-content p {
+    margin: 0 0 var(--spacing-sm) 0;
+    color: var(--color-gray);
+}
+
+.contact-item-content a {
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+.contact-form {
+    background: var(--color-white);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+}
+
+.contact-form h2 {
+    margin-bottom: var(--spacing-lg);
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 768px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-tabs {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-tab {
+        justify-content: flex-start;
+        min-width: auto;
+        padding: 1rem 1.5rem;
+        gap: var(--spacing-md);
+    }
+
+    .filter-tab-badge {
+        flex-shrink: 0;
+    }
+
+    .filter-tab-content {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-xs);
+    }
+
+    .filter-tab-name {
+        font-weight: 600;
+        color: var(--color-dark);
+    }
+
+    .filter-tab-desc {
+        font-size: 0.85rem;
+        color: var(--color-gray);
+    }
+
+    .company-logo-wrapper {
+        width: calc(100% + 2.5rem);
+        /* ✅ Lebih lebar sedikit di tablet */
+        height: 140px;
+        padding: 0;
+        margin: -1rem -1.25rem 1rem -1.25rem;
+    }
+
+    .company-logo {
+        width: 100%;
+        height: 140px;
+        display: block;
+    }
+
+    .logo-placeholder {
+        font-size: 1.8rem;
+    }
+
+    .booking-modal,
+    .admin-login-modal {
+        width: 95%;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        justify-content: stretch;
+    }
+
+    .btn-cancel,
+    .btn-submit,
+    .btn-submit-form {
+        width: 100%;
+    }
+
+    /* Transport Cards Responsive - Mobile */
+    .transport-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        /* Reduced gap untuk mobile */
+    }
+
+    .section-header-booking {
+        margin-bottom: var(--spacing-2xl);
+    }
+
+    .filter-tab-content {
+        display: none;
+    }
+
+    .filter-tab-name {
+        display: block;
+    }
+}
+
+@media (max-width: 1024px) {
+    .transport-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 425px) {
+    .transport-cards-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .transport-card {
+        min-height: 360px;
+    }
+
+    .transport-card-image {
+        height: 140px;
+        font-size: 2.5rem;
+    }
+
+    .company-logo-wrapper {
+        width: calc(100% + 2.5rem);
+        /* ✅ Lebih lebar sedikit di mobile */
+        height: 120px;
+        margin: -1rem -1.25rem 0.75rem -1.25rem;
+        padding: 0;
+    }
+
+    .company-logo {
+        width: 100%;
+        height: 120px;
+        display: block;
+    }
+
+    .logo-placeholder {
+        font-size: 1.5rem;
+    }
+
+    .transport-card-content {
+        padding: var(--spacing-md);
+    }
+
+    .transport-card h3 {
+        font-size: 1.15rem;
+    }
+
+    .transport-card .description {
+        font-size: 0.85rem;
+    }
+
+    .transport-card .price-range {
+        font-size: 1rem;
+    }
+
+    .btn-book-now {
+        padding: 0.75rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .section-title-booking {
+        font-size: 1.5rem;
+    }
+
+    .section-subtitle-booking {
+        font-size: 0.95rem;
+    }
+
+    .filter-tab {
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .filter-tab-badge {
+        width: 24px;
+        height: 24px;
+        font-size: 0.75rem;
+    }
+}
+
+/* ============================================
+   TRUST SECTION STYLES
+   ============================================ */
+
+.trust-section {
+    background: var(--color-white);
+    padding: var(--spacing-3xl) 0;
+}
+
+.trust-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.trust-item {
+    text-align: center;
+    padding: var(--spacing-lg);
+}
+
+.trust-icon {
+    font-size: 3rem;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-md);
+}
+
+.trust-item h3 {
+    font-size: var(--font-size-h4);
+    margin-bottom: var(--spacing-sm);
+}
+
+.trust-item p {
+    color: var(--color-gray);
+}
+
+/* ============================================
+   FAQ BOOKING STYLES
+   ============================================ */
+
+.faq-booking-section {
+    background: linear-gradient(180deg, #EEF1F5 0%, #E5E8EC 100%);
+    padding: var(--spacing-3xl) 0;
+}
+
+.faq-booking-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+}
+
+.faq-booking-header h2 {
+    font-size: var(--font-size-h2);
+    margin-bottom: var(--spacing-md);
+}
+
+.faq-booking-header p {
+    color: var(--color-gray);
+    font-size: 1.1rem;
+}
+
+.faq-booking-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-2xl);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 var(--spacing-lg);
+}
+
+.faq-booking-item {
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}
+
+.faq-booking-item:hover {
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+}
+
+.faq-booking-item.active {
+    box-shadow: var(--shadow-lg);
+}
+
+.faq-booking-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: var(--spacing-md);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--color-dark);
+    text-align: left;
+    transition: color 0.3s ease;
+}
+
+/* Increase question font size for better readability */
+.faq-booking-question span {
+    font-size: 1.1rem;
+}
+
+.faq-booking-question:hover {
+    color: var(--color-primary);
+}
+
+.faq-booking-icon {
+    font-size: 1.2rem;
+    color: var(--color-primary);
+    transition: transform 0.3s ease;
+}
+
+.faq-booking-item.active .faq-booking-icon {
+    transform: rotate(180deg);
+}
+
+.faq-booking-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: 0 var(--spacing-md);
+    background: #FFFFFF;
+    visibility: hidden;
+}
+
+.faq-booking-item.active .faq-booking-answer {
+    max-height: 800px;
+    padding: var(--spacing-sm) var(--spacing-md) var(--spacing-md);
+    background: #FFFFFF;
+    visibility: visible;
+}
+
+.faq-booking-answer p {
+    margin: 0;
+    color: var(--color-gray);
+    line-height: 1.8;
+}
+
+.faq-booking-cta {
+    text-align: center;
+}
+
+.faq-booking-cta p {
+    margin-bottom: var(--spacing-md);
+    font-size: 1.1rem;
+    color: var(--color-dark);
+}
+
+.btn-faq-more {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 0.75rem 1.5rem;
+    background: var(--color-primary);
+    color: var(--color-white);
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-faq-more:hover {
+    background: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ============================================
+   CONTACT FAQu SECTION
+   ============================================ */
+
+.contact-faq-section {
+    padding: var(--spacing-3xl) 0;
+}
+
+.text-small {
+    font-size: 0.85rem;
+    color: var(--color-gray);
+}
+
+/* ============================================
+   SECTION 2: TESTIMONI PELANGGAN
+   ============================================ */
+.testimonials-new-section {
+    background: var(--color-light-gray);
+    padding: var(--spacing-3xl) 0;
+    margin-top: var(--spacing-3xl);
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-2xl);
+}
+
+.testimonial-card {
+    background: white;
+    padding: var(--spacing-2xl);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(212, 149, 110, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+}
+
+.testimonial-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.testimonial-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.testimonial-info {
+    flex: 1;
+}
+
+.testimonial-info h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--color-dark);
+    font-weight: 600;
+}
+
+.testimonial-rating {
+    display: flex;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
+}
+
+.testimonial-rating .icon-star-fill {
+    color: #FFC107;
+    font-size: 0.9rem;
+}
+
+.testimonial-text {
+    color: var(--color-gray);
+    line-height: 1.6;
+    margin: 0;
+    font-size: 0.95rem;
+    flex: 1;
+}
+
+/* ============================================
+   SECTION 3: CARA PEMESANAN
+   ============================================ */
+.booking-steps-section {
+    padding: var(--spacing-3xl) 0;
+    background: white;
+    margin-top: var(--spacing-3xl);
+}
+
+.steps-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-2xl);
+}
+
+.step-card {
+    background: linear-gradient(135deg, rgba(212, 149, 110, 0.05) 0%, rgba(244, 164, 96, 0.05) 100%);
+    padding: var(--spacing-2xl);
+    border-radius: var(--radius-lg);
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    position: relative;
+    text-align: center;
+}
+
+.step-card:hover {
+    border-color: var(--color-primary);
+    background: linear-gradient(135deg, rgba(212, 149, 110, 0.1) 0%, rgba(244, 164, 96, 0.1) 100%);
+    box-shadow: 0 8px 24px rgba(212, 149, 110, 0.15);
+}
+
+.step-number {
+    position: absolute;
+    top: -16px;
+    right: -16px;
+    width: 48px;
+    height: 48px;
+    background: var(--color-primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(212, 149, 110, 0.3);
+}
+
+.step-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    background: white;
+    border-radius: var(--radius-md);
+    margin: 0 auto var(--spacing-lg);
+    box-shadow: 0 4px 12px rgba(212, 149, 110, 0.1);
+}
+
+.step-icon .icon {
+    font-size: 2.5rem;
+    color: var(--color-primary);
+}
+
+.step-card h3 {
+    margin: var(--spacing-md) 0;
+    color: var(--color-dark);
+    font-size: 1.35rem;
+}
+
+.step-card p {
+    color: var(--color-gray);
+    line-height: 1.6;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+/* ============================================
+   SECTION 4: GALERI FOTO
+   ============================================ */
+.gallery-new-section {
+    padding: var(--spacing-3xl) 0;
+    background: var(--color-light-gray);
+    margin-top: var(--spacing-3xl);
+}
+
+.gallery-new-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-2xl);
+}
+
+.gallery-new-item {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    height: 280px;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+}
+
+.gallery-new-image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.gallery-new-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gallery-new-item:hover .gallery-new-image img {
+    transform: scale(1.1);
+}
+
+.gallery-new-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%);
+    display: flex;
+    align-items: flex-end;
+    padding: var(--spacing-lg);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-new-item:hover .gallery-new-overlay {
+    opacity: 1;
+}
+
+.gallery-new-overlay h4 {
+    color: white;
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+/* ============================================
+   SECTION 6: LEGALITAS & KEAMANAN
+   ============================================ */
+.legality-security-section {
+    padding: var(--spacing-3xl) 0;
+    background: white;
+    margin-top: var(--spacing-3xl);
+}
+
+.legality-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-2xl);
+}
+
+.legality-card {
+    background: linear-gradient(135deg, #F8F6F3 0%, #FAF8F5 100%);
+    padding: var(--spacing-2xl);
+    border-radius: var(--radius-lg);
+    border: 2px solid rgba(212, 149, 110, 0.1);
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.legality-card:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px rgba(212, 149, 110, 0.15);
+}
+
+.legality-icon {
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--spacing-lg);
+    box-shadow: 0 8px 16px rgba(212, 149, 110, 0.2);
+}
+
+.legality-icon .icon {
+    font-size: 2rem;
+    color: white;
+}
+
+.legality-card h3 {
+    margin: 0 0 var(--spacing-md);
+    color: var(--color-dark);
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.legality-card p {
+    color: var(--color-gray);
+    line-height: 1.6;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+/* ============================================
+   SECTION 7: CTA PENUTUP
+   ============================================ */
+.cta-closing-section {
+    padding: var(--spacing-4xl) 0;
+    background: linear-gradient(135deg, #D4956E 0%, #B8704D 100%);
+    margin-top: var(--spacing-3xl);
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-closing-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.cta-closing-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    animation: fadeInUp 0.8s ease;
+}
+
+.cta-closing-title {
+    color: white;
+    font-size: 2.5rem;
+    margin: 0 0 var(--spacing-md);
+    font-weight: 700;
+}
+
+.cta-closing-subtitle {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 1.1rem;
+    margin: 0 0 var(--spacing-2xl);
+    line-height: 1.6;
+}
+
+.cta-closing-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-2xl);
+}
+
+.cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 1rem 2rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    border: 2px solid transparent;
+    cursor: pointer;
+}
+
+.cta-btn-primary {
+    background: white;
+    color: var(--color-primary);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.cta-btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
+
+.cta-btn-secondary {
+    background: transparent;
+    color: white;
+    border-color: white;
+}
+
+.cta-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-3px);
+}
+
+.cta-btn .icon {
+    font-size: 1.25rem;
+}
+
+.cta-closing-footer {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    margin: 0;
+    font-style: italic;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS FOR NEW SECTIONS
+   ============================================ */
+@media (max-width: 768px) {
+
+    .testimonials-grid,
+    .steps-container,
+    .gallery-new-grid,
+    .legality-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .cta-closing-title {
+        font-size: 1.75rem;
+    }
+
+    .cta-closing-subtitle {
+        font-size: 1rem;
+    }
+
+    .step-number {
+        width: 40px;
+        height: 40px;
+        font-size: 1.25rem;
+    }
+
+    .step-icon {
+        width: 64px;
+        height: 64px;
+    }
+
+    .step-icon .icon {
+        font-size: 2rem;
+    }
+
+    .gallery-new-item {
+        height: 240px;
+    }
+
+    .cta-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .testimonials-new-section,
+    .booking-steps-section,
+    .gallery-new-section,
+    .legality-security-section {
+        padding: var(--spacing-2xl) 0;
+    }
+
+    .cta-closing-section {
+        padding: var(--spacing-3xl) 0;
+    }
+}
+
+@media (max-width: 425px) {
+
+    .testimonials-grid,
+    .steps-container,
+    .gallery-new-grid,
+    .legality-grid {
+        gap: var(--spacing-sm);
+    }
+
+    .testimonial-card,
+    .step-card,
+    .legality-card {
+        padding: var(--spacing-lg);
+    }
+
+    .cta-closing-title {
+        font-size: 1.5rem;
+    }
+
+    .cta-closing-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .cta-btn {
+        padding: 0.875rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .step-number {
+        width: 36px;
+        height: 36px;
+        top: -12px;
+        right: -12px;
+        font-size: 1rem;
+    }
+
+    .legality-icon {
+        width: 64px;
+        height: 64px;
+    }
+
+    .legality-icon .icon {
+        font-size: 1.75rem;
+    }
+
+    .gallery-new-item {
+        height: 200px;
+    }
+}
+
+/* ============================================
+   PAGE PEMESANAN - ICON STYLING (SCOPED)
+   ============================================ */
+
+/* Icon navbar khusus halaman pemesanan - kecil & grayscale */
+.page-pemesanan nav .icon {
+    font-size: 1rem;
+    filter: grayscale(100%) brightness(0.9);
+    transition: all 0.3s ease;
+}
+
+.page-pemesanan nav .icon:hover {
+    filter: grayscale(100%) brightness(1.1);
+}
+
+/* Icon di header controls halaman pemesanan */
+.page-pemesanan .header-controls .icon {
+    font-size: 1rem;
+    filter: grayscale(100%) brightness(0.9);
+}
+
+/* Icon di mobile menu pemesanan */
+.page-pemesanan .mobile-menu .icon {
+    font-size: 1.2rem;
+    filter: grayscale(100%) brightness(0.9);
+}
+
+/* ============================================
+   FOOTER PREMIUM PASTEL - NEW DESIGN
+   ============================================ */
+
+/* Main Footer Container */
+/* ========================================
+   FOOTER PREMIUM - REDESIGNED
+   ======================================== */
+
+.footer-premium {
+    background: linear-gradient(180deg, #3a2f28 0%, #2d241e 50%, #251d19 100%);
+    color: rgba(255, 255, 255, 0.85);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Custom Container with Proper Padding */
+.footer-container-custom {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 3rem 6rem 2rem 6rem;
+    box-sizing: border-box;
+}
+
+/* Footer Premium Container - Standard for all pages */
+.footer-premium .container {
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+}
+
+/* Top Divider Line - Centered & Elegant */
+.footer-divider-top {
+    width: 60%;
+    max-width: 800px;
+    height: 1px;
+    background: rgba(212, 149, 110, 0.3);
+    margin: 0 auto 3rem auto;
+    display: none;
+    /* HIDDEN - Garis dihapus */
+}
+
+/* Grid Layout - 3 Equal Columns */
+.footer-grid-premium {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4rem;
+    margin-bottom: 2.5rem;
+    align-items: start;
+}
+
+/* Section Container */
+.footer-section-premium {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* Ensure content aligns to start */
+}
+
+/* Section Heading */
+.footer-heading-premium {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin: 0 0 0.75rem 0;
+    letter-spacing: 0.3px;
+    width: 100%;
+}
+
+/* Footer Separator Line - Under Headings */
+.footer-separator-premium {
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, #D4956E 0%, #B8704D 100%);
+    margin: 0 0 1.25rem 0;
+    border-radius: 2px;
+}
+
+/* Body Text */
+.footer-text-premium {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 0 1.5rem 0;
+    width: 100%;
+}
+
+/* Operating Hours Box - Minimalist Card */
+.footer-hours-box {
+    background: rgba(212, 149, 110, 0.06);
+    padding: 1rem 1.25rem;
+    border-radius: 8px;
+    border: 1px solid rgba(212, 149, 110, 0.15);
+    margin-top: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.footer-hours-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0 0 0.5rem 0;
+}
+
+.footer-hours-text {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.75);
+    margin: 0;
+}
+
+/* Links List */
+.footer-links-premium {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+}
+
+.footer-links-premium li {
+    margin: 0;
+    padding: 0;
+}
+
+/* Link Items */
+.footer-links-premium a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    display: block;
+    line-height: 1.6;
+}
+
+.footer-links-premium a:hover {
+    color: #D4956E;
+    transform: translateX(3px);
+}
+
+/* Contact Item */
+.footer-contact-item {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0.85rem;
+    width: 100%;
+}
+
+.footer-contact-icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+    opacity: 0.9;
+}
+
+.footer-contact-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    flex: 1;
+}
+
+.footer-contact-label {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+
+/* Footer Label Premium - For Hours and Contact Labels */
+.footer-label-premium {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0 0 0.5rem 0;
+}
+
+/* Contact Links */
+.footer-link-contact {
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+    line-height: 1.5;
+}
+
+.footer-link-contact:hover {
+    color: #D4956E;
+}
+
+/* Address Text */
+.footer-address-text {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.75);
+    margin: 0;
+}
+
+/* Footer Address - Alternative class name */
+.footer-address {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.75);
+    margin: 0;
+}
+
+/* Middle Divider Line - Centered & Elegant */
+.footer-divider-middle {
+    width: 60%;
+    max-width: 800px;
+    height: 1px;
+    background: rgba(212, 149, 110, 0.3);
+    margin: 0 auto 2rem auto;
+    display: none;
+    /* HIDDEN - Garis dihapus */
+}
+
+/* Footer Bottom */
+.footer-bottom-premium {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 1rem 0;
+}
+
+.footer-copyright-premium {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.88rem;
+    margin: 0;
+    text-align: center;
+}
+
+/* Admin Login Button - Hidden Icon Style */
+.footer-admin-login {
+    position: absolute;
+    right: 0;
+    width: 36px;
+    height: 36px;
+    background: rgba(212, 149, 110, 0.05);
+    border: 1px solid rgba(212, 149, 110, 0.15);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(212, 149, 110, 0.5);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+}
+
+.footer-admin-login:hover {
+    background: rgba(212, 149, 110, 0.1);
+    border-color: rgba(212, 149, 110, 0.3);
+    color: rgba(212, 149, 110, 0.9);
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+.footer-admin-login:hover {
+    background: rgba(215, 165, 122, 0.15);
+    border-color: rgba(215, 165, 122, 0.4);
+    color: #D7A57A;
+    transform: translateY(-2px);
+}
+
+/* ============================================
+   FOOTER RESPONSIVE DESIGN
+   ============================================ */
+
+/* Tablet - 2 Columns */
+@media (max-width: 1024px) {
+    .footer-container-custom {
+        padding: 3rem 4rem 2rem 4rem;
+    }
+
+    .footer-grid-premium {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2.5rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .footer-divider-top,
+    .footer-divider-middle {
+        width: 70%;
+        max-width: 600px;
+    }
+}
+
+/* Mobile Tablet - Stack */
+@media (max-width: 768px) {
+    .footer-container-custom {
+        padding: 2.5rem 2rem 1.5rem 2rem;
+    }
+
+    .footer-grid-premium {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .footer-divider-top,
+    .footer-divider-middle {
+        width: 80%;
+        max-width: 500px;
+    }
+
+    .footer-heading-premium {
+        font-size: 1.05rem;
+    }
+
+    .footer-text-premium {
+        font-size: 0.9rem;
+    }
+
+    .footer-label-premium {
+        font-size: 0.85rem;
+    }
+
+    .footer-hours-box {
+        padding: 0.75rem;
+    }
+}
+
+/* Mobile Extra Small */
+@media (max-width: 425px) {
+    .footer-container-custom {
+        padding: 2rem 1.5rem 1.5rem 1.5rem;
+    }
+
+    .footer-grid-premium {
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .footer-divider-top,
+    .footer-divider-middle {
+        width: 90%;
+        max-width: 400px;
+    }
+
+    .footer-heading-premium {
+        font-size: 1rem;
+    }
+
+    .footer-text-premium {
+        font-size: 0.85rem;
+    }
+
+    .footer-label-premium {
+        font-size: 0.8rem;
+    }
+
+    .footer-copyright-premium {
+        font-size: 0.8rem;
+    }
+}
+
+/* ============================================
+   PAGE PEMESANAN - AIRLINE LOGO STYLING (SCOPED)
+   ============================================ */
+
+/* Wrapper untuk logo maskapai di halaman pemesanan */
+.page-pemesanan .company-logo-wrapper {
+    /* ✅ Tambah 2.5rem untuk background sedikit lebih lebar */
+    width: calc(100% + 2.5rem);
+    height: 160px;
+
+    /* Background subtle dan profesional */
+    background: linear-gradient(135deg, #F5F5F5 0%, #EEEEEE 100%);
+
+    /* ✅ MARGIN NEGATIF: Keluar dari padding card kiri-kanan */
+    margin: -1rem -1.25rem 1rem -1.25rem;
+
+    /* ✅ NO PADDING: Logo mengisi penuh */
+    padding: 0;
+
+    /* Container styling - CENTER SEMPURNA */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    /* Border radius hanya atas untuk mengikuti card */
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+
+    /* Transisi untuk wrapper */
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect pada wrapper - untuk trigger perubahan */
+.page-pemesanan .transport-card:hover .company-logo-wrapper {
+    background: linear-gradient(135deg, #FFFFFF 0%, #F5F5F5 100%);
+}
+
+/* GRAYSCALE DEFAULT - Logo image styling di halaman pemesanan */
+.page-pemesanan .company-logo {
+    /* ✅ FULL WIDTH & HEIGHT */
+    width: 100%;
+    height: 160px;
+    display: block;
+    /* Hilangkan spacing inline-element */
+
+    /* ✅ OBJECT FIT CONTAIN - Logo proporsional, tidak terdistorsi */
+    object-fit: contain;
+    object-position: center;
+
+    /* ✅ NO PADDING/MARGIN */
+    padding: 0;
+    margin: 0;
+
+    /* GRAYSCALE DEFAULT */
+    filter: grayscale(100%);
+
+    /* Opacity netral */
+    opacity: 0.85;
+
+    /* Transisi smooth untuk effect grayscale ↔ color */
+    transition: filter 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* HOVER EFFECT - Kembali ke warna asli dengan smooth transition */
+.page-pemesanan .company-logo:hover,
+.page-pemesanan .transport-card:hover .company-logo {
+    /* Menghapus grayscale - tampil warna asli */
+    filter: grayscale(0%);
+
+    /* Opacity meningkat saat hover */
+    opacity: 1;
+
+    /* Slight scale untuk interaktivitas */
+    transform: scale(1.03);
+}
+
+/* Placeholder styling di halaman pemesanan */
+.page-pemesanan .logo-placeholder {
+    /* Grayscale untuk placeholder juga */
+    filter: grayscale(100%);
+
+    /* Icon warna neutral */
+    color: rgba(107, 114, 128, 0.5);
+
+    /* Transisi smooth */
+    transition: filter 0.3s ease, color 0.3s ease;
+
+    /* Background */
+    background: linear-gradient(135deg, #F5F5F5 0%, #EEEEEE 100%) !important;
+}
+
+/* Hover effect untuk placeholder - kembali ke warna */
+.page-pemesanan .logo-placeholder:hover,
+.page-pemesanan .transport-card:hover .logo-placeholder {
+    /* Menghapus grayscale */
+    filter: grayscale(0%);
+
+    /* Icon warna lebih terang saat hover */
+    color: rgba(107, 114, 128, 0.8);
+}
+
+/* Responsive adjustments untuk logo maskapai di pemesanan */
+@media (max-width: 768px) {
+    .page-pemesanan .company-logo-wrapper {
+        width: calc(100% + 2.5rem);
+        /* ✅ Lebih lebar sedikit di tablet */
+        height: 140px;
+        margin: -1rem -1.25rem 1rem -1.25rem;
+        padding: 0;
+    }
+
+    .page-pemesanan .company-logo {
+        width: 100%;
+        height: 140px;
+        display: block;
+    }
+}
+
+@media (max-width: 425px) {
+    .page-pemesanan .company-logo-wrapper {
+        width: calc(100% + 2.5rem);
+        /* ✅ Lebih lebar sedikit di mobile */
+        height: 120px;
+        margin: -1rem -1.25rem 0.75rem -1.25rem;
+        padding: 0;
+    }
+
+    .page-pemesanan .company-logo {
+        width: 100%;
+        height: 120px;
+        display: block;
+    }
+}
+
+/* ============================================
+   PAGE PEMESANAN - FEATURES SECTION (REDESIGNED)
+   ============================================ */
+
+/* Features Section Container */
+.page-pemesanan .page-pemesanan-features {
+    background: var(--color-white);
+    padding: var(--spacing-3xl) 0;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Optional: Subtle background decoration */
+.page-pemesanan .page-pemesanan-features::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(244, 164, 96, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Section Header */
+.page-pemesanan .features-header {
+    text-align: center;
+    margin-bottom: var(--spacing-3xl);
+    position: relative;
+    z-index: 1;
+}
+
+.page-pemesanan .features-title {
+    font-size: var(--font-size-h2);
+    font-weight: 700;
+    color: var(--color-dark);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.2;
+}
+
+.page-pemesanan .features-subtitle {
+    font-size: 1.1rem;
+    color: var(--color-gray);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+/* Features Grid */
+.page-pemesanan .features-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-lg);
+    position: relative;
+    z-index: 1;
+}
+
+/* Feature Card */
+.page-pemesanan .feature-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-light-gray);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-lg);
+    min-height: 280px;
+    justify-content: center;
+    position: relative;
+}
+
+/* Hover Effect on Card */
+.page-pemesanan .feature-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 12px 24px rgba(212, 149, 110, 0.12);
+    transform: translateY(-8px);
+}
+
+/* Icon Wrapper Container */
+.page-pemesanan .feature-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: var(--spacing-sm);
+}
+
+/* Icon Background Circle */
+.page-pemesanan .feature-icon-background {
+    /* Soft Pastel Background */
+    background: linear-gradient(135deg, #E8BBA8 0%, #F0D5C9 100%);
+
+    /* Circle Shape */
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+
+    /* Center Icon */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Icon Size & Color */
+    font-size: 2.2rem;
+    color: var(--color-primary);
+
+    /* Transition for Hover */
+    transition: all 0.3s ease;
+
+    /* Subtle Shadow */
+    box-shadow: 0 4px 12px rgba(212, 149, 110, 0.15);
+}
+
+/* Hover Effect on Icon */
+.page-pemesanan .feature-card:hover .feature-icon-background {
+    /* Darker background on hover */
+    background: linear-gradient(135deg, #D4956E 0%, #E8BBA8 100%);
+
+    /* Scale & Elevate */
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(212, 149, 110, 0.25);
+}
+
+/* Feature Card Title */
+.page-pemesanan .feature-card-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-dark);
+    margin: var(--spacing-sm) 0;
+    line-height: 1.3;
+}
+
+/* Feature Card Description */
+.page-pemesanan .feature-card-description {
+    font-size: 0.95rem;
+    color: var(--color-gray);
+    line-height: 1.6;
+    margin: 0;
+    font-weight: 400;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN - FEATURES SECTION
+   ============================================ */
+
+/* Tablet: 2 Columns */
+@media (max-width: 1024px) {
+    .page-pemesanan .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-lg);
+    }
+
+    .page-pemesanan .feature-card {
+        min-height: 260px;
+    }
+}
+
+/* Small Tablet: 2 Columns */
+@media (max-width: 768px) {
+    .page-pemesanan .page-pemesanan-features {
+        padding: var(--spacing-2xl) 0;
+    }
+
+    .page-pemesanan .features-header {
+        margin-bottom: var(--spacing-2xl);
+    }
+
+    .page-pemesanan .features-title {
+        font-size: 1.8rem;
+    }
+
+    .page-pemesanan .features-subtitle {
+        font-size: 1rem;
+    }
+
+    .page-pemesanan .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-md);
+    }
+
+    .page-pemesanan .feature-card {
+        padding: var(--spacing-xl) var(--spacing-md);
+        min-height: 240px;
+    }
+
+    .page-pemesanan .feature-icon-background {
+        width: 70px;
+        height: 70px;
+        font-size: 1.8rem;
+    }
+
+    .page-pemesanan .feature-card-title {
+        font-size: 1rem;
+    }
+
+    .page-pemesanan .feature-card-description {
+        font-size: 0.9rem;
+    }
+}
+
+/* Mobile: 1 Column */
+@media (max-width: 425px) {
+    .page-pemesanan .page-pemesanan-features {
+        padding: var(--spacing-2xl) 0;
+    }
+
+    .page-pemesanan .features-header {
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .page-pemesanan .features-title {
+        font-size: 1.5rem;
+    }
+
+    .page-pemesanan .features-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .page-pemesanan .features-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .page-pemesanan .feature-card {
+        padding: var(--spacing-lg) var(--spacing-md);
+        min-height: 220px;
+        gap: var(--spacing-md);
+    }
+
+    .page-pemesanan .feature-icon-wrapper {
+        margin-bottom: 0;
+    }
+
+    .page-pemesanan .feature-icon-background {
+        width: 65px;
+        height: 65px;
+        font-size: 1.6rem;
+    }
+
+    .page-pemesanan .feature-card-title {
+        font-size: 0.95rem;
+    }
+
+    .page-pemesanan .feature-card-description {
+        font-size: 0.85rem;
+    }
+}
+
+/* ============================================
+   PAYMENT METHODS SECTION (CARA PEMBAYARAN)
+   ============================================ */
+
+/* Payment Methods Section Container */
+.payment-methods-section {
+    background: var(--color-light-gray);
+    padding: var(--spacing-3xl) 0;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Optional: Subtle background decoration */
+.payment-methods-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(212, 149, 110, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Section Header */
+.payment-methods-section .section-header {
+    text-align: center;
+    margin-bottom: var(--spacing-3xl);
+    position: relative;
+    z-index: 1;
+}
+
+.payment-methods-section h2 {
+    font-size: var(--font-size-h2);
+    font-weight: 700;
+    color: var(--color-dark);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.2;
+}
+
+.payment-methods-section>.container>.section-header>p {
+    font-size: 1.1rem;
+    color: var(--color-gray);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+/* Payment Steps Grid */
+.payment-steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+    position: relative;
+    z-index: 1;
+}
+
+/* Payment Step Card */
+.payment-step-card {
+    background: var(--color-white);
+    border: 2px solid transparent;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-lg);
+    min-height: 300px;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* Hover Effect on Payment Card */
+.payment-step-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 12px 28px rgba(212, 149, 110, 0.15);
+    transform: translateY(-8px);
+}
+
+/* Icon Wrapper Container */
+.payment-step-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: var(--spacing-sm);
+}
+
+/* Icon Background Circle */
+.payment-step-icon-background {
+    /* Gradient Background - Soft Pastel */
+    background: linear-gradient(135deg, #E8BBA8 0%, #F0D5C9 100%);
+
+    /* Circle Shape */
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+
+    /* Center Icon */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Icon Size & Color */
+    font-size: 2.5rem;
+    color: var(--color-primary);
+
+    /* Transition for Hover */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Subtle Shadow */
+    box-shadow: 0 4px 12px rgba(212, 149, 110, 0.15);
+}
+
+/* Hover Effect on Icon */
+.payment-step-card:hover .payment-step-icon-background {
+    /* Darker Gradient on Hover */
+    background: linear-gradient(135deg, #D4956E 0%, #E8BBA8 100%);
+
+    /* Scale & Elevate */
+    transform: scale(1.15);
+
+    /* Enhanced Shadow */
+    box-shadow: 0 8px 24px rgba(212, 149, 110, 0.25);
+}
+
+/* Payment Step Title */
+.payment-step-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-dark);
+    margin: var(--spacing-md) 0;
+    line-height: 1.3;
+}
+
+/* Payment Step Description */
+.payment-step-description {
+    font-size: 0.95rem;
+    color: var(--color-gray);
+    line-height: 1.6;
+    margin: 0;
+    font-weight: 400;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN - PAYMENT METHODS
+   ============================================ */
+
+/* Tablet: 2 Columns */
+@media (max-width: 1024px) {
+    .payment-steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-lg);
+    }
+
+    .payment-step-card {
+        min-height: 280px;
+    }
+}
+
+/* Small Tablet & Mobile: 1 Column */
+@media (max-width: 768px) {
+    .payment-methods-section {
+        padding: var(--spacing-2xl) 0;
+    }
+
+    .payment-methods-section .section-header {
+        margin-bottom: var(--spacing-2xl);
+    }
+
+    .payment-methods-section h2 {
+        font-size: 1.8rem;
+    }
+
+    .payment-methods-section>.container>.section-header>p {
+        font-size: 1rem;
+    }
+
+    .payment-steps-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .payment-step-card {
+        padding: var(--spacing-xl) var(--spacing-md);
+        min-height: 240px;
+    }
+
+    .payment-step-icon-background {
+        width: 80px;
+        height: 80px;
+        font-size: 2rem;
+    }
+
+    .payment-step-title {
+        font-size: 1.1rem;
+    }
+
+    .payment-step-description {
+        font-size: 0.9rem;
+    }
+}
+
+/* Mobile: Extra Small */
+@media (max-width: 425px) {
+    .payment-methods-section {
+        padding: var(--spacing-2xl) 0;
+    }
+
+    .payment-methods-section .section-header {
+        margin-bottom: var(--spacing-xl);
+    }
+
+    .payment-methods-section h2 {
+        font-size: 1.5rem;
+    }
+
+    .payment-methods-section>.container>.section-header>p {
+        font-size: 0.95rem;
+    }
+
+    .payment-steps-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .payment-step-card {
+        padding: var(--spacing-lg) var(--spacing-md);
+        min-height: 220px;
+        gap: var(--spacing-md);
+    }
+
+    .payment-step-icon-background {
+        width: 75px;
+        height: 75px;
+        font-size: 1.8rem;
+    }
+
+    .payment-step-title {
+        font-size: 1rem;
+    }
+
+    .payment-step-description {
+        font-size: 0.85rem;
+    }
+}
+
+/* ============================================
+   FOOTER COMPACT - For Non-Beranda Pages
+   ============================================ */
+
+/* Apply compact footer styling to: pemesanan, galeri, kontak, faq */
+.page-pemesanan .footer-premium,
+.page-galeri .footer-premium,
+.page-kontak .footer-premium,
+.page-faq .footer-premium {
+    padding: 3rem 0 1.5rem;
+}
+
+.page-pemesanan .footer-grid-premium,
+.page-galeri .footer-grid-premium,
+.page-kontak .footer-grid-premium,
+.page-faq .footer-grid-premium {
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.page-pemesanan .footer-heading-premium,
+.page-galeri .footer-heading-premium,
+.page-kontak .footer-heading-premium,
+.page-faq .footer-heading-premium {
+    font-size: 1rem;
+}
+
+.page-pemesanan .footer-text-premium,
+.page-galeri .footer-text-premium,
+.page-kontak .footer-text-premium,
+.page-faq .footer-text-premium {
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.page-pemesanan .footer-label-premium,
+.page-galeri .footer-label-premium,
+.page-kontak .footer-label-premium,
+.page-faq .footer-label-premium {
+    font-size: 0.85rem;
+}
+
+.page-pemesanan .footer-separator-premium,
+.page-galeri .footer-separator-premium,
+.page-kontak .footer-separator-premium,
+.page-faq .footer-separator-premium {
+    width: 30px;
+}
+
+.page-pemesanan .footer-hours-box,
+.page-galeri .footer-hours-box,
+.page-kontak .footer-hours-box,
+.page-faq .footer-hours-box {
+    padding: 0.75rem;
+}
+
+.page-pemesanan .footer-copyright-premium,
+.page-galeri .footer-copyright-premium,
+.page-kontak .footer-copyright-premium,
+.page-faq .footer-copyright-premium {
+    font-size: 0.85rem;
+}
+
+.page-pemesanan .footer-links-premium,
+.page-galeri .footer-links-premium,
+.page-kontak .footer-links-premium,
+.page-faq .footer-links-premium {
+    gap: 0.6rem;
+}
+
+.page-pemesanan .footer-links-premium a,
+.page-galeri .footer-links-premium a,
+.page-kontak .footer-links-premium a,
+.page-faq .footer-links-premium a {
+    font-size: 0.9rem;
+}
+
+.page-pemesanan .footer-contact-item,
+.page-galeri .footer-contact-item,
+.page-kontak .footer-contact-item,
+.page-faq .footer-contact-item {
+    margin-bottom: 1rem;
+}

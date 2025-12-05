@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desain Footer 3 Kolom - Cendana Travel</title>
+    
+    <!-- Link Icon FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ================= CSS STYLE ================= */
+        
+        /* Reset Dasar */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; 
+            background-color: #f4f4f4;
+        }
+
+        /* --- Style Footer Utama --- */
+        .site-footer {
+            /* Warna Background Gradasi Cokelat Gelap */
+            background: linear-gradient(to bottom, #3e3228, #261e18);
+            color: #b0aaa0; /* Warna teks abu-abu krem */
+            padding-top: 60px;
+            font-size: 14px;
+            line-height: 1.6;
+            width: 100%;
+        }
+
+        .footer-container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            
+            /* GRID 3 KOLOM */
+            /* Kolom 1 (Tentang Kami) lebih lebar, Kolom 2 & 3 proporsional */
+            grid-template-columns: 1.4fr 0.8fr 1fr; 
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        /* Judul Per Kolom */
+        .footer-col h3 {
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        /* Garis Bawah Aksen (Warna Bronze) */
+        .divider {
+            width: 40px;
+            height: 3px;
+            background-color: #8c6b4a; 
+            margin-bottom: 25px;
+            border-radius: 2px;
+        }
+
+        /* --- Kolom 1: Tentang Kami --- */
+        .about-section p {
+            margin-bottom: 20px;
+            text-align: justify;
+            opacity: 0.9;
+        }
+
+        .operational-box {
+            border: 1px solid #5a4a3d;
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 6px;
+            color: #cbbcb1;
+            margin-top: 20px;
+        }
+        
+        .operational-box strong {
+            color: #8c6b4a;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* --- Kolom 2: Navigasi (Disesuaikan) --- */
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 8px;
+        }
+
+        .footer-links li:last-child {
+            border-bottom: none;
+        }
+
+        .footer-links a {
+            color: #b0aaa0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        .footer-links a:hover {
+            color: #d4a775; /* Efek hover warna emas */
+            transform: translateX(5px);
+            padding-left: 5px;
+        }
+
+        /* --- Kolom 3: Kontak --- */
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .contact-icon {
+            margin-right: 15px;
+            font-size: 18px;
+            margin-top: 2px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Warna spesifik icon */
+        .fa-whatsapp { color: #25D366; }
+        .fa-envelope { color: #5ea8de; }
+        .fa-map-marker-alt { color: #d64040; }
+
+        .contact-text span {
+            display: block;
+            font-size: 13px;
+            opacity: 0.7;
+            margin-bottom: 2px;
+        }
+
+        .contact-text a, 
+        .contact-text p {
+            color: #d4a775; /* Warna Emas/Bronze */
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .contact-text .address {
+            color: #b0aaa0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* --- Copyright Bar (Bawah) --- */
+        .footer-bottom {
+            border-top: 1px solid #3d342b;
+            text-align: center;
+            padding: 25px 0;
+            font-size: 13px;
+            color: #888;
+            background-color: #221a15;
+        }
+
+        /* --- Responsif (HP) --- */
+        @media (max-width: 768px) {
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================= FOOTER START ================= -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            
+            <!-- KOLOM 1: TENTANG KAMI -->
+            <div class="footer-col about-section">
+                <h3>Tentang Kami</h3>
+                <div class="divider"></div>
+                <p>
+                    Kami adalah penyedia layanan travel terpercaya dengan pengalaman lebih dari 10 tahun dalam melayani perjalanan Anda. Berawal dari lokasi sederhana, kini kami siap melayani kebutuhan liburan Anda.
+                </p>
+                
+                <div class="operational-box">
+                    <strong>Jam Operasional:</strong>
+                    Senin - Minggu: 08.00 - 22.00 WIB
+                </div>
+            </div>
+
+            <!-- KOLOM 2: NAVIGASI (UPDATED SESUAI FOTO BARU) -->
+            <div class="footer-col nav-section">
+                <h3>Navigasi</h3>
+                <div class="divider"></div>
+                <ul class="footer-links">
+                    <!-- Menu disesuaikan dengan foto: Beranda, Pemesanan, Galeri, FAQ, Kontak -->
+                    <li><a href="#">Beranda</a></li>
+                    <li><a href="#">Pemesanan</a></li>
+                    <li><a href="#">Galeri</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Kontak</a></li>
+                </ul>
+            </div>
+
+            <!-- KOLOM 3: HUBUNGI KAMI -->
+            <div class="footer-col contact-section">
+                <h3>Hubungi Kami</h3>
+                <div class="divider"></div>
+                
+                <!-- WhatsApp -->
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
+                    <div class="contact-text">
+                        <span>WhatsApp</span>
+                        <a href="https://wa.me/6285821841529">0858-2184-1529</a>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="far fa-envelope"></i></div>
+                    <div class="contact-text">
+                        <span>Email</span>
+                        <a href="mailto:admin@cendanatravel.com">admin@cendanatravel.com</a>
+                    </div>
+                </div>
+
+                <!-- Alamat -->
+                <div class="contact-item">
+                    <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="contact-text">
+                        <span>Alamat</span>
+                        <p class="address">
+                            Jl. Cendana No.8, Tlk. Lerong Ulu,<br>
+                            Kec. Sungai Kunjang, Kota Samarinda,<br>
+                            Kalimantan Timur 75127
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bagian Copyright -->
+        <div class="footer-bottom">
+            <p>&copy; 2024 Cv. Cendana Travel. All rights reserved.</p>
+        </div>
+    </footer>
+    <!-- ================= FOOTER END ================= -->
+
+</body>
+</html>

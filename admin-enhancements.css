@@ -1,0 +1,382 @@
+/* Enhanced Admin Panel Styling - Dark Glassmorphism with Pastel Accents */
+/* File ini berisi enhancement tambahan untuk dark glass premium theme */
+
+/* Smooth loading transition */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced card hover effects - Dark Glass */
+.stat-card:hover {
+    animation: pulse-glow-dark 2s infinite;
+}
+
+@keyframes pulse-glow-dark {
+
+    0%,
+    100% {
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 1px 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    50% {
+        box-shadow: 0 12px 48px rgba(74, 132, 255, 0.25), inset 1px 1px 0 rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* Pastel accent highlights for premium feel */
+.section-header h2,
+.gallery-info h4,
+.faq-question {
+    position: relative;
+}
+
+.section-header h2::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #E8C4A0, #D9A679);
+    transition: width 0.3s ease;
+}
+
+.section-card:hover .section-header h2::after {
+    width: 100%;
+}
+
+/* Better form focus states - Dark Glass Blue */
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    box-shadow: 0 0 0 4px rgba(74, 132, 255, 0.25), inset 0 0 12px rgba(74, 132, 255, 0.1);
+    border-color: #4A84FF;
+}
+
+/* Enhanced table animations */
+.table tbody tr {
+    animation: fadeInUp 0.3s ease-out;
+}
+
+.table tbody tr:hover {
+    box-shadow: inset 0 0 20px rgba(74, 132, 255, 0.1);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Better button states */
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+/* Enhanced sidebar navigation shimmer - Dark Glass */
+.nav-link {
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+    transition: left 0.5s ease;
+}
+
+.nav-link:hover::before {
+    left: 100%;
+}
+
+/* Active nav link with pastel glow */
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 20px;
+    background: linear-gradient(180deg, #E8C4A0, #D9A679);
+    border-radius: 2px;
+    opacity: 0.6;
+}
+
+/* FAQ 3 Column Grid - Responsive */
+.faq-item {
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.faq-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;
+    border-color: var(--admin-accent-purple) !important;
+}
+
+/* Responsive FAQ Grid */
+@media (max-width: 1400px) {
+
+    /* 2 columns for medium screens */
+    #faq-section .section-content>div[style*="grid-template-columns"] {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 900px) {
+
+    /* 1 column for tablets and mobile */
+    #faq-section .section-content>div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* 2 Column Form Layout - General & Contact Sections */
+#general-section form>div[style*="grid-template-columns"],
+#kontak-section form>div[style*="grid-template-columns"] {
+    transition: grid-template-columns 0.3s ease;
+}
+
+/* Responsive Form Grid */
+@media (max-width: 1024px) {
+
+    /* Stack to 1 column on tablets and mobile */
+    #general-section form>div[style*="grid-template-columns"],
+    #kontak-section form>div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* Better mobile responsiveness */
+@media (max-width: 768px) {
+    .admin-header {
+        backdrop-filter: blur(18px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .mobile-menu-toggle {
+        animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+            transform: translateY(0);
+        }
+
+        40% {
+            transform: translateY(-5px);
+        }
+
+        60% {
+            transform: translateY(-3px);
+        }
+    }
+
+    /* FAQ buttons stacked on mobile */
+    .faq-item>div>div:last-child {
+        flex-direction: column !important;
+    }
+
+    .faq-item .btn {
+        width: 100% !important;
+    }
+}
+
+/* Enhanced dark mode transitions - Already in dark theme */
+body * {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* Loading states - Dark Glass */
+.loading {
+    position: relative;
+    overflow: hidden;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(74, 132, 255, 0.15), transparent);
+    animation: loading-shimmer 1.5s infinite;
+}
+
+@keyframes loading-shimmer {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+/* Enhanced scrollbar styling - Dark Glass Theme */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(15, 15, 20, 0.5);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #4A84FF, #6DA8FF);
+    border-radius: 4px;
+    box-shadow: 0 0 8px rgba(74, 132, 255, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #6DA8FF, #8BB4FF);
+}
+
+/* Better focus management */
+*:focus {
+    outline: 2px solid #4A84FF;
+    outline-offset: 2px;
+}
+
+.btn:focus,
+.nav-link:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(74, 132, 255, 0.3);
+}
+
+/* Enhanced gallery grid animations */
+.gallery-item {
+    animation: slideInFromBottom 0.5s ease-out;
+}
+
+@keyframes slideInFromBottom {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Better error states - Dark Glass */
+.form-group.error input,
+.form-group.error textarea,
+.form-group.error select {
+    border-color: #FF5C5C;
+    background-color: rgba(255, 92, 92, 0.08);
+}
+
+.error-message {
+    color: #FF5C5C;
+    font-size: 0.85rem;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Success animations */
+.success-animation {
+    animation: successPulse 0.6s ease-out;
+}
+
+@keyframes successPulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Pastel accent animations for special UI elements */
+.premium-highlight {
+    position: relative;
+    background: linear-gradient(135deg, rgba(232, 196, 160, 0.1), rgba(217, 166, 121, 0.1));
+    border-left: 3px solid #E8C4A0;
+    border-radius: 8px;
+    padding: 12px 16px;
+    color: rgba(240, 240, 245, 0.9);
+}
+
+.premium-highlight::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, #E8C4A0, #D9A679);
+    border-radius: 3px 0 0 3px;
+}
+
+/* Icon styling with pastel accents */
+.icon-premium {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(232, 196, 160, 0.15), rgba(217, 166, 121, 0.08));
+    color: #E8C4A0;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 12px rgba(232, 196, 160, 0.15);
+}
+
+/* Better print styles */
+@media print {
+
+    .sidebar,
+    .mobile-menu-toggle,
+    .dark-mode-toggle,
+    .admin-header {
+        display: none !important;
+    }
+
+    .admin-content {
+        margin-left: 0 !important;
+        padding: 0 !important;
+    }
+
+    .content-section {
+        page-break-inside: avoid;
+    }
+}
