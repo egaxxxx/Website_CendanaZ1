@@ -13,7 +13,6 @@ header("Expires: 0");
 
 require_once 'config/database.php';
 require_once 'includes/functions.php';
-require_once 'includes/home_functions.php';
 
 startSecureSession();
 
