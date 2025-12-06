@@ -13,6 +13,7 @@ header("Expires: 0");
 
 require_once 'config/database.php';
 require_once 'includes/functions.php';
+require_once 'includes/home_functions.php';
 
 startSecureSession();
 
@@ -98,13 +99,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // ============================================
     elseif ($module === 'gallery') {
         if ($action === 'add') {
-            $imagePath = uploadImage($_FILES['image'], 'uploads/gallery/');
-            if ($imagePath && addGallery($_POST, $imagePath)) {
-                $_SESSION['admin_message'] = 'Foto galeri berhasil ditambahkan!';
-                $_SESSION['admin_message_type'] = 'success';
-            } else {
-                $_SESSION['admin_message'] = 'Gagal menambahkan foto galeri!';
+            // Check if file is selected
+            if (!isset($_FILES['image']) || $_FILES['image']['error'] === UPLOAD_ERR_NO_FILE) {
+                $_SESSION['admin_message'] = 'Silakan pilih foto terlebih dahulu!';
                 $_SESSION['admin_message_type'] = 'error';
+            } else {
+                $imagePath = uploadImage($_FILES['image'], 'uploads/gallery/');
+                if ($imagePath && addGallery($_POST, $imagePath)) {
+                    $_SESSION['admin_message'] = 'Foto galeri berhasil ditambahkan!';
+                    $_SESSION['admin_message_type'] = 'success';
+                } else {
+                    $_SESSION['admin_message'] = $imagePath ? 'Gagal menyimpan foto ke database!' : 'Format foto tidak didukung atau ukuran terlalu besar!';
+                    $_SESSION['admin_message_type'] = 'error';
+                }
             }
             header('Location: admin.php');
             exit();
@@ -158,7 +165,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // ============================================
     elseif ($module === 'faq') {
         if ($action === 'add') {
-            if (addFAQ($_POST)) {
+            // Validate required fields
+            if (empty($_POST['question']) || empty($_POST['answer'])) {
+                $_SESSION['admin_message'] = 'Pertanyaan dan jawaban tidak boleh kosong!';
+                $_SESSION['admin_message_type'] = 'error';
+            } elseif (addFAQ($_POST)) {
                 $_SESSION['admin_message'] = 'FAQ berhasil ditambahkan!';
                 $_SESSION['admin_message_type'] = 'success';
             } else {
@@ -1598,6 +1609,15 @@ $cacheKiller = time() . mt_rand(1000, 9999);
             box-shadow: var(--admin-shadow-peach);
         }
 
+        /* Home content tab containers */
+        .home-content-tab {
+            display: none;
+        }
+
+        .home-content-tab.active {
+            display: block;
+        }
+
         .transport-tab-content {
             display: none;
         }
@@ -2137,6 +2157,10 @@ $cacheKiller = time() . mt_rand(1000, 9999);
             <a href="#faq" class="nav-link" onclick="showSection('faq'); return false;">
                 <i class="fas fa-question-circle"></i>
                 FAQ
+            </a>
+            <a href="#home-content" class="nav-link" onclick="showSection('home-content'); return false;">
+                <i class="fas fa-home"></i>
+                Konten Beranda
             </a>
             <a href="#general" class="nav-link" onclick="showSection('general'); return false;">
                 <i class="fas fa-cog"></i>
