@@ -1,13 +1,43 @@
 <?php
-// Data default untuk menghindari error database
+// Load data dari database
+require_once 'config/database.php';
+require_once 'includes/functions.php';
+require_once 'includes/home_content_functions.php';
+
+// Get homepage settings and contact info from database
+$homepageSettings = getHomepageSettings();
+$contactInfo = getContactInfo();
+
+// Get dynamic home content
+$whyChooseUs = getAllWhyChooseUs();
+$paymentSteps = getAllPaymentSteps();
+$orderSteps = getAllOrderSteps();
+$galleryHomeSelection = getAllGalleryHomeSelection();
+
+// Set variabel global untuk digunakan di footer
+$companyName = $homepageSettings['company_name'] ?? 'CV. Cendana Travel';
+$companyAddress = $homepageSettings['company_address'] ?? 'Jl. Cendana No.8, Tlk. Lerong Ulu, Kec. Sungai Kunjang, Kota Samarinda, Kalimantan Timur 75127';
+$companyHours = $homepageSettings['company_hours'] ?? 'Senin - Minggu: 08.00 - 22.00 WIB';
+$companyEmail = $homepageSettings['company_email'] ?? 'info@cendanatravel.com';
+$companyWhatsapp = $homepageSettings['company_whatsapp'] ?? '6285821841529';
+$companyInstagram = $homepageSettings['company_instagram'] ?? '@cendanatravel_official';
+$companyTiktok = $homepageSettings['company_tiktok'] ?? '';
+$footerDescription = $homepageSettings['footer_description'] ?? 'Kami adalah penyedia layanan travel terpercaya dengan pengalaman lebih dari 10 tahun dalam melayani perjalanan Anda.';
+
+// Data untuk company info - semua dari homepage_settings
 $companyInfoData = [
-    'name' => 'CV. Cendana Travel',
-    'whatsapp' => '6285821841529',
-    'instagram' => '@cendanatravel_official',
-    'email' => 'info@cendanatravel.com',
-    'address' => 'Jl. Cendana No.8, Tlk. Lerong Ulu, Kec. Sungai Kunjang<br>Kota Samarinda, Kalimantan Timur 75127',
-    'hours' => 'Senin - Minggu: 08.00 - 22.00 WIB',
-    'description' => 'Kami adalah penyedia layanan travel terpercaya dengan pengalaman lebih dari 10 tahun dalam melayani perjalanan Anda.'
+    'name' => $companyName,
+    'whatsapp' => $companyWhatsapp,
+    'instagram' => $companyInstagram,
+    'tiktok' => $companyTiktok,
+    'email' => $companyEmail,
+    'address' => $companyAddress,
+    'hours' => $companyHours,
+    'description' => $footerDescription,
+    'phone' => $contactInfo['phone'] ?? '(0541) 123456',
+    'facebook' => $contactInfo['facebook'] ?? '',
+    'twitter' => $contactInfo['twitter'] ?? '',
+    'maps_embed' => $contactInfo['maps_embed'] ?? ''
 ];
 ?>
 <!DOCTYPE html>
@@ -19,7 +49,6 @@ $companyInfoData = [
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="icons.css">
     <link rel="stylesheet" href="beranda-dynamic.css">
-    <link rel="stylesheet" href="section-dividers-optimized.css">
 </head>
 <body>
     <!-- Header Navigation -->
@@ -52,9 +81,9 @@ $companyInfoData = [
     </header>
 
     <!-- Hero Section Dynamic -->
-    <section class="hero hero-dynamic" id="home">
+    <section class="hero hero-dynamic" id="home" <?php if (!empty($homepageSettings['hero_background'])): ?>style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('uploads/<?php echo htmlspecialchars($homepageSettings['hero_background']); ?>'); background-size: cover; background-position: center; background-attachment: fixed;"<?php endif; ?>>
         <!-- Background Layers -->
-        <div class="hero-background-layer"></div>
+        <div class="hero-background-layer" <?php if (!empty($homepageSettings['hero_background'])): ?>style="opacity: 0.3;"<?php endif; ?>></div>
         <div class="hero-pattern-overlay"></div>
         
         <!-- Floating Elements -->
@@ -68,12 +97,12 @@ $companyInfoData = [
             <div class="container">
                 <div class="hero-content fade-in-up">
                     <h1 class="hero-title">
-                        Perjalanan Impian<br>
-                        <span class="hero-company">Dimulai dari Sini</span>
+                        <?php echo htmlspecialchars($homepageSettings['hero_title'] ?? 'Perjalanan Impian'); ?><br>
+                        <span class="hero-company"><?php echo htmlspecialchars($homepageSettings['hero_subtitle'] ?? 'Dimulai dari Sini'); ?></span>
                     </h1>
                     
                     <p class="hero-description">
-                        Layanan travel profesional dengan pengalaman lebih dari 10 tahun. Kami mengutamakan kenyamanan dan keamanan perjalanan Anda ke seluruh penjuru nusantara.
+                        <?php echo htmlspecialchars($homepageSettings['hero_description'] ?? 'Layanan travel profesional dengan pengalaman lebih dari 10 tahun. Kami mengutamakan kenyamanan dan keamanan perjalanan Anda ke seluruh penjuru nusantara.'); ?>
                     </p>
                     
                     <div class="hero-cta">
@@ -91,16 +120,16 @@ $companyInfoData = [
                     
                     <div class="hero-stats">
                         <div class="stat-card fade-in" style="animation-delay: 0.2s;">
-                            <div class="stat-number" data-target="10">0</div>
-                            <div class="stat-label">Tahun Pengalaman</div>
+                            <div class="stat-number"><?php echo htmlspecialchars($homepageSettings['stats_years'] ?? '10+'); ?></div>
+                            <div class="stat-label"><?php echo htmlspecialchars($homepageSettings['stats_years_label'] ?? 'Tahun Pengalaman'); ?></div>
                         </div>
                         <div class="stat-card fade-in" style="animation-delay: 0.4s;">
-                            <div class="stat-number" data-target="5000">0</div>
-                            <div class="stat-label">Pelanggan Puas</div>
+                            <div class="stat-number"><?php echo htmlspecialchars($homepageSettings['stats_customers'] ?? '5000+'); ?></div>
+                            <div class="stat-label"><?php echo htmlspecialchars($homepageSettings['stats_customers_label'] ?? 'Pelanggan Puas'); ?></div>
                         </div>
                         <div class="stat-card fade-in" style="animation-delay: 0.6s;">
-                            <div class="stat-number" data-target="4.9">0</div>
-                            <div class="stat-label">Rating</div>
+                            <div class="stat-number"><?php echo htmlspecialchars($homepageSettings['stats_rating'] ?? '4.9'); ?></div>
+                            <div class="stat-label"><?php echo htmlspecialchars($homepageSettings['stats_rating_label'] ?? 'Rating'); ?></div>
                         </div>
                     </div>
                 </div>
@@ -125,7 +154,7 @@ $companyInfoData = [
                     </div>
                     <div class="service-content">
                         <div class="service-icon-inline">
-                            <h3>✈️ Tiket Pesawat</h3>
+                            <h3>Tiket Pesawat</h3>
                         </div>
                         <p>Terbang ke seluruh destinasi domestik dan internasional dengan harga kompetitif. Proses booking instan dan terpercaya dengan sistem pembayaran yang aman.</p>
                         <ul class="service-features">
@@ -144,7 +173,7 @@ $companyInfoData = [
                     </div>
                     <div class="service-content-small">
                         <div class="service-icon-inline">
-                            <h3>🚌 Tiket Bus Premium</h3>
+                            <h3>Tiket Bus Premium</h3>
                         </div>
                         <p>Perjalanan darat yang nyaman dengan armada terbaru dan fasilitas lengkap untuk perjalanan antar kota yang nyaman dan terjangkau.</p>
                         <a href="pemesanan.php?type=bus" class="service-btn-small">Pesan Tiket Bus</a>
@@ -157,7 +186,7 @@ $companyInfoData = [
                     </div>
                     <div class="service-content-small">
                         <div class="service-icon-inline">
-                            <h3>🚢 Tiket Kapal Laut</h3>
+                            <h3>Tiket Kapal Laut</h3>
                         </div>
                         <p>Nikmati perjalanan laut antar pulau dengan aman dan pemandangan indah. Booking kapal penumpang yang nyaman dan aman ke berbagai pelabuhan.</p>
                         <a href="pemesanan.php?type=kapal" class="service-btn-small">Pesan Tiket Kapal</a>
@@ -181,35 +210,23 @@ $companyInfoData = [
                 <p style="font-size: 1.1rem; color: #6B7280; margin-bottom: 2rem;">Kepercayaan pelanggan adalah prioritas utama kami dalam memberikan layanan travel terbaik</p>
                 
                 <ul class="benefit-list">
+                    <?php foreach ($whyChooseUs as $item): ?>
+                    <?php if ($item['is_active']): ?>
                     <li class="benefit-item">
                         <div class="benefit-icon">
-                            <i class="icon icon-check"></i>
+                            <?php if ($item['icon'] && file_exists($item['icon'])): ?>
+                                <img src="<?= htmlspecialchars($item['icon']) ?>" alt="<?= htmlspecialchars($item['title']) ?>" style="width: 40px; height: 40px; object-fit: contain;">
+                            <?php else: ?>
+                                <i class="icon icon-check"></i>
+                            <?php endif; ?>
                         </div>
                         <div class="benefit-text">
-                            <h3>Legal & Terpercaya</h3>
-                            <p>Perusahaan travel resmi dengan izin operasional lengkap dari badan pemerintah yang kompeten.</p>
+                            <h3><?= htmlspecialchars($item['title']) ?></h3>
+                            <p><?= htmlspecialchars($item['description']) ?></p>
                         </div>
                     </li>
-                    
-                    <li class="benefit-item">
-                        <div class="benefit-icon">
-                            <i class="icon icon-phone"></i>
-                        </div>
-                        <div class="benefit-text">
-                            <h3>Layanan 24/7</h3>
-                            <p>Tim customer service yang responsif siap membantu Anda kapan saja, bahkan di hari libur.</p>
-                        </div>
-                    </li>
-                    
-                    <li class="benefit-item">
-                        <div class="benefit-icon">
-                            <i class="icon icon-shield"></i>
-                        </div>
-                        <div class="benefit-text">
-                            <h3>Aman & Terjamin</h3>
-                            <p>Semua transaksi dijamin aman dengan sertifikat keamanan dan perlindungan data pelanggan yang ketat.</p>
-                        </div>
-                    </li>
+                    <?php endif; ?>
+                    <?php endforeach; ?>
                 </ul>
             </div>
         </div>
@@ -225,38 +242,23 @@ $companyInfoData = [
 
             <div class="horizontal-scroll-wrapper">
                 <div class="horizontal-scroll-container">
-                    <!-- STEP 1: TRANSFER BANK -->
+                    <?php foreach ($paymentSteps as $step): ?>
+                    <?php if ($step['is_active']): ?>
                     <article class="payment-card-scroll">
                         <div class="payment-step-icon-wrapper">
                             <div class="payment-step-icon-background">
-                                <i class="icon icon-bank"></i>
+                                <?php if ($step['icon'] && file_exists($step['icon'])): ?>
+                                    <img src="<?= htmlspecialchars($step['icon']) ?>" alt="<?= htmlspecialchars($step['title']) ?>" style="width: 40px; height: 40px; object-fit: contain;">
+                                <?php else: ?>
+                                    <i class="icon icon-check-circle"></i>
+                                <?php endif; ?>
                             </div>
                         </div>
-                        <h3>Transfer Bank</h3>
-                        <p>Transfer pembayaran ke rekening resmi kami yang tertera. Kami mendukung semua bank besar di Indonesia.</p>
+                        <h3><?= htmlspecialchars($step['title']) ?></h3>
+                        <p><?= htmlspecialchars($step['description']) ?></p>
                     </article>
-
-                    <!-- STEP 2: KONFIRMASI PEMBAYARAN -->
-                    <article class="payment-card-scroll">
-                        <div class="payment-step-icon-wrapper">
-                            <div class="payment-step-icon-background">
-                                <i class="icon icon-check-circle"></i>
-                            </div>
-                        </div>
-                        <h3>Konfirmasi Pembayaran</h3>
-                        <p>Kirim bukti transfer melalui WhatsApp atau form konfirmasi untuk proses verifikasi cepat.</p>
-                    </article>
-
-                    <!-- STEP 3: TIKET DIKIRIM -->
-                    <article class="payment-card-scroll">
-                        <div class="payment-step-icon-wrapper">
-                            <div class="payment-step-icon-background">
-                                <i class="icon icon-ticket"></i>
-                            </div>
-                        </div>
-                        <h3>Tiket Dikirim</h3>
-                        <p>Setelah validasi, e-ticket akan dikirim langsung melalui WhatsApp atau email Anda.</p>
-                    </article>
+                    <?php endif; ?>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
@@ -343,156 +345,108 @@ $companyInfoData = [
         </div>
     </section>
 
-    <!-- SECTION 3: CARA PEMESANAN - TIMELINE -->
-    <section class="booking-steps-section booking-timeline">
+    <!-- SECTION 3: CARA PEMESANAN - ALTERNATING LAYOUT -->
+    <section class="booking-steps-alternating">
         <div class="container">
-            <div class="section-header fade-in-up">
+            <div class="section-header-booking fade-in-up">
                 <h2>Bagaimana Cara Memesan?</h2>
-                <p>Proses pemesanan yang mudah dan cepat dalam 3 langkah sederhana</p>
+                <p>Proses pemesanan tiket yang mudah dan cepat dalam 3 langkah sederhana.</p>
             </div>
 
-            <div class="timeline-container">
-                <!-- Timeline Line -->
-                <div class="timeline-line"></div>
-
-                <!-- Step 1 -->
-                <div class="timeline-step fade-in-up" style="animation-delay: 0.1s;">
-                    <div class="timeline-marker">1</div>
-                    <div class="timeline-content">
-                        <h3>Pilih Layanan</h3>
-                        <p>Kunjungi halaman Pemesanan dan pilih jenis transportasi yang Anda inginkan (pesawat, kapal, atau bus).</p>
-                    </div>
+            <?php 
+            $stepIndex = 0;
+            foreach ($orderSteps as $step): 
+                if (!$step['is_active']) continue;
+                $stepIndex++;
+                $isLeft = ($stepIndex % 2) != 0; // Odd = left, Even = right
+                $delay = $stepIndex * 0.1;
+            ?>
+            <!-- Step <?= $stepIndex ?>: <?= $isLeft ? 'Image Left, Content Right' : 'Content Left, Image Right' ?> -->
+            <div class="booking-step-row booking-step-<?= $isLeft ? 'left' : 'right' ?> fade-in-up" style="animation-delay: <?= $delay ?>s;">
+                <?php if ($isLeft): ?>
+                <div class="booking-step-image">
+                    <?php if ($step['image'] && file_exists($step['image'])): ?>
+                        <img src="<?= htmlspecialchars($step['image']) ?>" alt="<?= htmlspecialchars($step['title']) ?>">
+                    <?php else: ?>
+                        <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80" alt="<?= htmlspecialchars($step['title']) ?>">
+                    <?php endif; ?>
                 </div>
-
-                <!-- Step 2 -->
-                <div class="timeline-step fade-in-up" style="animation-delay: 0.2s;">
-                    <div class="timeline-marker">2</div>
-                    <div class="timeline-content">
-                        <h3>Hubungi Admin</h3>
-                        <p>Klik "Pesan Sekarang" dan isi form. Anda akan diarahkan ke WhatsApp admin untuk konfirmasi.</p>
-                    </div>
+                <div class="booking-step-content">
+                    <h3><?= htmlspecialchars($step['title']) ?></h3>
+                    <p><?= htmlspecialchars($step['description']) ?></p>
                 </div>
-
-                <!-- Step 3 -->
-                <div class="timeline-step fade-in-up" style="animation-delay: 0.3s;">
-                    <div class="timeline-marker">3</div>
-                    <div class="timeline-content">
-                        <h3>Lakukan Pembayaran</h3>
-                        <p>Transfer pembayaran sesuai instruksi. E-ticket akan dikirimkan setelah konfirmasi pembayaran.</p>
-                    </div>
+                <?php else: ?>
+                <div class="booking-step-content">
+                    <h3><?= htmlspecialchars($step['title']) ?></h3>
+                    <p><?= htmlspecialchars($step['description']) ?></p>
                 </div>
+                <div class="booking-step-image">
+                    <?php if ($step['image'] && file_exists($step['image'])): ?>
+                        <img src="<?= htmlspecialchars($step['image']) ?>" alt="<?= htmlspecialchars($step['title']) ?>">
+                    <?php else: ?>
+                        <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80" alt="<?= htmlspecialchars($step['title']) ?>">
+                    <?php endif; ?>
+                </div>
+                <?php endif; ?>
             </div>
+            <?php endforeach; ?>
         </div>
     </section>
 
-    <!-- SECTION 4: GALERI FOTO - MASONRY -->
-    <section class="gallery-new-section gallery-masonry">
+    <!-- SECTION 4: GALERI FOTO - POLAROID CARDS -->
+    <section class="gallery-polaroid-section">
         <div class="container">
-            <div class="section-header fade-in-up">
-                <h2>Galeri Perjalanan</h2>
-                <p>Koleksi momen indah dari perjalanan bersama kami</p>
-            </div>
-
-            <div class="masonry-grid">
-                <!-- Gallery Item 1 - Tall -->
-                <article class="masonry-item tall fade-in" style="animation-delay: 0.1s;">
-                    <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Destinasi Pantai">
-                    <div class="gallery-new-overlay">
-                        <h4>Destinasi Pantai</h4>
-                    </div>
-                </article>
-
-                <!-- Gallery Item 2 - Regular -->
-                <article class="masonry-item fade-in" style="animation-delay: 0.2s;">
-                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Gunung Indah">
-                    <div class="gallery-new-overlay">
-                        <h4>Gunung Indah</h4>
-                    </div>
-                </article>
-
-                <!-- Gallery Item 3 - Regular -->
-                <article class="masonry-item fade-in" style="animation-delay: 0.3s;">
-                    <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Petualangan Laut">
-                    <div class="gallery-new-overlay">
-                        <h4>Petualangan Laut</h4>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION 6: LEGALITAS & KEAMANAN - COMPACT 2x2 -->
-    <section class="legality-security-section legality-compact">
-        <div class="container">
-            <div class="section-header fade-in-up">
-                <h2>Legalitas & Keamanan</h2>
-                <p>Kami menjamin keaslian dan keamanan dalam setiap transaksi</p>
-            </div>
-
-            <div class="legality-grid-2x2">
-                <!-- Card 1: Terdaftar Resmi -->
-                <article class="legality-item fade-in" style="animation-delay: 0.1s;">
-                    <div class="legality-icon">
-                        <i class="icon icon-certificate"></i>
-                    </div>
-                    <h3>Terdaftar Resmi</h3>
-                    <p>CV. Cendana Travel adalah perusahaan travel yang terdaftar secara resmi di badan pemerintah yang kompeten</p>
-                </article>
-
-                <!-- Card 2: Lisensi Operasional -->
-                <article class="legality-item fade-in" style="animation-delay: 0.2s;">
-                    <div class="legality-icon">
-                        <i class="icon icon-license"></i>
-                    </div>
-                    <h3>Lisensi Operasional</h3>
-                    <p>Kami memiliki lisensi operasional lengkap untuk menjalankan bisnis travel dengan izin yang sah</p>
-                </article>
-
-                <!-- Card 3: Transaksi Aman -->
-                <article class="legality-item fade-in" style="animation-delay: 0.3s;">
-                    <div class="legality-icon">
-                        <i class="icon icon-lock"></i>
-                    </div>
-                    <h3>Transaksi Aman</h3>
-                    <p>Semua transaksi dilindungi dengan sistem keamanan terkini untuk melindungi data pribadi Anda</p>
-                </article>
-
-                <!-- Card 4: Perlindungan Data -->
-                <article class="legality-item fade-in" style="animation-delay: 0.4s;">
-                    <div class="legality-icon">
-                        <i class="icon icon-shield"></i>
-                    </div>
-                    <h3>Perlindungan Data</h3>
-                    <p>Data pribadi pelanggan dijaga ketat sesuai dengan standar perlindungan data internasional</p>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION 7: CTA PENUTUP - DYNAMIC BANNER -->
-    <section class="cta-closing-section cta-dynamic">
-        <!-- Gradient Background -->
-        <div class="cta-gradient-background"></div>
-        
-        <div class="container">
-            <div class="cta-content-centered fade-in-up">
-                <h2>Siap Memulai Perjalanan Anda?</h2>
-                <p>Jangan tunda lagi! Hubungi kami sekarang dan dapatkan penawaran terbaik untuk perjalanan impian Anda</p>
+            <div class="gallery-polaroid-wrapper">
                 
-                <div class="cta-closing-buttons">
-                    <a href="https://wa.me/<?php echo htmlspecialchars($companyInfoData['whatsapp']); ?>" class="cta-btn cta-btn-primary" target="_blank">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.488"/>
-                        </svg>
-                        <span>Chat WhatsApp Sekarang</span>
-                    </a>
-                    <a href="pemesanan.php" class="cta-btn cta-btn-secondary">
-                        <i class="icon icon-plane"></i>
-                        <span>Lihat Paket Perjalanan</span>
-                    </a>
+                <!-- Polaroid Cards Stack -->
+                <div class="polaroid-cards-stack">
+                    <?php 
+                    $cardPositions = ['left', 'center', 'right'];
+                    $cardIndex = 0;
+                    foreach ($galleryHomeSelection as $galItem): 
+                        $position = $cardPositions[$cardIndex % 3];
+                        $cardIndex++;
+                    ?>
+                    <!-- Card <?= ucfirst($position) ?> -->
+                    <div class="polaroid-card-home card-<?= $position ?>-home">
+                        <?php if ($galItem['image_path'] && file_exists($galItem['image_path'])): ?>
+                            <img src="<?= htmlspecialchars($galItem['image_path']) ?>" alt="<?= htmlspecialchars($galItem['title'] ?? $galItem['description']) ?>">
+                        <?php else: ?>
+                            <img src="https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?auto=format&fit=crop&w=600&q=80" alt="<?= htmlspecialchars($galItem['description']) ?>">
+                        <?php endif; ?>
+                    </div>
+                    <?php 
+                    if ($cardIndex >= 3) break; // Max 3 photos
+                    endforeach; 
+                    
+                    // Fill remaining slots if less than 3
+                    $defaultImages = [
+                        'https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?auto=format&fit=crop&w=600&q=80',
+                        'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80',
+                        'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80'
+                    ];
+                    
+                    while ($cardIndex < 3):
+                        $position = $cardPositions[$cardIndex % 3];
+                    ?>
+                    <div class="polaroid-card-home card-<?= $position ?>-home">
+                        <img src="<?= $defaultImages[$cardIndex] ?>" alt="Galeri Perjalanan">
+                    </div>
+                    <?php 
+                    $cardIndex++;
+                    endwhile;
+                    ?>
                 </div>
-
-                <p class="cta-closing-footer">Tersedia 24/7 untuk melayani Anda</p>
+                
+                <!-- Text Content -->
+                <div class="gallery-polaroid-content">
+                    <h2 class="gallery-polaroid-title">Galeri Perjalanan</h2>
+                    <p class="gallery-polaroid-subtitle">
+                        Temukan inspirasi destinasi wisata terbaik dari koleksi perjalanan kami yang tak terlupakan.
+                    </p>
+                    <a href="galeri.php" class="btn-gallery-polaroid">Lihat Selengkapnya</a>
+                </div>
+                
             </div>
         </div>
     </section>
@@ -508,14 +462,14 @@ $companyInfoData = [
                 
                 <!-- KOLOM 1: Tentang Kami -->
                 <section class="footer-section-premium">
-                    <h3 class="footer-heading-premium">Tentang Kami</h3>
+                    <h3 class="footer-heading-premium"><?php echo htmlspecialchars($companyInfoData['name']); ?></h3>
                     <p class="footer-text-premium">
-                        Kami adalah penyedia layanan travel terpercaya dengan pengalaman lebih dari 10 tahun dalam melayani perjalanan Anda. Berawal dari lokasi sederhana, kini kami siap melayani kebutuhan liburan Anda.
+                        <?php echo htmlspecialchars($companyInfoData['description']); ?>
                     </p>
                     <div class="footer-hours-box">
                         <p class="footer-hours-label">Jam Operasional:</p>
                         <p class="footer-hours-text">
-                            Senin - Minggu: 08:00 - 22:00 WIB
+                            <?php echo htmlspecialchars($companyInfoData['hours']); ?>
                         </p>
                     </div>
                 </section>
@@ -567,7 +521,7 @@ $companyInfoData = [
                         <div class="footer-contact-content">
                             <p class="footer-contact-label">Alamat</p>
                             <p class="footer-address-text">
-                                Jl. Cendana No.8, Tlk. Lerong Ulu, Kec. Sungai Kunang, Kota Samarinda, Kalimantan Timur 75127
+                                <?php echo nl2br(htmlspecialchars($companyAddress)); ?>
                             </p>
                         </div>
                     </div>
@@ -581,7 +535,7 @@ $companyInfoData = [
             <!-- Footer Bottom: Copyright & Admin Login -->
             <div class="footer-bottom-premium">
                 <p class="footer-copyright-premium">
-                    &copy; 2024 Cv. Cendana Travel. All rights reserved.
+                    <?php echo htmlspecialchars($homepageSettings['footer_copyright'] ?? '© 2024 CV. Cendana Travel. All rights reserved.'); ?>
                 </p>
                 <a href="auth.php" class="footer-admin-login" title="Login Admin">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">

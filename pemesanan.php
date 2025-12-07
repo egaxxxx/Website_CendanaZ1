@@ -11,24 +11,20 @@ header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 header("Expires: 0");
 
-// Koneksi ke database
-require_once 'config/database.php';
-require_once 'includes/functions.php';
+// Load page configuration (company name, footer, etc)
+require_once 'includes/page_config.php';
 
-// Ambil company info dari database
-$companyInfoData = getCompanyInfo();
-
-// Fallback jika database belum ada data
-if (empty($companyInfoData)) {
-    $companyInfoData = [
-        'name' => 'CV. Cendana Travel',
-        'whatsapp' => '6285821841529',
-        'instagram' => '@cendanatravel_official',
-        'email' => 'info@cendanatravel.com',
-        'address' => 'Jl. Cendana No.8, Tlk. Lerong Ulu, Kec. Sungai Kunjang<br>Kota Samarinda, Kalimantan Timur 75127',
-        'hours' => 'Senin - Minggu: 08.00 - 22.00 WIB'
-    ];
-}
+// Gunakan data LANGSUNG dari homepage_settings (via page_config.php)
+$companyInfoData = [
+    'name' => $companyName,
+    'whatsapp' => $companyWhatsapp,
+    'instagram' => $companyInstagram,
+    'tiktok' => $companyTiktok,
+    'email' => $companyEmail,
+    'address' => $companyAddress,
+    'hours' => $companyHours,
+    'description' => $footerDescription
+];
 
 // Ambil semua data transport services dari database
 $transportServices = getAllTransportServices();
@@ -73,7 +69,7 @@ $servicesDataJSON = json_encode($servicesData, JSON_HEX_TAG | JSON_HEX_AMP | JSO
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pemesanan - <?php echo htmlspecialchars($companyInfoData['name']); ?> [DB:<?php echo time(); ?>]</title>
+    <title>Pemesanan - <?php echo htmlspecialchars($companyName); ?></title>
     
     <!-- 🔥 EXTREME CACHE BUSTING 🔥 -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
@@ -138,7 +134,7 @@ $servicesDataJSON = json_encode($servicesData, JSON_HEX_TAG | JSON_HEX_AMP | JSO
     <header>
         <div class="container header-container">
             <!-- Logo Perusahaan -->
-            <a href="index.php" class="logo"><?php echo htmlspecialchars($companyInfoData['name']); ?></a>
+            <a href="index.php" class="logo"><?php echo htmlspecialchars($companyName); ?></a>
             
             <!-- Menu Navigasi -->
             <nav>
@@ -169,11 +165,11 @@ $servicesDataJSON = json_encode($servicesData, JSON_HEX_TAG | JSON_HEX_AMP | JSO
     </header>
 
     <!-- Hero Section with Gradient Background -->
-    <section class="booking-hero">
+    <section class="booking-hero" <?php if (!empty($homepageSettings['pemesanan_hero_background'])): ?>style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('uploads/<?php echo htmlspecialchars($homepageSettings['pemesanan_hero_background']); ?>'); background-size: cover; background-position: center;"<?php endif; ?>>
         <div class="container">
             <div class="booking-hero-content">
-                <h1 class="booking-hero-title">Temukan Tiket Perjalanan Terbaik</h1>
-                <p class="booking-hero-subtitle">Pesan tiket pesawat, kapal, dan bus dengan harga terbaik. Proses cepat, aman, dan terpercaya untuk perjalanan Anda.</p>
+                <h1 class="booking-hero-title"><?php echo htmlspecialchars($homepageSettings['pemesanan_hero_title'] ?? 'Pemesanan Travel'); ?></h1>
+                <p class="booking-hero-subtitle"><?php echo htmlspecialchars($homepageSettings['pemesanan_hero_description'] ?? 'Pesan tiket pesawat, bus, dan kapal dengan mudah dan cepat'); ?></p>
             </div>
         </div>
         
@@ -234,12 +230,7 @@ $servicesDataJSON = json_encode($servicesData, JSON_HEX_TAG | JSON_HEX_AMP | JSO
     <!-- Cards Container with Enhanced Layout -->
     <section class="booking-list-section">
         <div class="container">
-            <!-- Section Header -->
-            <div class="section-header-booking">
-                <h2 class="section-title-booking" id="sectionTitle">Pilihan Pesawat Terbaik</h2>
-                <p class="section-subtitle-booking" id="sectionSubtitle">8 pilihan layanan tersedia untuk Anda</p>
-            </div>
-            
+
             <!-- Cards Grid -->
             <div class="transport-cards-grid" id="cardsContainer">
                 <!-- Cards will be rendered here by JavaScript -->
@@ -371,7 +362,7 @@ $servicesDataJSON = json_encode($servicesData, JSON_HEX_TAG | JSON_HEX_AMP | JSO
                     <div class="footer-hours-box">
                         <p class="footer-label-premium">Jam Operasional:</p>
                         <p class="footer-text-premium">
-                            Senin - Minggu: 08:00 - 22:00 WIB
+                            <?php echo htmlspecialchars($companyHours); ?>
                         </p>
                     </div>
                 </section>
@@ -416,7 +407,7 @@ $servicesDataJSON = json_encode($servicesData, JSON_HEX_TAG | JSON_HEX_AMP | JSO
                         <div>
                             <p class="footer-label-premium">Alamat</p>
                             <p class="footer-text-premium footer-address">
-                                Jl. Cendana No.8, Tlk. Lerong Ulu, Kec. Sungai Kunang, Kota Samarinda, Kalimantan Timur 75127
+                                <?php echo nl2br(htmlspecialchars($companyAddress)); ?>
                             </p>
                         </div>
                     </div>
@@ -427,7 +418,7 @@ $servicesDataJSON = json_encode($servicesData, JSON_HEX_TAG | JSON_HEX_AMP | JSO
             <!-- Footer Bottom: Copyright & Admin Login -->
             <div class="footer-bottom-premium">
                 <p class="footer-copyright-premium">
-                    &copy; 2024 Cv. Cendana Travel. All rights reserved.
+                    <?php echo htmlspecialchars($footerCopyright); ?>
                 </p>
                 <a href="auth.php" class="footer-admin-login">
                     <i class="fas fa-sign-in-alt"></i>

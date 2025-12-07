@@ -1,20 +1,20 @@
 // Variabel global
-let dataTransportasi = {};   
-let dataFasilitas = [];      
-let transportTypesData = []; 
+let dataTransportasi = {};
+let dataFasilitas = [];
+let transportTypesData = [];
 let companyInfoData = {};
 
 // Muat data dari local storage
 function muatDataDariPenyimpanan() {
-    const versiSaatIni = '2.0'; 
+    const versiSaatIni = '2.0';
     const versiTersimpan = localStorage.getItem('dataVersion');
-    
+
     if (versiTersimpan !== versiSaatIni) {
         localStorage.removeItem('companyInfoData');
         localStorage.setItem('dataVersion', versiSaatIni);
         console.log('Data diperbarui ke versi', versiSaatIni);
     }
-    
+
     // muat data transportasi
     const dataTransportasiTersimpan = localStorage.getItem('dataTransportasi');
     if (dataTransportasiTersimpan) {
@@ -55,7 +55,7 @@ function muatDataDariPenyimpanan() {
     }
 
     // muat informasi perusahaan
-    companyInfoData = COMPANY_CONFIG; 
+    companyInfoData = COMPANY_CONFIG;
     localStorage.setItem('companyInfoData', JSON.stringify(companyInfoData));
 }
 
@@ -91,7 +91,7 @@ function pesanViaWhatsApp(namaProduk) {
     // Encode pesan untuk URL (mengganti spasi dan karakter khusus)
     const pesanTerencode = encodeURIComponent(pesan);
     const urlWhatsApp = `https://wa.me/${nomorWhatsApp}?text=${pesanTerencode}`;
-    
+
     // Buka WhatsApp di tab baru
     window.open(urlWhatsApp, '_blank');
 }
@@ -99,11 +99,11 @@ function pesanViaWhatsApp(namaProduk) {
 // Handle form booking WhatsApp
 function handleWhatsAppBooking(event) {
     event.preventDefault();
-    
+
     // ambil data dari form
     const origin = document.getElementById('origin').value.trim();
     const destination = document.getElementById('destination').value.trim();
-    
+
     if (!origin || !destination) {
         alert('Mohon lengkapi kota asal dan tujuan perjalanan!');
         return;
@@ -114,18 +114,18 @@ Dari: ${origin}
 Ke: ${destination}
 
 Mohon informasi jadwal, harga, dan ketersediaan tiket. Terima kasih!`;
-    
+
     const nomorWhatsApp = companyInfoData.whatsapp || "6285821841529";
     const pesanTerencode = encodeURIComponent(pesan);
     const urlWhatsApp = `https://wa.me/${nomorWhatsApp}?text=${pesanTerencode}`;
-    
+
     // Buka WhatsApp di tab baru
     window.open(urlWhatsApp, '_blank');
-    
+
     // Reset form setelah submit
     document.getElementById('origin').value = '';
     document.getElementById('destination').value = '';
-    
+
     console.log('Form booking berhasil disubmit');
 }
 
@@ -138,7 +138,7 @@ Mohon informasi jadwal, harga, dan ketersediaan tiket. Terima kasih!`;
 function muatDanTampilkanFasilitas() {
     // Cari elemen kontainer untuk menampilkan fasilitas
     const kontainerFasilitas = document.getElementById('destinations-grid');
-    
+
     // Jika kontainer tidak ditemukan, hentikan fungsi
     if (!kontainerFasilitas) {
         console.warn('⚠️ Kontainer fasilitas tidak ditemukan');
@@ -147,13 +147,13 @@ function muatDanTampilkanFasilitas() {
 
     // Kosongkan kontainer terlebih dahulu
     kontainerFasilitas.innerHTML = '';
-    
+
     // Loop melalui setiap fasilitas dan buat card-nya
     dataFasilitas.forEach((fasilitas) => {
         // Buat elemen div untuk card fasilitas
         const kartuFasilitas = document.createElement('div');
         kartuFasilitas.className = 'destination-card facility-card';
-        
+
         // Isi konten card dengan data fasilitas
         kartuFasilitas.innerHTML = `
             <div class="destination-image">
@@ -164,11 +164,11 @@ function muatDanTampilkanFasilitas() {
                 <p class="destination-description">${fasilitas.description}</p>
             </div>
         `;
-        
+
         // Tambahkan card ke kontainer
         kontainerFasilitas.appendChild(kartuFasilitas);
     });
-    
+
     console.log(`${dataFasilitas.length} fasilitas ditampilkan`);
 }
 
@@ -181,7 +181,7 @@ function muatDanTampilkanFasilitas() {
 function muatDanTampilkanJenisTransportasi() {
     // Cari kontainer untuk menampilkan jenis transportasi
     const kontainerJenisTransportasi = document.getElementById('transport-grid');
-    
+
     // Jika kontainer tidak ditemukan, hentikan fungsi
     if (!kontainerJenisTransportasi) {
         console.warn('⚠️ Kontainer jenis transportasi tidak ditemukan');
@@ -190,10 +190,10 @@ function muatDanTampilkanJenisTransportasi() {
 
     // Kosongkan kontainer terlebih dahulu
     kontainerJenisTransportasi.innerHTML = '';
-    
+
     // Gunakan data dari transportTypesData, jika kosong gunakan data default
-    const jenisTransportasi = (transportTypesData && transportTypesData.length > 0) 
-        ? transportTypesData 
+    const jenisTransportasi = (transportTypesData && transportTypesData.length > 0)
+        ? transportTypesData
         : [
             { key: 'pesawat', name: 'Pesawat', icon: 'icon icon-plane', imageLight: './JenisTransportasi/pesawatterang.png', imageDark: './JenisTransportasi/pesawatgelap.png' },
             { key: 'kapal', name: 'Kapal', icon: 'icon icon-ship', imageLight: './JenisTransportasi/kapalterang.png', imageDark: './JenisTransportasi/kapalgelap.png' },
@@ -204,27 +204,27 @@ function muatDanTampilkanJenisTransportasi() {
     jenisTransportasi.forEach(jenis => {
         // Ambil layanan untuk jenis transportasi ini
         const layanan = dataTransportasi[jenis.key] || [];
-        
+
         // Cek apakah website menggunakan mode gelap
         const apakahModeGelap = document.body.getAttribute('data-theme') === 'dark';
-        
+
         // Tentukan gambar yang akan digunakan berdasarkan mode
-        let gambarYangDigunakan = apakahModeGelap 
-            ? (jenis.imageDark || jenis.imageLight) 
+        let gambarYangDigunakan = apakahModeGelap
+            ? (jenis.imageDark || jenis.imageLight)
             : (jenis.imageLight || jenis.imageDark);
-        
+
         // Fallback untuk path gambar yang benar
         if (jenis.key === 'pesawat') {
-            gambarYangDigunakan = apakahModeGelap 
-                ? 'JenisTransportasi/pesawatgelap.png' 
+            gambarYangDigunakan = apakahModeGelap
+                ? 'JenisTransportasi/pesawatgelap.png'
                 : 'JenisTransportasi/pesawatterang.png';
         } else if (jenis.key === 'kapal') {
-            gambarYangDigunakan = apakahModeGelap 
-                ? 'JenisTransportasi/kapalgelap.png' 
+            gambarYangDigunakan = apakahModeGelap
+                ? 'JenisTransportasi/kapalgelap.png'
                 : 'JenisTransportasi/kapalterang.png';
         } else if (jenis.key === 'bus') {
-            gambarYangDigunakan = apakahModeGelap 
-                ? 'JenisTransportasi/busgelap.png' 
+            gambarYangDigunakan = apakahModeGelap
+                ? 'JenisTransportasi/busgelap.png'
                 : 'JenisTransportasi/busterang.png';
         }
 
@@ -245,11 +245,11 @@ function muatDanTampilkanJenisTransportasi() {
                 <button class="btn-transport" onclick="tanganiKlikJenisTransportasi('${jenis.key}')">Lihat Layanan</button>
             </div>
         `;
-        
+
         // Tambahkan card ke kontainer
         kontainerJenisTransportasi.appendChild(kartuTransportasi);
     });
-    
+
     console.log(`${jenisTransportasi.length} jenis transportasi ditampilkan`);
 }
 
@@ -260,7 +260,7 @@ function muatDanTampilkanJenisTransportasi() {
  */
 function muatTabFilterTransportasi() {
     const kontainerTab = document.getElementById('transport-filter-tabs');
-    
+
     if (!kontainerTab) {
         console.warn('⚠️ Kontainer tab tidak ditemukan');
         return;
@@ -268,7 +268,7 @@ function muatTabFilterTransportasi() {
 
     // Kosongkan kontainer tab
     kontainerTab.innerHTML = '';
-    
+
     // Buat tab "Semua Layanan"
     const tabSemuaLayanan = document.createElement('button');
     tabSemuaLayanan.className = 'transport-tab active';
@@ -276,7 +276,7 @@ function muatTabFilterTransportasi() {
         muatDanTampilkanSemuaLayanan();
         setelTabAktif(tabSemuaLayanan);
     };
-    
+
     // Hitung total layanan dari semua jenis transportasi
     const totalLayanan = Object.values(dataTransportasi).reduce((total, layanan) => total + layanan.length, 0);
     tabSemuaLayanan.innerHTML = `
@@ -296,14 +296,14 @@ function muatTabFilterTransportasi() {
     // Loop melalui setiap jenis transportasi dan buat tab-nya
     jenisTransportasi.forEach(jenis => {
         const layanan = dataTransportasi[jenis.key] || [];
-        
+
         // Skip jika tidak ada layanan
         if (layanan.length === 0) return;
 
         // Pilih gambar berdasarkan tema (gelap/terang)
         const apakahModeGelap = document.body.getAttribute('data-theme') === 'dark';
-        const gambarYangDigunakan = apakahModeGelap 
-            ? (jenis.imageDark || jenis.imageLight) 
+        const gambarYangDigunakan = apakahModeGelap
+            ? (jenis.imageDark || jenis.imageLight)
             : (jenis.imageLight || jenis.imageDark);
 
         // Buat tab untuk jenis transportasi
@@ -313,7 +313,7 @@ function muatTabFilterTransportasi() {
             filterKontenBerdasarkanJenisTransportasi(jenis.key);
             setelTabAktif(tabJenisTransportasi);
         };
-        
+
         tabJenisTransportasi.innerHTML = `
             <img src="${gambarYangDigunakan}" alt="${jenis.name}" class="transport-tab-image" 
                  onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
@@ -323,7 +323,7 @@ function muatTabFilterTransportasi() {
         `;
         kontainerTab.appendChild(tabJenisTransportasi);
     });
-    
+
     console.log('✅ Tab filter transportasi berhasil dimuat');
 }
 
@@ -336,7 +336,7 @@ function setelTabAktif(tabAktif) {
     // Hapus class 'active' dari semua tab
     const semuaTab = document.querySelectorAll('.transport-tab');
     semuaTab.forEach(tab => tab.classList.remove('active'));
-    
+
     // Tambahkan class 'active' ke tab yang diklik
     tabAktif.classList.add('active');
 }
@@ -349,7 +349,7 @@ function setelTabAktif(tabAktif) {
 function muatDanTampilkanSemuaLayanan() {
     console.log('✈️ Memuat semua layanan...');
     const kontainerLayanan = document.getElementById('transport-cards-grid');
-    
+
     if (!kontainerLayanan) {
         console.warn('⚠️ Kontainer layanan tidak ditemukan');
         return;
@@ -357,7 +357,7 @@ function muatDanTampilkanSemuaLayanan() {
 
     // Kosongkan kontainer
     kontainerLayanan.innerHTML = '';
-    
+
     // Buat grid container
     const kontainerGrid = document.createElement('div');
     kontainerGrid.className = 'services-grid';
@@ -382,7 +382,7 @@ function muatDanTampilkanSemuaLayanan() {
                     <p><i class="icon icon-route"></i> ${layananItem.route}</p>
                     <p><i class="icon icon-money"></i> ${layananItem.price}</p>
                     <button class="btn-wa-small" onclick="pesanViaWhatsApp('${layananItem.name} - ${layananItem.route}')">
-                        <i class="icon icon-whatsapp"></i> Pesan Sekarang
+                        Pesan Sekarang
                     </button>
                 </div>
             `;
@@ -418,10 +418,10 @@ function filterKontenBerdasarkanJenisTransportasi(jenisTransportasi) {
 
     // Kosongkan kontainer
     kontainerLayanan.innerHTML = '';
-    
+
     // Buat nama tampilan (huruf pertama besar)
     const namaTampilan = jenisTransportasi.charAt(0).toUpperCase() + jenisTransportasi.slice(1);
-    
+
     // Buat header
     const elemenHeader = document.createElement('div');
     elemenHeader.className = 'services-header';
@@ -446,7 +446,7 @@ function filterKontenBerdasarkanJenisTransportasi(jenisTransportasi) {
                 <p><i class="icon icon-route"></i> ${layananItem.route}</p>
                 <p><i class="icon icon-money"></i> ${layananItem.price}</p>
                 <button class="btn-wa-small" onclick="pesanViaWhatsApp('${layananItem.name} - ${layananItem.route}')">
-                    <i class="icon icon-whatsapp"></i> Pesan Sekarang
+                    Pesan Sekarang
                 </button>
             </div>
         `;
@@ -476,21 +476,21 @@ function tanganiKlikJenisTransportasi(jenisTransportasi) {
  */
 function gulungKeBagian(idBagian) {
     const bagian = document.getElementById(idBagian);
-    
+
     if (bagian) {
         // Tinggi header untuk offset
         const tinggiHeader = 80;
         const posisiTarget = bagian.offsetTop - tinggiHeader;
-        
+
         // Lakukan scroll halus
-        gulungHalusKePosisi(posisiTarget, 1200); 
-        
+        gulungHalusKePosisi(posisiTarget, 1200);
+
         // Tutup menu mobile jika terbuka
         const menuNavigasi = document.querySelector('.nav-menu');
         if (menuNavigasi && menuNavigasi.classList.contains('active')) {
             menuNavigasi.classList.remove('active');
         }
-        
+
         console.log(`🎯 Scroll halus ke bagian: ${idBagian}`);
     } else {
         console.warn(`⚠️ Bagian dengan ID "${idBagian}" tidak ditemukan`);
@@ -553,9 +553,9 @@ function closeAdminLogin() {
 function togglePasswordVisibility() {
     const passwordInput = document.getElementById('adminPassword');
     const icon = document.getElementById('passwordToggleIcon');
-    
+
     if (!passwordInput || !icon) return;
-    
+
     if (passwordInput.type === 'password') {
         // Tampilkan password
         passwordInput.type = 'text';
@@ -592,23 +592,23 @@ function attemptAdminLogin() {
         },
         body: 'action=login&password=' + encodeURIComponent(password)
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            loginSuccess(data.redirect);
-        } else {
-            loginFailed(data.message);
-        }
-        
-        loginButton.disabled = false;
-        loginButton.innerHTML = '<i class="icon icon-sign-in"></i> Login';
-    })
-    .catch(error => {
-        console.error('Login error:', error);
-        alert('Terjadi kesalahan koneksi. Silakan coba lagi.');
-        loginButton.disabled = false;
-        loginButton.innerHTML = '<i class="icon icon-sign-in"></i> Login';
-    });
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                loginSuccess(data.redirect);
+            } else {
+                loginFailed(data.message);
+            }
+
+            loginButton.disabled = false;
+            loginButton.innerHTML = '<i class="icon icon-sign-in"></i> Login';
+        })
+        .catch(error => {
+            console.error('Login error:', error);
+            alert('Terjadi kesalahan koneksi. Silakan coba lagi.');
+            loginButton.disabled = false;
+            loginButton.innerHTML = '<i class="icon icon-sign-in"></i> Login';
+        });
 }
 
 function loginSuccess(redirectUrl) {
@@ -637,27 +637,27 @@ function loginFailed(message) {
  */
 document.addEventListener('DOMContentLoaded', function () {
     console.log('🚀 Memulai inisialisasi website...');
-    
+
     // muat data dari localStorage
     muatDataDariPenyimpanan();
 
     // form whatsapp booking sudah dihapus
-    
+
     // Set minimum date untuk input date (hari ini)
     const today = new Date().toISOString().split('T')[0];
     const departureDateInput = document.getElementById('departure-date');
     const returnDateInput = document.getElementById('return-date');
-    
+
     if (departureDateInput) {
         departureDateInput.setAttribute('min', today);
-        departureDateInput.addEventListener('change', function() {
+        departureDateInput.addEventListener('change', function () {
             // Set minimum return date sama dengan departure date
             if (returnDateInput && this.value) {
                 returnDateInput.setAttribute('min', this.value);
             }
         });
     }
-    
+
     if (returnDateInput) {
         returnDateInput.setAttribute('min', today);
     }
@@ -741,7 +741,7 @@ document.addEventListener('DOMContentLoaded', function () {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
             const targetId = this.getAttribute('href');
-            
+
             if (targetId === '#' || targetId === '#home') {
                 // Scroll halus ke atas
                 gulungHalusKePosisi(0, 1000);
@@ -758,12 +758,12 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log('🔧 Menginisialisasi halaman admin...');
 
         muatDataDariPenyimpanan();
-        
+
         const semuaForm = document.querySelectorAll('.admin-form');
         semuaForm.forEach(form => {
             form.style.display = 'none';
         });
-        
+
         setTimeout(() => {
             showSection('destinations');
         }, 200);
@@ -789,7 +789,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function getTransportFolderPath(transportType) {
     const folderMap = {
         'pesawat': 'pesawat',
-        'kapal': 'kapal', 
+        'kapal': 'kapal',
         'bus': 'bus'
     };
     return folderMap[transportType] || 'uploads';
@@ -798,7 +798,7 @@ function getTransportFolderPath(transportType) {
 function showSection(sectionName) {
     try {
         console.log(`🔄 Switching to section: ${sectionName}`);
-        
+
         const sections = document.querySelectorAll('.admin-section');
         sections.forEach(section => {
             section.style.display = 'none';
@@ -807,10 +807,10 @@ function showSection(sectionName) {
         const targetSection = document.getElementById(sectionName + '-section');
         console.log(`🔍 Looking for section: ${sectionName}-section`);
         console.log(`🔍 Found section:`, targetSection);
-        
+
         const allSections = document.querySelectorAll('.admin-section');
         console.log('🔍 All available sections:', Array.from(allSections).map(s => s.id));
-        
+
         if (targetSection) {
             targetSection.style.display = 'block';
             console.log(`✅ Section ${sectionName} displayed`);
@@ -862,14 +862,14 @@ function showSection(sectionName) {
                 if (companySection) {
                     console.log('🏢 Company section innerHTML length:', companySection.innerHTML.length);
                     console.log('🏢 Company section display before:', companySection.style.display);
-                    
+
                     // FORCE VISIBILITY
                     companySection.style.display = 'block';
                     companySection.style.visibility = 'visible';
                     companySection.style.opacity = '1';
                     companySection.style.height = 'auto';
                     companySection.style.overflow = 'visible';
-                    
+
                     console.log('🏢 Company section display after:', companySection.style.display);
                     console.log('🏢 Company section visibility:', companySection.style.visibility);
                 }
@@ -916,7 +916,7 @@ function loadFacilitiesAdmin() {
     const tableBody = document.getElementById('facilities-table-body');
 
     console.log('🔍 Facilities data:', dataFasilitas);
-    
+
     dataFasilitas.forEach((facility, index) => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -943,18 +943,18 @@ function loadFacilitiesAdmin() {
             </td>
         `;
         tableBody.appendChild(row);
-        
+
         // Add event listeners directly
         const editBtn = row.querySelector('.btn-edit');
         const deleteBtn = row.querySelector('.btn-delete');
-        
+
         if (editBtn) {
             editBtn.addEventListener('click', () => {
                 console.log('Edit button clicked for index:', index);
                 editFacility(index);
             });
         }
-        
+
         if (deleteBtn) {
             deleteBtn.addEventListener('click', () => {
                 console.log('Delete button clicked for index:', index);
@@ -962,7 +962,7 @@ function loadFacilitiesAdmin() {
             });
         }
     });
-    
+
     console.log(`✅ Loaded ${dataFasilitas.length} facilities in table format`);
 }
 
@@ -1081,17 +1081,17 @@ async function addFacility() {
 // Edit Facility
 function editFacility(index) {
     console.log('🔧 editFacility called with index:', index);
-    
+
     if (!dataFasilitas || dataFasilitas.length === 0) {
         alert('❌ Data fasilitas tidak tersedia');
         return;
     }
-    
+
     if (index < 0 || index >= dataFasilitas.length) {
         alert('❌ Index fasilitas tidak valid: ' + index);
         return;
     }
-    
+
     const facility = dataFasilitas[index];
     console.log('✏️ Editing facility:', facility);
 
@@ -1297,11 +1297,11 @@ function loadTransportTypesAdmin() {
 
     transportTypesData.forEach((type, index) => {
         const serviceCount = dataTransportasi[type.key] ? dataTransportasi[type.key].length : 0;
-        
+
         // Show current images - PERBAIKAN: Langsung set path yang benar
         let currentImageLight = 'JenisTransportasi/placeholder.png';
         let currentImageDark = 'JenisTransportasi/placeholder.png';
-        
+
         if (type.key === 'pesawat') {
             currentImageLight = 'JenisTransportasi/pesawatterang.png';
             currentImageDark = 'JenisTransportasi/pesawatgelap.png';
@@ -1312,7 +1312,7 @@ function loadTransportTypesAdmin() {
             currentImageLight = 'JenisTransportasi/busterang.png';
             currentImageDark = 'JenisTransportasi/busgelap.png';
         }
-        
+
         const row = document.createElement('tr');
         row.innerHTML = `
             <td><strong>${index + 1}</strong></td>
@@ -1344,7 +1344,7 @@ function loadTransportTypesAdmin() {
             </td>
         `;
         tableBody.appendChild(row);
-        
+
         // Add event listener directly
         const editBtn = row.querySelector('.btn-edit');
         if (editBtn) {
@@ -1354,7 +1354,7 @@ function loadTransportTypesAdmin() {
             });
         }
     });
-    
+
     console.log(`✅ Loaded ${transportTypesData.length} transport types in table format`);
 }
 
@@ -1363,14 +1363,14 @@ function showAddTransportTypeForm() {
     const form = document.getElementById('add-transport-type-form');
     if (form) {
         form.style.display = 'block';
-        
+
         // Reset form
         document.getElementById('transport-type-key').value = '';
         document.getElementById('transport-type-name').value = '';
         document.getElementById('transport-type-description').value = '';
         document.getElementById('transport-type-light-image').value = '';
         document.getElementById('transport-type-dark-image').value = '';
-        
+
         // Hide previews
         const lightPreview = document.getElementById('transport-light-preview');
         const darkPreview = document.getElementById('transport-dark-preview');
@@ -1394,38 +1394,38 @@ async function addTransportType() {
     const description = document.getElementById('transport-type-description').value.trim();
     const lightImageFile = document.getElementById('transport-type-light-image').files[0];
     const darkImageFile = document.getElementById('transport-type-dark-image').files[0];
-    
+
     if (!key || !name || !description) {
         alert('Mohon lengkapi semua field yang diperlukan!');
         return;
     }
-    
+
     // Check if key already exists
     if (transportTypesData.find(t => t.key === key)) {
         alert('Kode transportasi sudah ada! Gunakan kode yang berbeda.');
         return;
     }
-    
+
     let lightImagePath = `JenisTransportasi/${key}terang.png`;
     let darkImagePath = `JenisTransportasi/${key}gelap.png`;
-    
+
     // Handle light image upload
     if (lightImageFile) {
         try {
             const extension = lightImageFile.name.split('.').pop().toLowerCase();
             const filename = `${key}terang.${extension}`;
-            
+
             // Upload to server
             const formData = new FormData();
             formData.append('logoFile', lightImageFile);
             formData.append('type', 'transport');
             formData.append('filename', filename);
-            
+
             const response = await fetch('upload.php', {
                 method: 'POST',
                 body: formData
             });
-            
+
             const result = await response.json();
             if (result.success) {
                 lightImagePath = `JenisTransportasi/${filename}`;
@@ -1437,24 +1437,24 @@ async function addTransportType() {
             console.log('⚠️ Light image upload failed:', error.message);
         }
     }
-    
+
     // Handle dark image upload
     if (darkImageFile) {
         try {
             const extension = darkImageFile.name.split('.').pop().toLowerCase();
             const filename = `${key}gelap.${extension}`;
-            
+
             // Upload to server
             const formData = new FormData();
             formData.append('logoFile', darkImageFile);
             formData.append('type', 'transport');
             formData.append('filename', filename);
-            
+
             const response = await fetch('upload.php', {
                 method: 'POST',
                 body: formData
             });
-            
+
             const result = await response.json();
             if (result.success) {
                 darkImagePath = `JenisTransportasi/${filename}`;
@@ -1466,7 +1466,7 @@ async function addTransportType() {
             console.log('⚠️ Dark image upload failed:', error.message);
         }
     }
-    
+
     const newTransportType = {
         key: key,
         name: name,
@@ -1475,65 +1475,65 @@ async function addTransportType() {
         imageDark: darkImagePath,
         description: description
     };
-    
+
     // Add to data
     transportTypesData.push(newTransportType);
-    
+
     // Initialize empty array for this transport type in dataTransportasi
     if (!dataTransportasi[key]) {
         dataTransportasi[key] = [];
     }
-    
+
     // Simpan ke localStorage
     simpanDataKePenyimpanan();
-    
+
     // Update tampilan
     loadTransportTypesAdmin();
     muatDanTampilkanJenisTransportasi(); // Update halaman utama
     muatTabFilterTransportasi(); // Update tab filter
     hideAddTransportTypeForm();
-    
+
     // Clear form
     document.getElementById('transport-type-key').value = '';
     document.getElementById('transport-type-name').value = '';
     document.getElementById('transport-type-description').value = '';
     document.getElementById('transport-type-light-image').value = '';
     document.getElementById('transport-type-dark-image').value = '';
-    
+
     // Hide previews
     const lightPreview = document.getElementById('transport-light-preview');
     const darkPreview = document.getElementById('transport-dark-preview');
     if (lightPreview) lightPreview.style.display = 'none';
     if (darkPreview) darkPreview.style.display = 'none';
-    
+
     alert(`✅ Jenis transportasi "${name}" berhasil ditambahkan!`);
 }
 
 // Edit Transport Type
 function editTransportType(index) {
     console.log('🔧 editTransportType called with index:', index);
-    
+
     if (!transportTypesData || transportTypesData.length === 0) {
         alert('❌ Data jenis transportasi tidak tersedia');
         return;
     }
-    
+
     if (index < 0 || index >= transportTypesData.length) {
         alert('❌ Index transport type tidak valid: ' + index);
         return;
     }
-    
+
     const type = transportTypesData[index];
     console.log('✏️ Editing transport type:', type);
-    
+
     // Show the form
     showAddTransportTypeForm();
-    
+
     // Populate form with existing data
     document.getElementById('transport-type-key').value = type.key;
     document.getElementById('transport-type-name').value = type.name;
     document.getElementById('transport-type-description').value = type.description;
-    
+
     // Show current images
     if (type.imageLight) {
         const lightPreview = document.getElementById('transport-light-preview');
@@ -1543,7 +1543,7 @@ function editTransportType(index) {
             lightPreview.style.display = 'block';
         }
     }
-    
+
     if (type.imageDark) {
         const darkPreview = document.getElementById('transport-dark-preview');
         const darkImg = document.getElementById('transport-dark-preview-img');
@@ -1552,13 +1552,13 @@ function editTransportType(index) {
             darkPreview.style.display = 'block';
         }
     }
-    
+
     // Change form title and button
     const formTitle = document.querySelector('#add-transport-type-form h3');
     if (formTitle) {
         formTitle.textContent = `Edit Jenis Transportasi: ${type.name}`;
     }
-    
+
     const saveButton = document.querySelector('#add-transport-type-form .btn-primary');
     if (saveButton) {
         saveButton.textContent = 'Update';
@@ -1573,38 +1573,38 @@ async function updateTransportType(index) {
     const description = document.getElementById('transport-type-description').value.trim();
     const lightImageFile = document.getElementById('transport-type-light-image').files[0];
     const darkImageFile = document.getElementById('transport-type-dark-image').files[0];
-    
+
     if (!key || !name || !description) {
         alert('Mohon lengkapi semua field yang diperlukan!');
         return;
     }
-    
+
     // Update the transport type data
     const type = transportTypesData[index];
     type.key = key;
     type.name = name;
     type.description = description;
-    
+
     // Update light image if new file uploaded
     if (lightImageFile) {
         try {
             const timestamp = Date.now();
             const extension = lightImageFile.name.split('.').pop().toLowerCase();
             const filename = `${key}terang_${timestamp}.${extension}`;
-            
+
             // Try to upload to server
             const formData = new FormData();
             formData.append('transportImage', lightImageFile);
             formData.append('type', 'transport_type');
             formData.append('filename', filename);
-            
+
             const response = await fetch('upload.php', {
                 method: 'POST',
                 body: formData
             });
-            
+
             const result = await response.json();
-            
+
             if (result.success) {
                 type.imageLight = result.data.file_path;
                 console.log(`✅ Light image updated: ${type.imageLight}`);
@@ -1616,27 +1616,27 @@ async function updateTransportType(index) {
             type.imageLight = URL.createObjectURL(lightImageFile);
         }
     }
-    
+
     // Update dark image if new file uploaded
     if (darkImageFile) {
         try {
             const timestamp = Date.now();
             const extension = darkImageFile.name.split('.').pop().toLowerCase();
             const filename = `${key}gelap_${timestamp}.${extension}`;
-            
+
             // Try to upload to server
             const formData = new FormData();
             formData.append('transportImage', darkImageFile);
             formData.append('type', 'transport_type');
             formData.append('filename', filename);
-            
+
             const response = await fetch('upload.php', {
                 method: 'POST',
                 body: formData
             });
-            
+
             const result = await response.json();
-            
+
             if (result.success) {
                 type.imageDark = result.data.file_path;
                 console.log(`✅ Dark image updated: ${type.imageDark}`);
@@ -1648,14 +1648,14 @@ async function updateTransportType(index) {
             type.imageDark = URL.createObjectURL(darkImageFile);
         }
     }
-    
+
     simpanDataKePenyimpanan();
-    
+
     // Update tampilan
     loadTransportTypesAdmin();
-    muatDanTampilkanJenisTransportasi(); 
+    muatDanTampilkanJenisTransportasi();
     hideAddTransportTypeForm();
-    
+
     alert(`✅ Jenis transportasi "${name}" berhasil diperbarui!`);
 }
 
@@ -1663,12 +1663,12 @@ async function updateTransportType(index) {
 function previewTransportLightImage(input) {
     const preview = document.getElementById('transport-light-preview');
     const img = document.getElementById('transport-light-preview-img');
-    
+
     if (!preview || !img) return;
-    
+
     if (input.files && input.files[0]) {
         const reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             img.src = e.target.result;
             preview.style.display = 'block';
         };
@@ -1679,12 +1679,12 @@ function previewTransportLightImage(input) {
 function previewTransportDarkImage(input) {
     const preview = document.getElementById('transport-dark-preview');
     const img = document.getElementById('transport-dark-preview-img');
-    
+
     if (!preview || !img) return;
-    
+
     if (input.files && input.files[0]) {
         const reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             img.src = e.target.result;
             preview.style.display = 'block';
         };
@@ -1721,13 +1721,13 @@ function loadTicketsAdmin() {
 
     const tableBody = document.getElementById('tickets-table-body');
     let totalTickets = 0;
-    
+
     console.log('🔍 Transport data for tickets:', dataTransportasi);
-    
+
     for (const [transportType, tickets] of Object.entries(dataTransportasi)) {
         const typeName = transportTypesData.find(t => t.key === transportType)?.name || transportType;
         console.log(`🚀 Loading ${tickets.length} tickets for ${transportType}`);
-        
+
         tickets.forEach((ticket, index) => {
             totalTickets++;
             const row = document.createElement('tr');
@@ -1761,18 +1761,18 @@ function loadTicketsAdmin() {
                 </td>
             `;
             tableBody.appendChild(row);
-            
+
             // Add event listeners directly
             const editBtn = row.querySelector('.btn-edit');
             const deleteBtn = row.querySelector('.btn-delete');
-            
+
             if (editBtn) {
                 editBtn.addEventListener('click', () => {
                     console.log('Edit ticket clicked:', transportType, index);
                     editTicket(transportType, index);
                 });
             }
-            
+
             if (deleteBtn) {
                 deleteBtn.addEventListener('click', () => {
                     console.log('Delete ticket clicked:', transportType, index);
@@ -1781,9 +1781,9 @@ function loadTicketsAdmin() {
             }
         });
     }
-    
+
     console.log(`✅ Loaded ${totalTickets} tickets total in table format`);
-    
+
     // If no tickets, show empty state
     if (totalTickets === 0) {
         container.innerHTML = `
@@ -1802,7 +1802,7 @@ function populateTransportTypeSelect() {
     if (!select) return;
 
     select.innerHTML = '<option value="">Pilih Jenis Transportasi</option>';
-    
+
     const transportTypes = [
         { key: 'pesawat', name: 'Pesawat' },
         { key: 'kapal', name: 'Kapal' },
@@ -1822,32 +1822,32 @@ function showAddTicketForm() {
     const form = document.getElementById('add-ticket-form');
     if (form) {
         form.style.display = 'block';
-        
+
         // Reset form
         document.getElementById('ticket-transport-type').value = '';
         document.getElementById('ticket-name').value = '';
         document.getElementById('ticket-route').value = '';
         document.getElementById('ticket-price').value = '';
         document.getElementById('ticket-logo').value = '';
-        
+
         // Hide preview
         const preview = document.getElementById('ticket-logo-preview');
         if (preview) {
             preview.style.display = 'none';
         }
-        
+
         // Reset form title and button
         const formTitle = document.querySelector('#add-ticket-form h3');
         if (formTitle) {
             formTitle.textContent = 'Tambah Layanan Baru';
         }
-        
+
         const saveButton = document.querySelector('#add-ticket-form .btn-primary');
         if (saveButton) {
             saveButton.textContent = 'Simpan';
             saveButton.onclick = addTicket;
         }
-        
+
         // Populate transport type select
         populateTransportTypeSelect();
     }
@@ -1868,35 +1868,35 @@ async function addTicket() {
     const route = document.getElementById('ticket-route').value.trim();
     const price = document.getElementById('ticket-price').value.trim();
     const logoFile = document.getElementById('ticket-logo').files[0];
-    
+
     if (!transportType || !name || !route || !price) {
         alert('Mohon lengkapi semua field yang diperlukan!');
         return;
     }
-    
+
     let logoPath;
-    
+
     if (logoFile) {
         try {
             // Generate filename for transport folder
             const timestamp = Date.now();
             const extension = logoFile.name.split('.').pop().toLowerCase();
             const filename = `${name.replace(/[^a-zA-Z0-9]/g, '').toLowerCase()}_${timestamp}.${extension}`;
-            
+
             // Try to upload to server
             const formData = new FormData();
             formData.append('logoFile', logoFile);
             formData.append('type', 'transport_logo');
             formData.append('transportType', transportType);
             formData.append('filename', filename);
-            
+
             const response = await fetch('upload.php', {
                 method: 'POST',
                 body: formData
             });
-            
+
             const result = await response.json();
-            
+
             if (result.success) {
                 logoPath = result.data.file_path;
                 console.log(`✅ Logo uploaded successfully: ${logoPath}`);
@@ -1915,7 +1915,7 @@ async function addTicket() {
         // Use placeholder
         logoPath = `https://via.placeholder.com/100x60/3498db/ffffff?text=${encodeURIComponent(name)}`;
     }
-    
+
     const newTicket = {
         id: Date.now(),
         name: name,
@@ -1925,48 +1925,48 @@ async function addTicket() {
         transportType: transportType,
         dateAdded: new Date().toISOString()
     };
-    
+
     if (!dataTransportasi[transportType]) {
         dataTransportasi[transportType] = [];
     }
-    
+
     dataTransportasi[transportType].push(newTicket);
-    
+
     simpanDataKePenyimpanan();
-    
+
     loadTicketsAdmin();
-    muatDanTampilkanSemuaLayanan(); 
+    muatDanTampilkanSemuaLayanan();
     hideAddTicketForm();
-    
+
     alert(`✅ Layanan "${name}" berhasil ditambahkan ke ${transportType}!`);
 }
 
 // Edit Ticket
 function editTicket(transportType, index) {
     console.log('🔧 editTicket called with:', transportType, index);
-    
+
     if (!dataTransportasi || !dataTransportasi[transportType]) {
         alert('❌ Data transportasi tidak tersedia untuk: ' + transportType);
         return;
     }
-    
+
     if (index < 0 || index >= dataTransportasi[transportType].length) {
         alert('❌ Index ticket tidak valid: ' + index);
         return;
     }
-    
+
     const ticket = dataTransportasi[transportType][index];
     console.log('✏️ Editing ticket:', ticket);
-    
+
     // Show the form
     showAddTicketForm();
-    
+
     // Populate form with existing data
     document.getElementById('ticket-transport-type').value = transportType;
     document.getElementById('ticket-name').value = ticket.name;
     document.getElementById('ticket-route').value = ticket.route;
     document.getElementById('ticket-price').value = ticket.price;
-    
+
     // Show current logo if exists
     if (ticket.logo) {
         const preview = document.getElementById('ticket-logo-preview');
@@ -1976,13 +1976,13 @@ function editTicket(transportType, index) {
             preview.style.display = 'block';
         }
     }
-    
+
     // Change form title and button
     const formTitle = document.querySelector('#add-ticket-form h3');
     if (formTitle) {
         formTitle.textContent = `Edit Layanan: ${ticket.name}`;
     }
-    
+
     const saveButton = document.querySelector('#add-ticket-form .btn-primary');
     if (saveButton) {
         saveButton.textContent = 'Update';
@@ -1996,37 +1996,37 @@ async function updateTicket(transportType, index) {
     const route = document.getElementById('ticket-route').value.trim();
     const price = document.getElementById('ticket-price').value.trim();
     const logoFile = document.getElementById('ticket-logo').files[0];
-    
+
     if (!name || !route || !price) {
         alert('Mohon lengkapi semua field yang diperlukan!');
         return;
     }
-    
+
     const ticket = dataTransportasi[transportType][index];
     ticket.name = name;
     ticket.route = route;
     ticket.price = price;
-    
+
     // Update logo 
     if (logoFile) {
         try {
             const timestamp = Date.now();
             const extension = logoFile.name.split('.').pop().toLowerCase();
             const filename = `${name.replace(/[^a-zA-Z0-9]/g, '').toLowerCase()}_${timestamp}.${extension}`;
-            
+
             const formData = new FormData();
             formData.append('logoFile', logoFile);
             formData.append('type', 'transport_logo');
             formData.append('transportType', transportType);
             formData.append('filename', filename);
-            
+
             const response = await fetch('upload.php', {
                 method: 'POST',
                 body: formData
             });
-            
+
             const result = await response.json();
-            
+
             if (result.success) {
                 ticket.logo = result.data.file_path;
                 console.log(`✅ Logo updated successfully: ${ticket.logo}`);
@@ -2041,14 +2041,14 @@ async function updateTicket(transportType, index) {
             console.log(`📁 Logo would be updated as: ${transportType}/${name.replace(/[^a-zA-Z0-9]/g, '').toLowerCase()}_${timestamp}.${extension}`);
         }
     }
-    
+
     simpanDataKePenyimpanan();
-    
+
     // Update tampilan
     loadTicketsAdmin();
     muatDanTampilkanSemuaLayanan();
     hideAddTicketForm();
-    
+
     alert(`✅ Layanan "${name}" berhasil diperbarui!`);
 }
 
@@ -2058,13 +2058,13 @@ function deleteTicket(transportType, index) {
     if (confirm(`Apakah Anda yakin ingin menghapus layanan "${ticket.name}"?`)) {
         // Hapus dari data
         dataTransportasi[transportType].splice(index, 1);
-        
+
         simpanDataKePenyimpanan();
-        
+
         // Update tampilan
         loadTicketsAdmin();
-        muatDanTampilkanSemuaLayanan(); 
-        
+        muatDanTampilkanSemuaLayanan();
+
         alert(`✅ Layanan "${ticket.name}" berhasil dihapus!`);
     }
 }
@@ -2073,22 +2073,22 @@ function deleteTicket(transportType, index) {
 function previewTicketLogo(input) {
     const preview = document.getElementById('ticket-logo-preview');
     const img = document.getElementById('ticket-preview-img');
-    
+
     if (!preview || !img) {
         console.error('Preview elements not found');
         return;
     }
-    
+
     if (input.files && input.files[0]) {
         const file = input.files[0];
-        
+
         const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
         if (!allowedTypes.includes(file.type)) {
             alert('Format file tidak didukung. Gunakan JPG, PNG, atau GIF.');
             input.value = '';
             return;
         }
-        
+
         // Validate file size (max 5MB)
         const maxSize = 5 * 1024 * 1024;
         if (file.size > maxSize) {
@@ -2097,19 +2097,19 @@ function previewTicketLogo(input) {
             input.value = '';
             return;
         }
-        
+
         const reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             img.src = e.target.result;
             preview.style.display = 'block';
             console.log('✅ Logo preview loaded');
         };
-        
-        reader.onerror = function() {
+
+        reader.onerror = function () {
             alert('Gagal membaca file. Coba lagi.');
             input.value = '';
         };
-        
+
         reader.readAsDataURL(file);
     }
 }
@@ -2118,11 +2118,11 @@ function previewTicketLogo(input) {
 function removeTicketLogoPreview() {
     const preview = document.getElementById('ticket-logo-preview');
     const input = document.getElementById('ticket-logo');
-    
+
     if (preview) {
         preview.style.display = 'none';
     }
-    
+
     if (input) {
         input.value = '';
     }
@@ -2205,7 +2205,7 @@ function backToWebsite() {
  */
 function muatInformasiPerusahaan() {
     console.log('🏢 Memuat informasi perusahaan...');
-    
+
     // Update informasi kontak di bagian contact
     const infoKontak = document.querySelector('.contact-info');
     if (infoKontak) {
@@ -2233,7 +2233,7 @@ function muatInformasiPerusahaan() {
             </div>
         `;
     }
-    
+
     // Update informasi kontak di footer
     const infoKontakFooter = document.querySelector('footer .contact-info');
     if (infoKontakFooter) {
@@ -2243,19 +2243,19 @@ function muatInformasiPerusahaan() {
             <p><i class="icon icon-camera"></i> ${companyInfoData.instagram || '@cendanatravel_official'}</p>
         `;
     }
-    
+
     // Update deskripsi di footer
     const deskripsiFooter = document.querySelector('footer .footer-section p');
     if (deskripsiFooter && companyInfoData.description) {
         deskripsiFooter.textContent = companyInfoData.description;
     }
-    
+
     // Update link WhatsApp float button
     const tombolFloatWhatsApp = document.querySelector('.wa-float a');
     if (tombolFloatWhatsApp) {
         tombolFloatWhatsApp.href = `https://wa.me/${companyInfoData.whatsapp || '6282152069585'}`;
     }
-    
+
     // Update semua tombol WhatsApp lainnya
     document.querySelectorAll('.btn-whatsapp, .whatsapp-btn').forEach(tombol => {
         const hrefSaatIni = tombol.getAttribute('href') || tombol.getAttribute('onclick');
@@ -2267,7 +2267,7 @@ function muatInformasiPerusahaan() {
             }
         }
     });
-    
+
     console.log('✅ Informasi perusahaan berhasil dimuat');
 }
 
@@ -2288,18 +2288,18 @@ function updateCompanyInfo() {
     companyInfoData.email = document.getElementById('company-email').value.trim();
     companyInfoData.address = document.getElementById('company-address').value.trim();
     companyInfoData.hours = document.getElementById('company-hours').value.trim();
-    
+
     const kolomDeskripsi = document.getElementById('company-description');
     if (kolomDeskripsi) {
         companyInfoData.description = kolomDeskripsi.value.trim();
     }
-    
+
     simpanDataKePenyimpanan();
-    
+
     if (typeof muatInformasiPerusahaan === 'function') {
         muatInformasiPerusahaan();
     }
-    
+
     alert('✅ Informasi perusahaan berhasil diperbarui!');
     console.log('Informasi perusahaan diperbarui:', companyInfoData);
 }
@@ -2328,12 +2328,12 @@ function showCompanyInfoSection() {
     document.querySelectorAll('.admin-section').forEach(section => {
         section.style.display = 'none';
     });
-    
+
     const companySection = document.getElementById('company-info-section');
     if (companySection) {
         companySection.style.display = 'block';
     }
-    
+
     document.querySelectorAll('.sidebar-menu li').forEach(li => li.classList.remove('active'));
     event.target.closest('li').classList.add('active');
 }
@@ -2350,7 +2350,7 @@ async function saveCompanyInfo() {
         hours: document.getElementById('company-hours').value,
         description: document.getElementById('company-description').value
     };
-    
+
     // Handle upload banner jika ada file baru
     const bannerFile = document.getElementById('company-banner').files[0];
     if (bannerFile) {
@@ -2373,12 +2373,12 @@ async function saveCompanyInfo() {
             formData.append('logoFile', bannerFile);
             formData.append('type', 'banner');
             formData.append('filename', 'bannercendana.png');
-            
+
             const response = await fetch('upload.php', {
                 method: 'POST',
                 body: formData
             });
-            
+
             const result = await response.json();
             if (result.success) {
                 console.log('Banner uploaded successfully');
@@ -2392,27 +2392,27 @@ async function saveCompanyInfo() {
             console.log('Demo mode: Banner would be saved as cendana/bannercendana.png');
         }
     }
-    
+
     companyInfoData = { ...companyInfoData, ...companyData };
-    
+
     // Simpan ke localStorage
     localStorage.setItem('companyInfoData', JSON.stringify(companyInfoData));
-    
+
     // Update tampilan di halaman utama
     if (typeof muatInformasiPerusahaan === 'function') {
         muatInformasiPerusahaan();
     }
-    
+
     alert('✅ Informasi perusahaan berhasil disimpan!');
 }
 
 function previewBanner(input) {
     const preview = document.getElementById('banner-preview');
     const img = document.getElementById('banner-preview-img');
-    
+
     if (input.files && input.files[0]) {
         const reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             img.src = e.target.result;
             preview.style.display = 'block';
         };
@@ -2440,31 +2440,31 @@ function updateHeroBackground() {
  *  */
 function handleScheduleSearch(event) {
     event.preventDefault();
-    
+
     // Ambil nilai dari form
     const destination = document.getElementById('destination').value;
     const participants = document.getElementById('participants').value;
     const departureDate = document.getElementById('departure-date').value;
     const returnDate = document.getElementById('return-date').value;
-    
+
     // Validasi
     if (!destination || !participants || !departureDate || !returnDate) {
         alert('Mohon lengkapi semua field yang diperlukan!');
         return;
     }
-    
+
     // Format tanggal untuk ditampilkan
     const formatDate = (dateString) => {
         if (!dateString) return '';
         const date = new Date(dateString);
-        return date.toLocaleDateString('id-ID', { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
+        return date.toLocaleDateString('id-ID', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
         });
     };
-    
+
     // Buat pesan untuk WhatsApp
     const whatsappNumber = companyInfoData?.whatsapp || '6285821841529';
     const message = `Halo, saya ingin mencari jadwal perjalanan dengan detail berikut:
@@ -2475,11 +2475,11 @@ function handleScheduleSearch(event) {
 📅 Tanggal Pulang: ${formatDate(returnDate)}
 
 Mohon informasi ketersediaan dan harga yang tersedia. Terima kasih!`;
-    
+
     // Encode message untuk URL
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-    
+
     // Buka WhatsApp
     window.open(whatsappUrl, '_blank');
 }

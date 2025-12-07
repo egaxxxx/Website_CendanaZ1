@@ -1,32 +1,18 @@
 <?php
-require_once 'config/database.php';
+require_once 'includes/page_config.php';
 require_once 'includes/faq_data.php';
 
-function getCompanyInfo($conn) {
-    $company = [];
-    $stmt = $conn->prepare("SELECT * FROM company_info WHERE id = 1");
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        $company = $result->fetch_assoc();
-    }
-    $stmt->close();
-    return $company;
-}
-
-$companyInfoData = getCompanyInfo($conn);
-
-if (empty($companyInfoData)) {
-    $companyInfoData = [
-        'name' => 'CV. Cendana Travel',
-        'whatsapp' => '6285821841529',
-        'instagram' => '@cendanatravel_official',
-        'email' => 'info@cendanatravel.com',
-        'address' => 'Jl. Cendana No.8, Tlk. Lerong Ulu, Kec. Sungai Kunjang<br>Kota Samarinda, Kalimantan Timur 75127',
-        'hours' => 'Senin - Minggu: 08.00 - 22.00 WIB',
-        'description' => 'Kami adalah penyedia layanan travel terpercaya dengan pengalaman lebih dari 10 tahun dalam melayani perjalanan Anda.'
-    ];
-}
+// Gunakan data LANGSUNG dari homepage_settings (via page_config.php)
+$companyInfoData = [
+    'name' => $companyName,
+    'whatsapp' => $companyWhatsapp,
+    'instagram' => $companyInstagram,
+    'tiktok' => $companyTiktok,
+    'email' => $companyEmail,
+    'address' => $companyAddress,
+    'hours' => $companyHours,
+    'description' => $footerDescription
+];
 
 $faqData = getFaqData();
 ?>
@@ -35,7 +21,7 @@ $faqData = getFaqData();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ - <?php echo htmlspecialchars($companyInfoData['name']); ?></title>
+    <title>FAQ - <?php echo htmlspecialchars($companyName); ?></title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="icons.css">
 </head>
@@ -43,7 +29,7 @@ $faqData = getFaqData();
     <!-- Header Navigation -->
     <header>
         <div class="container header-container">
-            <a href="index.php" class="logo"><?php echo htmlspecialchars($companyInfoData['name']); ?></a>
+            <a href="index.php" class="logo"><?php echo htmlspecialchars($companyName); ?></a>
             
             <nav>
                 <ul class="nav-menu">
@@ -70,15 +56,15 @@ $faqData = getFaqData();
     </header>
 
     <!-- Hero Section -->
-    <section class="hero" id="home" style="min-height: 500px; margin-top: 70px;">
+    <section class="hero" id="home" style="min-height: 500px; margin-top: 70px;" <?php if (!empty($homepageSettings['faq_hero_background'])): ?>style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('uploads/<?php echo htmlspecialchars($homepageSettings['faq_hero_background']); ?>'); background-size: cover; background-position: center; min-height: 500px; margin-top: 70px;"<?php endif; ?>>
         <div class="hero-overlay">
             <div class="container">
                 <div class="hero-content">
                     <h1 class="hero-title" style="font-size: 3rem;">
-                        Pusat Bantuan & FAQ
+                        <?php echo htmlspecialchars($homepageSettings['faq_hero_title'] ?? 'Pusat Bantuan & FAQ'); ?>
                     </h1>
                     <p class="hero-description">
-                        Jawaban lengkap untuk semua pertanyaan seputar layanan perjalanan kami. Temukan informasi yang Anda butuhkan.
+                        <?php echo htmlspecialchars($homepageSettings['faq_hero_description'] ?? 'Jawaban lengkap untuk semua pertanyaan seputar layanan perjalanan kami. Temukan informasi yang Anda butuhkan.'); ?>
                     </p>
                 </div>
             </div>
@@ -182,7 +168,7 @@ $faqData = getFaqData();
                     <div class="footer-hours-box">
                         <p class="footer-label-premium">Jam Operasional:</p>
                         <p class="footer-text-premium">
-                            Senin - Minggu: 08:00 - 22:00 WIB
+                            <?php echo htmlspecialchars($companyHours); ?>
                         </p>
                     </div>
                 </section>
@@ -238,7 +224,7 @@ $faqData = getFaqData();
             <!-- Footer Bottom: Copyright & Admin Login -->
             <div class="footer-bottom-premium">
                 <p class="footer-copyright-premium">
-                    &copy; 2024 Cv. Cendana Travel. All rights reserved.
+                    <?php echo htmlspecialchars($footerCopyright); ?>
                 </p>
                 <a href="auth.php" class="footer-admin-login">
                     <i class="fas fa-sign-in-alt"></i>

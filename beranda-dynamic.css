@@ -4,6 +4,31 @@
    ============================================ */
 
 /* ============================================
+   0. GLOBAL SECTION BACKGROUNDS & SEPARATORS
+   ============================================ */
+
+/* Background Colors - Selang-seling untuk pemisah visual yang jelas */
+.bg-white-section {
+    background-color: #ffffff;
+}
+
+.bg-cream-section {
+    background-color: #f9f6f2;
+}
+
+/* Section Padding Consistency */
+section {
+    position: relative;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+section::before,
+section::after {
+    display: none !important;
+}
+
+/* ============================================
    1. HERO DYNAMIC - LAYERED & PARALLAX
    ============================================ */
 
@@ -261,14 +286,14 @@
    ============================================ */
 
 .services-dynamic {
-    padding: 6rem 0;
-    background: linear-gradient(180deg, #F9FAFB 0%, #FFFFFF 100%);
+    padding: 4rem 0;
+    background-color: #ffffff;
     position: relative;
 }
 
 .services-dynamic .section-header {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
 }
 
 .services-dynamic .section-header h2 {
@@ -534,7 +559,7 @@ section:not(:last-of-type) {
 
 .why-us-split {
     padding: 0;
-    background: #ffffff;
+    background-color: #f9f6f2;
 }
 
 .split-layout {
@@ -620,8 +645,8 @@ section:not(:last-of-type) {
    ============================================ */
 
 .payment-carousel {
-    padding: 6rem 0;
-    background: linear-gradient(180deg, #FFFFFF 0%, #FFF5F0 100%);
+    padding: 4rem 0;
+    background-color: #ffffff;
     position: relative;
 }
 
@@ -707,14 +732,14 @@ section:not(:last-of-type) {
    ============================================ */
 
 .testimonials-slider {
-    padding: 6rem 0;
-    background: #FFF5F0;
+    padding: 4rem 0;
+    background-color: #f9f6f2;
     overflow: hidden;
 }
 
 .testimonial-carousel {
     position: relative;
-    margin-top: 4rem;
+    margin-top: 2.5rem;
 }
 
 .testimonial-track {
@@ -796,167 +821,266 @@ section:not(:last-of-type) {
 }
 
 /* ============================================
-   7. BOOKING TIMELINE - COMPACT VERSION
+   7. BOOKING STEPS ALTERNATING LAYOUT
    ============================================ */
 
-.booking-timeline {
-    padding: 3rem 0 2.5rem;
-    background: #ffffff;
+.booking-steps-alternating {
+    padding: 50px 0;
+    background-color: #ffffff;
+    position: relative;
+    overflow: hidden;
 }
 
-.booking-timeline .section-header {
-    margin-bottom: 0.5rem;
+.section-header-booking {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
 }
 
-.booking-timeline .section-header h2 {
-    margin-bottom: 0.8rem;
+.section-header-booking h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #2c2c2c;
+    margin-bottom: 12px;
 }
 
-.booking-timeline .section-header p {
+.section-header-booking p {
+    font-size: 1.1rem;
+    color: #6B7280;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Booking Step Row */
+.booking-step-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    margin-bottom: 50px;
+    position: relative;
+    z-index: 1;
+}
+
+.booking-step-row:last-child {
     margin-bottom: 0;
 }
 
-.timeline-container {
+/* Image Container */
+.booking-step-image {
     position: relative;
-    max-width: 850px;
-    margin: 2rem auto 0;
-    padding-left: 3rem;
-}
-
-.timeline-line {
-    position: absolute;
-    left: 22px;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: linear-gradient(180deg, #D4956E 0%, #F4A460 100%);
-}
-
-.timeline-step {
-    position: relative;
-    padding: 0 0 1.2rem 1.5rem;
-    display: flex;
-    gap: 1.5rem;
-}
-
-.timeline-step:last-child {
-    padding-bottom: 0;
-}
-
-.timeline-marker {
-    position: absolute;
-    left: -2.55rem;
-    top: 0.3rem;
-    width: 46px;
-    height: 46px;
-    background: linear-gradient(135deg, #D4956E 0%, #F4A460 100%);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #ffffff;
-    box-shadow: 0 4px 15px rgba(212, 149, 110, 0.35);
-    z-index: 2;
-}
-
-.timeline-content {
-    background: #FFF5F0;
-    padding: 1.5rem 1.8rem;
-    border-radius: 16px;
-    border-left: 3px solid #D4956E;
-    flex: 1;
-}
-
-.timeline-content h3 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #2a1f1a;
-    margin-bottom: 0.6rem;
-}
-
-.timeline-content p {
-    font-size: 0.98rem;
-    line-height: 1.6;
-    color: #6B7280;
-    margin: 0;
-}
-
-/* ============================================
-   8. GALLERY MASONRY - COMPACT & PREMIUM
-   ============================================ */
-
-.gallery-masonry {
-    padding: 3.5rem 0;
-    /* Reduced from 6rem for compact look */
-    background: linear-gradient(180deg, #FFF5F0 0%, #FFFFFF 100%);
-}
-
-.masonry-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    grid-auto-rows: 220px;
-    /* Reduced height for compactness */
-    gap: 1rem;
-    /* Tighter gap */
-    margin-top: 2.5rem;
-    /* Reduced margin */
-}
-
-.masonry-item {
-    border-radius: 16px;
-    /* Slightly smaller radius */
+    border-radius: 20px;
     overflow: hidden;
-    position: relative;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+    aspect-ratio: 1/1;
+    min-height: 400px;
 }
 
-.masonry-item:hover {
-    transform: scale(1.02);
-    box-shadow: 0 15px 40px rgba(212, 149, 110, 0.25);
-}
-
-.masonry-item.tall {
-    grid-row: span 2;
-}
-
-.masonry-item.wide {
-    grid-column: span 2;
-}
-
-.masonry-item img {
+.booking-step-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    transition: transform 0.6s ease;
 }
 
-.masonry-item:hover img {
-    transform: scale(1.08);
+.booking-step-row:hover .booking-step-image img {
+    transform: scale(1.05);
 }
 
-.masonry-item .gallery-new-overlay {
+/* Content Container */
+.booking-step-content {
+    padding: 60px 50px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(212, 149, 110, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 400px;
+}
+
+.booking-step-content h3 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #2c2c2c;
+    margin-bottom: 30px;
+    position: relative;
+    padding-bottom: 20px;
+    line-height: 1.2;
+}
+
+.booking-step-content h3::after {
+    content: '';
     position: absolute;
-    bottom: 0;
     left: 0;
-    right: 0;
-    padding: 1.5rem;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    bottom: 0;
+    width: 100px;
+    height: 6px;
+    background: linear-gradient(90deg, #D4956E, #F4A460);
+    border-radius: 3px;
 }
 
-.masonry-item:hover .gallery-new-overlay {
-    opacity: 1;
-}
-
-.masonry-item .gallery-new-overlay h4 {
-    color: #ffffff;
-    font-size: 1.1rem;
-    font-weight: 600;
+.booking-step-content p {
+    font-size: 1.35rem;
+    line-height: 2.1;
+    color: #4a5568;
     margin: 0;
+    text-align: justify;
+    letter-spacing: 0.3px;
+}
+
+/* Alternating Layout - Left Image */
+.booking-step-left {
+    grid-template-areas: "image content";
+}
+
+.booking-step-left .booking-step-image {
+    grid-area: image;
+}
+
+.booking-step-left .booking-step-content {
+    grid-area: content;
+}
+
+/* Alternating Layout - Right Image */
+.booking-step-right {
+    grid-template-areas: "content image";
+}
+
+.booking-step-right .booking-step-image {
+    grid-area: image;
+}
+
+.booking-step-right .booking-step-content {
+    grid-area: content;
+}
+
+/* ============================================
+   8. GALLERY POLAROID CARDS - REDESIGN
+   ============================================ */
+
+.gallery-polaroid-section {
+    padding: 50px 0;
+    background-color: #f9f6f2;
+    text-align: center;
+}
+
+.gallery-polaroid-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+/* Polaroid Cards Stack */
+.polaroid-cards-stack {
+    position: relative;
+    height: 380px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+    perspective: 1000px;
+}
+
+.polaroid-card-home {
+    position: absolute;
+    width: 200px;
+    height: 280px;
+    background-color: #fff;
+    padding: 10px 10px 50px 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    transition: all 0.5s ease;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.polaroid-card-home img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 2px;
+    filter: brightness(0.95);
+}
+
+/* Card Positions */
+.card-left-home {
+    z-index: 1;
+    transform: translateX(-120px) translateY(20px) rotate(-15deg);
+}
+
+.card-right-home {
+    z-index: 2;
+    transform: translateX(120px) translateY(20px) rotate(15deg);
+}
+
+.card-center-home {
+    z-index: 3;
+    transform: translateY(-20px) rotate(0deg) scale(1.1);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+}
+
+.card-center-home img {
+    filter: brightness(1.05);
+}
+
+/* Hover Effects */
+.polaroid-cards-stack:hover .card-left-home {
+    transform: translateX(-150px) translateY(30px) rotate(-25deg);
+}
+
+.polaroid-cards-stack:hover .card-right-home {
+    transform: translateX(150px) translateY(30px) rotate(25deg);
+}
+
+.polaroid-cards-stack:hover .card-center-home {
+    transform: translateY(-40px) scale(1.15);
+}
+
+/* Content Area */
+.gallery-polaroid-content {
+    position: relative;
+    z-index: 10;
+}
+
+.gallery-polaroid-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: #2c2c2c;
+    margin-bottom: 10px;
+}
+
+.gallery-polaroid-subtitle {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn-gallery-polaroid {
+    display: inline-block;
+    background-color: #fff;
+    color: #333;
+    padding: 14px 40px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.btn-gallery-polaroid:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
 
 /* ============================================
@@ -964,16 +1088,16 @@ section:not(:last-of-type) {
    ============================================ */
 
 .legality-compact {
-    padding: 6rem 0;
+    padding: 4rem 0;
     background: #ffffff;
 }
 
 .legality-grid-2x2 {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 3rem;
+    gap: 2.5rem;
     max-width: 900px;
-    margin: 4rem auto 0;
+    margin: 2.5rem auto 0;
 }
 
 .legality-item {
@@ -1317,40 +1441,91 @@ section:not(:last-of-type) {
         padding: 3rem 2rem;
     }
 
-    .timeline-container {
-        padding-left: 2.5rem;
-        margin-top: 1.5rem;
+    /* Booking Steps Alternating Responsive */
+    .booking-steps-alternating {
+        padding: 50px 0;
     }
 
-    .timeline-marker {
-        width: 42px;
-        height: 42px;
-        left: -2.3rem;
-        font-size: 1.1rem;
-        top: 0.2rem;
+    .section-header-booking {
+        margin-bottom: 40px;
     }
 
-    .timeline-content {
-        padding: 1.3rem 1.5rem;
+    .section-header-booking h2 {
+        font-size: 2rem;
     }
 
-    .timeline-content h3 {
-        font-size: 1.15rem;
+    .section-header-booking p {
+        font-size: 1rem;
+        padding: 0 20px;
     }
 
-    .timeline-content p {
-        font-size: 0.95rem;
-    }
-
-    .masonry-grid {
+    .booking-step-row {
         grid-template-columns: 1fr;
-        grid-auto-rows: 200px;
+        gap: 30px;
+        margin-bottom: 50px;
     }
 
-    .masonry-item.tall,
-    .masonry-item.wide {
-        grid-row: span 1;
-        grid-column: span 1;
+    .booking-step-left,
+    .booking-step-right {
+        grid-template-areas:
+            "image"
+            "content";
+    }
+
+    .booking-step-content {
+        padding: 30px 25px;
+        min-height: auto;
+    }
+
+    .booking-step-image {
+        min-height: 300px;
+    }
+
+    .booking-step-content h3 {
+        font-size: 1.6rem;
+        margin-bottom: 18px;
+        padding-bottom: 12px;
+    }
+
+    .booking-step-content h3::after {
+        width: 70px;
+        height: 4px;
+    }
+
+    .booking-step-content p {
+        font-size: 1rem;
+        line-height: 1.8;
+    }
+
+    /* Polaroid Cards Responsive */
+    .polaroid-card-home {
+        width: 140px;
+        height: 190px;
+        padding-bottom: 35px;
+    }
+
+    .card-left-home {
+        transform: translateX(-80px) translateY(10px) rotate(-10deg);
+    }
+
+    .card-right-home {
+        transform: translateX(80px) translateY(10px) rotate(10deg);
+    }
+
+    .polaroid-cards-stack:hover .card-left-home {
+        transform: translateX(-90px) rotate(-15deg);
+    }
+
+    .polaroid-cards-stack:hover .card-right-home {
+        transform: translateX(90px) rotate(15deg);
+    }
+
+    .gallery-polaroid-title {
+        font-size: 24px;
+    }
+
+    .gallery-polaroid-subtitle {
+        font-size: 14px;
     }
 
     .cta-content-centered h2 {
@@ -1403,39 +1578,43 @@ section:not(:last-of-type) {
         flex: 0 0 260px;
     }
 
-    .timeline-container {
-        padding-left: 2.2rem;
-        margin-top: 1.2rem;
+    /* Booking Steps Alternating - Small Mobile */
+    .section-header-booking h2 {
+        font-size: 1.75rem;
     }
 
-    .timeline-line {
-        left: 19px;
+    .section-header-booking p {
+        font-size: 0.95rem;
     }
 
-    .timeline-marker {
-        width: 38px;
-        height: 38px;
-        left: -2.05rem;
-        font-size: 1rem;
-        top: 0.15rem;
+    .booking-step-row {
+        gap: 25px;
+        margin-bottom: 40px;
     }
 
-    .timeline-step {
-        padding: 0 0 1rem 1.2rem;
+    .booking-step-content {
+        padding: 25px 20px;
+        min-height: auto;
     }
 
-    .timeline-content {
-        padding: 1.2rem 1.3rem;
+    .booking-step-image {
+        min-height: 250px;
     }
 
-    .timeline-content h3 {
-        font-size: 1.1rem;
-        margin-bottom: 0.5rem;
+    .booking-step-content h3 {
+        font-size: 1.4rem;
+        margin-bottom: 14px;
+        padding-bottom: 10px;
     }
 
-    .timeline-content p {
-        font-size: 0.92rem;
-        line-height: 1.55;
+    .booking-step-content h3::after {
+        width: 60px;
+        height: 3px;
+    }
+
+    .booking-step-content p {
+        font-size: 0.95rem;
+        line-height: 1.7;
     }
 
     .cta-content-centered h2 {

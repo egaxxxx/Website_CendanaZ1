@@ -1,38 +1,24 @@
 <?php
-require_once 'config/database.php';
+require_once 'includes/page_config.php';
 
-function getCompanyInfo($conn) {
-    $company = [];
-    $stmt = $conn->prepare("SELECT * FROM company_info WHERE id = 1");
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        $company = $result->fetch_assoc();
-    }
-    $stmt->close();
-    return $company;
-}
-
-$companyInfoData = getCompanyInfo($conn);
-
-if (empty($companyInfoData)) {
-    $companyInfoData = [
-        'name' => 'CV. Cendana Travel',
-        'whatsapp' => '6285821841529',
-        'instagram' => '@cendanatravel_official',
-        'email' => 'info@cendanatravel.com',
-        'address' => 'Jl. Cendana No.8, Tlk. Lerong Ulu, Kec. Sungai Kunjang<br>Kota Samarinda, Kalimantan Timur 75127',
-        'hours' => 'Senin - Minggu: 08.00 - 22.00 WIB',
-        'description' => 'Kami adalah penyedia layanan travel terpercaya dengan pengalaman lebih dari 10 tahun dalam melayani perjalanan Anda.'
-    ];
-}
+// Gunakan data LANGSUNG dari homepage_settings (via page_config.php)
+$companyInfoData = [
+    'name' => $companyName,
+    'whatsapp' => $companyWhatsapp,
+    'instagram' => $companyInstagram,
+    'tiktok' => $companyTiktok,
+    'email' => $companyEmail,
+    'address' => $companyAddress,
+    'hours' => $companyHours,
+    'description' => $footerDescription
+];
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kontak - <?php echo htmlspecialchars($companyInfoData['name']); ?></title>
+    <title>Kontak - <?php echo htmlspecialchars($companyName); ?></title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="icons.css">
     <link rel="stylesheet" href="kontak-dynamic.css">
@@ -41,7 +27,7 @@ if (empty($companyInfoData)) {
     <!-- Header Navigation -->
     <header>
         <div class="container header-container">
-            <a href="index.php" class="logo"><?php echo htmlspecialchars($companyInfoData['name']); ?></a>
+            <a href="index.php" class="logo"><?php echo htmlspecialchars($companyName); ?></a>
             
             <nav>
                 <ul class="nav-menu">
@@ -68,10 +54,10 @@ if (empty($companyInfoData)) {
     </header>
 
     <!-- New Hero Banner + Overlapping Two Column Layout (Matches Screenshot 3) -->
-    <section class="contact-hero-banner">
+    <section class="contact-hero-banner" <?php if (!empty($homepageSettings['kontak_hero_background'])): ?>style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('uploads/<?php echo htmlspecialchars($homepageSettings['kontak_hero_background']); ?>'); background-size: cover; background-position: center;"<?php endif; ?>>
         <div class="container">
-            <h1>Hubungi Kami</h1>
-            <p>Kami siap membantu kebutuhan perjalanan Anda</p>
+            <h1><?php echo htmlspecialchars($homepageSettings['kontak_hero_title'] ?? 'Hubungi Kami'); ?></h1>
+            <p><?php echo htmlspecialchars($homepageSettings['kontak_hero_description'] ?? 'Kami siap membantu kebutuhan perjalanan Anda'); ?></p>
         </div>
     </section>
     <section class="contact-section-wrapper">
@@ -107,16 +93,26 @@ if (empty($companyInfoData)) {
                             <div class="contact-panel-icon"><i class="icon icon-instagram"></i></div>
                             <div class="contact-panel-text">
                                 <h3>Instagram</h3>
-                                <p><a href="https://instagram.com/<?php echo str_replace('@', '', htmlspecialchars($companyInfoData['instagram'])); ?>" target="_blank">@cendanatravel_official</a></p>
+                                <?php 
+                                $instagramUsername = str_replace('@', '', htmlspecialchars($companyInfoData['instagram']));
+                                $instagramDisplay = (strpos($companyInfoData['instagram'], '@') === 0) ? $companyInfoData['instagram'] : '@' . $companyInfoData['instagram'];
+                                ?>
+                                <p><a href="https://instagram.com/<?php echo $instagramUsername; ?>" target="_blank"><?php echo htmlspecialchars($instagramDisplay); ?></a></p>
                             </div>
                         </div>
+                        <?php if (!empty($companyInfoData['tiktok'])): ?>
                         <div class="contact-panel-item">
                             <div class="contact-panel-icon"><i class="icon icon-tiktok"></i></div>
                             <div class="contact-panel-text">
                                 <h3>TikTok</h3>
-                                <p><a href="https://tiktok.com/@cendanatravel" target="_blank">@cendanatravel</a></p>
+                                <?php 
+                                $tiktokUsername = str_replace('@', '', htmlspecialchars($companyInfoData['tiktok']));
+                                $tiktokDisplay = (strpos($companyInfoData['tiktok'], '@') === 0) ? $companyInfoData['tiktok'] : '@' . $companyInfoData['tiktok'];
+                                ?>
+                                <p><a href="https://tiktok.com/@<?php echo $tiktokUsername; ?>" target="_blank"><?php echo htmlspecialchars($tiktokDisplay); ?></a></p>
                             </div>
                         </div>
+                        <?php endif; ?>
                     </aside>
 
                     <!-- Right: Modern Form Card -->
@@ -183,7 +179,7 @@ if (empty($companyInfoData)) {
                     <div class="footer-hours-box">
                         <p class="footer-label-premium">Jam Operasional:</p>
                         <p class="footer-text-premium">
-                            Senin - Minggu: 08:00 - 22:00 WIB
+                            <?php echo htmlspecialchars($companyHours); ?>
                         </p>
                     </div>
                 </section>
@@ -228,7 +224,7 @@ if (empty($companyInfoData)) {
                         <div>
                             <p class="footer-label-premium">Alamat</p>
                             <p class="footer-text-premium footer-address">
-                                Jl. Cendana No.8, Tlk. Lerong Ulu, Kec. Sungai Kunang, Kota Samarinda, Kalimantan Timur 75127
+                                <?php echo nl2br(htmlspecialchars($companyAddress)); ?>
                             </p>
                         </div>
                     </div>
@@ -239,7 +235,7 @@ if (empty($companyInfoData)) {
             <!-- Footer Bottom: Copyright & Admin Login -->
             <div class="footer-bottom-premium">
                 <p class="footer-copyright-premium">
-                    &copy; 2024 Cv. Cendana Travel. All rights reserved.
+                    <?php echo htmlspecialchars($footerCopyright); ?>
                 </p>
                 <a href="auth.php" class="footer-admin-login">
                     <i class="fas fa-sign-in-alt"></i>

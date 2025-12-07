@@ -62,200 +62,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     /* CRUD sederhana tanpa framework dengan PRG Pattern */
     
     // ============================================
-    // HANDLE HOME CONTENT CRUD OPERATIONS
-    // ============================================
-    require_once __DIR__ . '/includes/home_content_functions.php';
-    
-    // WHY CHOOSE US
-    if ($module === 'why_choose') {
-        if ($action === 'create') {
-            $icon_file = $_FILES['icon'] ?? null;
-            if (createWhyChooseUs($_POST, $icon_file)) {
-                $_SESSION['admin_message'] = 'Poin "Mengapa Memilih Kami" berhasil ditambahkan!';
-                $_SESSION['admin_message_type'] = 'success';
-            } else {
-                $_SESSION['admin_message'] = 'Gagal menambahkan poin!';
-                $_SESSION['admin_message_type'] = 'error';
-            }
-            header('Location: admin.php#konten-beranda');
-            exit();
-        }
-        elseif ($action === 'update') {
-            $icon_file = $_FILES['icon'] ?? null;
-            if (updateWhyChooseUs($_POST['id'], $_POST, $icon_file)) {
-                $_SESSION['admin_message'] = 'Poin berhasil diperbarui!';
-                $_SESSION['admin_message_type'] = 'success';
-            } else {
-                $_SESSION['admin_message'] = 'Gagal memperbarui poin!';
-                $_SESSION['admin_message_type'] = 'error';
-            }
-            header('Location: admin.php#konten-beranda');
-            exit();
-        }
-        elseif ($action === 'delete') {
-            if (deleteWhyChooseUs($_POST['id'])) {
-                $_SESSION['admin_message'] = 'Poin berhasil dihapus!';
-                $_SESSION['admin_message_type'] = 'success';
-            } else {
-                $_SESSION['admin_message'] = 'Gagal menghapus poin!';
-                $_SESSION['admin_message_type'] = 'error';
-            }
-            header('Location: admin.php#konten-beranda');
-            exit();
-        }
-    }
-    
-    // PAYMENT STEPS
-    elseif ($module === 'payment_steps') {
-        if ($action === 'create') {
-            $icon_file = $_FILES['icon'] ?? null;
-            if (createPaymentStep($_POST, $icon_file)) {
-                $_SESSION['admin_message'] = 'Langkah pembayaran berhasil ditambahkan!';
-                $_SESSION['admin_message_type'] = 'success';
-            } else {
-                $_SESSION['admin_message'] = 'Gagal menambahkan langkah!';
-                $_SESSION['admin_message_type'] = 'error';
-            }
-            header('Location: admin.php#konten-beranda');
-            exit();
-        }
-        elseif ($action === 'update') {
-            $icon_file = $_FILES['icon'] ?? null;
-            if (updatePaymentStep($_POST['id'], $_POST, $icon_file)) {
-                $_SESSION['admin_message'] = 'Langkah berhasil diperbarui!';
-                $_SESSION['admin_message_type'] = 'success';
-            } else {
-                $_SESSION['admin_message'] = 'Gagal memperbarui langkah!';
-                $_SESSION['admin_message_type'] = 'error';
-            }
-            header('Location: admin.php#konten-beranda');
-            exit();
-        }
-        elseif ($action === 'delete') {
-            if (deletePaymentStep($_POST['id'])) {
-                $_SESSION['admin_message'] = 'Langkah berhasil dihapus!';
-                $_SESSION['admin_message_type'] = 'success';
-            } else {
-                $_SESSION['admin_message'] = 'Gagal menghapus langkah!';
-                $_SESSION['admin_message_type'] = 'error';
-            }
-            header('Location: admin.php#konten-beranda');
-            exit();
-        }
-    }
-    
-    // ORDER STEPS
-    elseif ($module === 'order_steps') {
-        if ($action === 'create') {
-            $image_file = $_FILES['image'] ?? null;
-            if (createOrderStep($_POST, $image_file)) {
-                $_SESSION['admin_message'] = 'Langkah pemesanan berhasil ditambahkan!';
-                $_SESSION['admin_message_type'] = 'success';
-            } else {
-                $_SESSION['admin_message'] = 'Gagal menambahkan langkah!';
-                $_SESSION['admin_message_type'] = 'error';
-            }
-            header('Location: admin.php#konten-beranda');
-            exit();
-        }
-        elseif ($action === 'update') {
-            $image_file = $_FILES['image'] ?? null;
-            if (updateOrderStep($_POST['id'], $_POST, $image_file)) {
-                $_SESSION['admin_message'] = 'Langkah berhasil diperbarui!';
-                $_SESSION['admin_message_type'] = 'success';
-            } else {
-                $_SESSION['admin_message'] = 'Gagal memperbarui langkah!';
-                $_SESSION['admin_message_type'] = 'error';
-            }
-            header('Location: admin.php#konten-beranda');
-            exit();
-        }
-        elseif ($action === 'delete') {
-            if (deleteOrderStep($_POST['id'])) {
-                $_SESSION['admin_message'] = 'Langkah berhasil dihapus!';
-                $_SESSION['admin_message_type'] = 'success';
-            } else {
-                $_SESSION['admin_message'] = 'Gagal menghapus langkah!';
-                $_SESSION['admin_message_type'] = 'error';
-            }
-            header('Location: admin.php#konten-beranda');
-            exit();
-        }
-    }
-    
-    // GALLERY HOME SELECTION
-    elseif ($module === 'gallery_home') {
-        if ($action === 'create') {
-            $result = createGalleryHomeSelection($_POST);
-            $_SESSION['admin_message'] = $result['message'];
-            $_SESSION['admin_message_type'] = $result['success'] ? 'success' : 'error';
-            header('Location: admin.php#konten-beranda');
-            exit();
-        }
-        elseif ($action === 'update') {
-            if (updateGalleryHomeSelection($_POST['id'], $_POST)) {
-                $_SESSION['admin_message'] = 'Foto beranda berhasil diperbarui!';
-                $_SESSION['admin_message_type'] = 'success';
-            } else {
-                $_SESSION['admin_message'] = 'Gagal memperbarui foto!';
-                $_SESSION['admin_message_type'] = 'error';
-            }
-            header('Location: admin.php#konten-beranda');
-            exit();
-        }
-        elseif ($action === 'delete') {
-            if (deleteGalleryHomeSelection($_POST['id'])) {
-                $_SESSION['admin_message'] = 'Foto berhasil dihapus dari beranda!';
-                $_SESSION['admin_message_type'] = 'success';
-            } else {
-                $_SESSION['admin_message'] = 'Gagal menghapus foto!';
-                $_SESSION['admin_message_type'] = 'error';
-            }
-            header('Location: admin.php#konten-beranda');
-            exit();
-        }
-    }
-    
-    // LEGAL SECURITY
-    elseif ($module === 'legal_security') {
-        if ($action === 'create') {
-            $icon_file = $_FILES['icon'] ?? null;
-            if (createLegalSecurity($_POST, $icon_file)) {
-                $_SESSION['admin_message'] = 'Poin legalitas & keamanan berhasil ditambahkan!';
-                $_SESSION['admin_message_type'] = 'success';
-            } else {
-                $_SESSION['admin_message'] = 'Gagal menambahkan poin!';
-                $_SESSION['admin_message_type'] = 'error';
-            }
-            header('Location: admin.php#konten-beranda');
-            exit();
-        }
-        elseif ($action === 'update') {
-            $icon_file = $_FILES['icon'] ?? null;
-            if (updateLegalSecurity($_POST['id'], $_POST, $icon_file)) {
-                $_SESSION['admin_message'] = 'Poin berhasil diperbarui!';
-                $_SESSION['admin_message_type'] = 'success';
-            } else {
-                $_SESSION['admin_message'] = 'Gagal memperbarui poin!';
-                $_SESSION['admin_message_type'] = 'error';
-            }
-            header('Location: admin.php#konten-beranda');
-            exit();
-        }
-        elseif ($action === 'delete') {
-            if (deleteLegalSecurity($_POST['id'])) {
-                $_SESSION['admin_message'] = 'Poin berhasil dihapus!';
-                $_SESSION['admin_message_type'] = 'success';
-            } else {
-                $_SESSION['admin_message'] = 'Gagal menghapus poin!';
-                $_SESSION['admin_message_type'] = 'error';
-            }
-            header('Location: admin.php#konten-beranda');
-            exit();
-        }
-    }
-    
-    // ============================================
     // HANDLE GENERAL INFO UPDATE
     // ============================================
     if ($action === 'update' && $module === 'general') {
@@ -439,16 +245,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         $currentSettings = getHomepageSettings();
         
-        // Merge with current settings - only update fields that are present in POST
-        $updateData = $currentSettings; // Start with current data
-        
-        // Update only fields that exist in POST
-        foreach ($_POST as $key => $value) {
-            if ($key !== 'action' && $key !== 'module') {
-                $updateData[$key] = $value;
-            }
-        }
-        
         // Handle hero background upload if provided
         $backgroundFields = ['hero_background', 'pemesanan_hero_background', 'galeri_hero_background', 'faq_hero_background', 'kontak_hero_background'];
         
@@ -456,20 +252,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_FILES[$field]) && $_FILES[$field]['error'] === UPLOAD_ERR_OK) {
                 $backgroundPath = uploadImage($_FILES[$field], 'uploads/');
                 if ($backgroundPath) {
-                    $updateData[$field] = $backgroundPath;
+                    $_POST[$field] = $backgroundPath;
                 }
+            } else {
+                // Keep existing background if no new upload
+                $_POST[$field] = $currentSettings[$field] ?? '';
             }
-            // If file not uploaded, keep existing value (already in $updateData from merge)
         }
         
-        if (updateHomepageSettings($updateData)) {
+        if (updateHomepageSettings($_POST)) {
             $_SESSION['admin_message'] = 'Pengaturan beranda berhasil diperbarui!';
             $_SESSION['admin_message_type'] = 'success';
         } else {
             $_SESSION['admin_message'] = 'Gagal memperbarui pengaturan beranda!';
             $_SESSION['admin_message_type'] = 'error';
         }
-        header('Location: admin.php#beranda');
+        header('Location: admin.php#general');
         exit();
     }
     
@@ -2448,14 +2246,6 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                 <i class="fas fa-tachometer-alt"></i>
                 Dashboard
             </a>
-            <a href="#beranda" class="nav-link" onclick="showSection('beranda'); return false;">
-                <i class="fas fa-cog"></i>
-                Pengaturan Beranda
-            </a>
-            <a href="#konten-beranda" class="nav-link" onclick="showSection('konten-beranda'); return false;">
-                <i class="fas fa-th-large"></i>
-                Konten Beranda
-            </a>
             <a href="#transportasi" class="nav-link" onclick="showSection('transportasi'); return false;">
                 <i class="fas fa-plane"></i>
                 Kelola Transportasi
@@ -2471,6 +2261,10 @@ $cacheKiller = time() . mt_rand(1000, 9999);
             <a href="#kontak" class="nav-link" onclick="showSection('kontak'); return false;">
                 <i class="fas fa-phone"></i>
                 Informasi Kontak
+            </a>
+            <a href="#pengaturan" class="nav-link" onclick="showSection('pengaturan'); return false;">
+                <i class="fas fa-cog"></i>
+                Pengaturan Website
             </a>
             <a href="auth.php?action=logout" class="nav-link" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
                 <i class="fas fa-sign-out-alt"></i>
@@ -2567,115 +2361,37 @@ $cacheKiller = time() . mt_rand(1000, 9999);
         </div>
 
         <!-- ============================================ -->
-        <!-- PENGATURAN BERANDA SECTION -->
+        <!-- PENGATURAN WEBSITE SECTION -->
         <!-- ============================================ -->
-        <div id="beranda-section" class="content-section">
-            <h1>Pengaturan Beranda</h1>
-            <p>Kelola konten dinamis untuk semua halaman website</p>
+        <div id="pengaturan-section" class="content-section">
+            <h1>Pengaturan Website</h1>
+            <p>Kelola pengaturan umum website seperti nama perusahaan, tentang kami, dan footer</p>
             
             <div class="section-card">
                 <div class="section-header">
-                    <h2>Hero Section & Konten Beranda</h2>
+                    <h2>Informasi Umum & Footer</h2>
                 </div>
                 <div class="section-content">
-                    <form method="POST" enctype="multipart/form-data">
+                    <form method="POST">
                         <input type="hidden" name="action" value="update">
-                        <input type="hidden" name="module" value="homepage">
+                        <input type="hidden" name="module" value="settings">
                         
-                        <!-- 2 COLUMN GRID LAYOUT -->
-                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem; position: relative;">
-                            <!-- Vertical Divider Line -->
-                            <div style="position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--admin-border); transform: translateX(-50%);"></div>
-                            
-                            <!-- LEFT COLUMN -->
-                            <div style="display: flex; flex-direction: column; gap: 1.5rem; position: relative; z-index: 1;">
-                                <div class="form-group-horizontal" style="margin-bottom: 0;">
-                                    <label>Nama Perusahaan</label>
-                                    <div class="form-input-wrapper">
-                                        <input type="text" name="company_name" value="<?= htmlspecialchars($homepageSettings['company_name'] ?? '') ?>" required>
-                                        <small style="color: var(--admin-text-muted); display: block; margin-top: 0.5rem;">Tampil di Navbar dan Footer</small>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group-horizontal" style="margin-bottom: 0;">
-                                    <label>Judul Hero Beranda</label>
-                                    <div class="form-input-wrapper">
-                                        <input type="text" name="hero_title" value="<?= htmlspecialchars($homepageSettings['hero_title'] ?? '') ?>" required placeholder="Perjalanan Impian">
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group-horizontal" style="margin-bottom: 0;">
-                                    <label>Sub Judul Hero</label>
-                                    <div class="form-input-wrapper">
-                                        <input type="text" name="hero_subtitle" value="<?= htmlspecialchars($homepageSettings['hero_subtitle'] ?? '') ?>" required placeholder="DIMULAI DARI SINI">
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group-horizontal" style="margin-bottom: 0;">
-                                    <label>Deskripsi Hero</label>
-                                    <div class="form-input-wrapper">
-                                        <textarea name="hero_description" rows="3" required><?= htmlspecialchars($homepageSettings['hero_description'] ?? '') ?></textarea>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group-horizontal" style="margin-bottom: 0;">
-                                    <label>Background Hero</label>
-                                    <div class="form-input-wrapper">
-                                        <input type="file" name="hero_background" accept="image/*">
-                                        <?php if (!empty($homepageSettings['hero_background'])): ?>
-                                        <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
-                                            <img src="uploads/<?= htmlspecialchars($homepageSettings['hero_background']) ?>" alt="Current" style="max-width: 150px; border-radius: 4px; border: 1px solid var(--admin-border);">
-                                            <button type="button" class="btn-danger" style="padding: 6px 12px; font-size: 0.85rem;"
-                                                    onclick="if(confirm('Yakin hapus background?')) window.location.href='?action=delete_background&module=homepage&field=hero_background'">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </div>
-                                        <?php endif; ?>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <!-- RIGHT COLUMN -->
-                            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-                                <div class="form-group-horizontal" style="margin-bottom: 0;">
-                                    <label>Statistik - Tahun</label>
-                                    <div class="form-input-wrapper">
-                                        <input type="text" name="stats_years" value="<?= htmlspecialchars($homepageSettings['stats_years'] ?? '') ?>" required placeholder="10+">
-                                        <input type="text" name="stats_years_label" value="<?= htmlspecialchars($homepageSettings['stats_years_label'] ?? '') ?>" placeholder="Tahun Pengalaman" style="margin-top: 0.5rem;">
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group-horizontal" style="margin-bottom: 0;">
-                                    <label>Statistik - Pelanggan</label>
-                                    <div class="form-input-wrapper">
-                                        <input type="text" name="stats_customers" value="<?= htmlspecialchars($homepageSettings['stats_customers'] ?? '') ?>" required placeholder="5000+">
-                                        <input type="text" name="stats_customers_label" value="<?= htmlspecialchars($homepageSettings['stats_customers_label'] ?? '') ?>" placeholder="Pelanggan Puas" style="margin-top: 0.5rem;">
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group-horizontal" style="margin-bottom: 0;">
-                                    <label>Statistik - Rating</label>
-                                    <div class="form-input-wrapper">
-                                        <input type="text" name="stats_rating" value="<?= htmlspecialchars($homepageSettings['stats_rating'] ?? '') ?>" required placeholder="4.9">
-                                        <input type="text" name="stats_rating_label" value="<?= htmlspecialchars($homepageSettings['stats_rating_label'] ?? '') ?>" placeholder="Rating" style="margin-top: 0.5rem;">
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group-horizontal" style="margin-bottom: 0;">
-                                    <label>Tentang Kami (Footer)</label>
-                                    <div class="form-input-wrapper">
-                                        <textarea name="footer_description" rows="4" required><?= htmlspecialchars($homepageSettings['footer_description'] ?? '') ?></textarea>
-                                        <small style="color: var(--admin-text-muted); display: block; margin-top: 0.5rem;">Deskripsi perusahaan di Footer</small>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group-horizontal" style="margin-bottom: 0;">
-                                    <label>Copyright Text</label>
-                                    <div class="form-input-wrapper">
-                                        <input type="text" name="footer_copyright" value="<?= htmlspecialchars($homepageSettings['footer_copyright'] ?? '') ?>" required placeholder="© 2024 CV. Cendana Travel">
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label>Nama Perusahaan</label>
+                            <input type="text" name="company_name" value="<?= htmlspecialchars($homepageSettings['company_name'] ?? '') ?>" required placeholder="CV. Cendana Travel">
+                            <small style="color: var(--admin-text-muted); display: block; margin-top: 0.5rem;">Tampil di Navbar, Footer, dan judul halaman</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Tentang Kami (Deskripsi Footer)</label>
+                            <textarea name="footer_description" rows="4" required placeholder="Kami adalah penyedia layanan travel terpercaya..."><?= htmlspecialchars($homepageSettings['footer_description'] ?? '') ?></textarea>
+                            <small style="color: var(--admin-text-muted); display: block; margin-top: 0.5rem;">Tampil di bagian "Tentang Kami" pada Footer semua halaman</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Copyright Text</label>
+                            <input type="text" name="footer_copyright" value="<?= htmlspecialchars($homepageSettings['footer_copyright'] ?? '') ?>" required placeholder="© 2025 CV. Cendana Travel. All rights reserved.">
+                            <small style="color: var(--admin-text-muted); display: block; margin-top: 0.5rem;">Tampil di bagian bawah Footer</small>
                         </div>
                         
                         <!-- SUBMIT BUTTON -->
@@ -2688,161 +2404,187 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                 </div>
             </div>
             
-            <!-- HERO HALAMAN LAIN -->
+            <!-- PENGATURAN HERO SECTIONS -->
             <div class="section-card" style="margin-top: 2rem;">
                 <div class="section-header">
-                    <h2>Hero Halaman Lain</h2>
+                    <h2><i class="fas fa-images"></i> Pengaturan Hero Section Semua Halaman</h2>
+                    <p style="font-size: 0.9rem; color: var(--admin-text-muted); margin-top: 0.5rem;">Kelola judul, deskripsi, dan background hero untuk setiap halaman</p>
                 </div>
                 <div class="section-content">
                     <form method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="action" value="update">
                         <input type="hidden" name="module" value="homepage">
                         
-                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem; position: relative;">
-                            <!-- Vertical Divider Line -->
-                            <div style="position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--admin-border); transform: translateX(-50%);"></div>
-                            
-                            <!-- HALAMAN PEMESANAN -->
-                            <div style="position: relative; z-index: 1;">
-                                <h3 style="margin-bottom: 1rem; color: var(--admin-text-primary); font-size: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--admin-border);">Halaman Pemesanan</h3>
-                                <div style="display: flex; flex-direction: column; gap: 1rem;">
-                                    <div class="form-group-horizontal" style="margin-bottom: 0;">
-                                        <label>Judul</label>
-                                        <div class="form-input-wrapper">
-                                            <input type="text" name="pemesanan_hero_title" value="<?= htmlspecialchars($homepageSettings['pemesanan_hero_title'] ?? 'Pemesanan Travel') ?>">
-                                        </div>
-                                    </div>
-                                    <div class="form-group-horizontal" style="margin-bottom: 0;">
-                                        <label>Deskripsi</label>
-                                        <div class="form-input-wrapper">
-                                            <textarea name="pemesanan_hero_description" rows="2"><?= htmlspecialchars($homepageSettings['pemesanan_hero_description'] ?? '') ?></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group-horizontal" style="margin-bottom: 0;">
-                                        <label>Background</label>
-                                        <div class="form-input-wrapper">
-                                            <input type="file" name="pemesanan_hero_background" accept="image/*">
-                                            <?php if (!empty($homepageSettings['pemesanan_hero_background'])): ?>
-                                            <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
-                                                <img src="uploads/<?= htmlspecialchars($homepageSettings['pemesanan_hero_background']) ?>" style="max-width: 100px; border-radius: 4px;">
-                                                <button type="button" class="btn-danger" style="padding: 4px 8px; font-size: 0.75rem;" 
-                                                        onclick="if(confirm('Yakin hapus?')) window.location.href='?action=delete_background&module=homepage&field=pemesanan_hero_background'">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                            <?php endif; ?>
-                                        </div>
-                                    </div>
-                                </div>
+                        <!-- HERO BERANDA -->
+                        <h3 style="margin-bottom: 1rem; color: var(--admin-primary); border-bottom: 2px solid var(--admin-border); padding-bottom: 0.5rem;">
+                            <i class="fas fa-home"></i> Hero Section - Halaman Beranda
+                        </h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div class="form-group">
+                                <label>Judul Utama</label>
+                                <input type="text" name="hero_title" value="<?= htmlspecialchars($homepageSettings['hero_title'] ?? '') ?>" required>
                             </div>
-                            
-                            <!-- HALAMAN GALERI -->
-                            <div style="position: relative; z-index: 1;">
-                                <h3 style="margin-bottom: 1rem; color: var(--admin-text-primary); font-size: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--admin-border);">Halaman Galeri</h3>
-                                <div style="display: flex; flex-direction: column; gap: 1rem;">
-                                    <div class="form-group-horizontal" style="margin-bottom: 0;">
-                                        <label>Judul</label>
-                                        <div class="form-input-wrapper">
-                                            <input type="text" name="galeri_hero_title" value="<?= htmlspecialchars($homepageSettings['galeri_hero_title'] ?? 'Galeri Perjalanan') ?>">
-                                        </div>
-                                    </div>
-                                    <div class="form-group-horizontal" style="margin-bottom: 0;">
-                                        <label>Deskripsi</label>
-                                        <div class="form-input-wrapper">
-                                            <textarea name="galeri_hero_description" rows="2"><?= htmlspecialchars($homepageSettings['galeri_hero_description'] ?? '') ?></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group-horizontal" style="margin-bottom: 0;">
-                                        <label>Background</label>
-                                        <div class="form-input-wrapper">
-                                            <input type="file" name="galeri_hero_background" accept="image/*">
-                                            <?php if (!empty($homepageSettings['galeri_hero_background'])): ?>
-                                            <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
-                                                <img src="uploads/<?= htmlspecialchars($homepageSettings['galeri_hero_background']) ?>" style="max-width: 100px; border-radius: 4px;">
-                                                <button type="button" class="btn-danger" style="padding: 4px 8px; font-size: 0.75rem;" 
-                                                        onclick="if(confirm('Yakin hapus?')) window.location.href='?action=delete_background&module=homepage&field=galeri_hero_background'">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                            <?php endif; ?>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="form-group">
+                                <label>Sub Judul</label>
+                                <input type="text" name="hero_subtitle" value="<?= htmlspecialchars($homepageSettings['hero_subtitle'] ?? '') ?>" required>
                             </div>
-                            
-                            <!-- HALAMAN FAQ -->
-                            <div style="position: relative; z-index: 1;">
-                                <h3 style="margin-bottom: 1rem; color: var(--admin-text-primary); font-size: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--admin-border);">Halaman FAQ</h3>
-                                <div style="display: flex; flex-direction: column; gap: 1rem;">
-                                    <div class="form-group-horizontal" style="margin-bottom: 0;">
-                                        <label>Judul</label>
-                                        <div class="form-input-wrapper">
-                                            <input type="text" name="faq_hero_title" value="<?= htmlspecialchars($homepageSettings['faq_hero_title'] ?? 'Pertanyaan yang Sering Diajukan') ?>">
-                                        </div>
-                                    </div>
-                                    <div class="form-group-horizontal" style="margin-bottom: 0;">
-                                        <label>Deskripsi</label>
-                                        <div class="form-input-wrapper">
-                                            <textarea name="faq_hero_description" rows="2"><?= htmlspecialchars($homepageSettings['faq_hero_description'] ?? '') ?></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group-horizontal" style="margin-bottom: 0;">
-                                        <label>Background</label>
-                                        <div class="form-input-wrapper">
-                                            <input type="file" name="faq_hero_background" accept="image/*">
-                                            <?php if (!empty($homepageSettings['faq_hero_background'])): ?>
-                                            <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
-                                                <img src="uploads/<?= htmlspecialchars($homepageSettings['faq_hero_background']) ?>" style="max-width: 100px; border-radius: 4px;">
-                                                <button type="button" class="btn-danger" style="padding: 4px 8px; font-size: 0.75rem;" 
-                                                        onclick="if(confirm('Yakin hapus?')) window.location.href='?action=delete_background&module=homepage&field=faq_hero_background'">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                            <?php endif; ?>
-                                        </div>
-                                    </div>
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Deskripsi</label>
+                            <textarea name="hero_description" rows="2" required><?= htmlspecialchars($homepageSettings['hero_description'] ?? '') ?></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Background Image</label>
+                            <input type="file" name="hero_background" accept="image/*">
+                            <?php if (!empty($homepageSettings['hero_background'])): ?>
+                            <div style="display: flex; align-items: center; gap: 10px; margin-top: 0.5rem;">
+                                <img src="uploads/<?= htmlspecialchars($homepageSettings['hero_background']) ?>" alt="Current" style="max-width: 200px; max-height: 100px; border-radius: 4px;">
+                                <button type="button" class="btn-danger" style="padding: 6px 12px; font-size: 0.85rem;"
+                                        onclick="if(confirm('Yakin hapus background?')) window.location.href='?action=delete_background&module=homepage&field=hero_background';">
+                                    <i class="fas fa-trash"></i> Hapus
+                                </button>
                             </div>
-                            
-                            <!-- HALAMAN KONTAK -->
-                            <div style="position: relative; z-index: 1;">
-                                <h3 style="margin-bottom: 1rem; color: var(--admin-text-primary); font-size: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--admin-border);">Halaman Kontak</h3>
-                                <div style="display: flex; flex-direction: column; gap: 1rem;">
-                                    <div class="form-group-horizontal" style="margin-bottom: 0;">
-                                        <label>Judul</label>
-                                        <div class="form-input-wrapper">
-                                            <input type="text" name="kontak_hero_title" value="<?= htmlspecialchars($homepageSettings['kontak_hero_title'] ?? 'Hubungi Kami') ?>">
-                                        </div>
-                                    </div>
-                                    <div class="form-group-horizontal" style="margin-bottom: 0;">
-                                        <label>Deskripsi</label>
-                                        <div class="form-input-wrapper">
-                                            <textarea name="kontak_hero_description" rows="2"><?= htmlspecialchars($homepageSettings['kontak_hero_description'] ?? '') ?></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="form-group-horizontal" style="margin-bottom: 0;">
-                                        <label>Background</label>
-                                        <div class="form-input-wrapper">
-                                            <input type="file" name="kontak_hero_background" accept="image/*">
-                                            <?php if (!empty($homepageSettings['kontak_hero_background'])): ?>
-                                            <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
-                                                <img src="uploads/<?= htmlspecialchars($homepageSettings['kontak_hero_background']) ?>" style="max-width: 100px; border-radius: 4px;">
-                                                <button type="button" class="btn-danger" style="padding: 4px 8px; font-size: 0.75rem;" 
-                                                        onclick="if(confirm('Yakin hapus?')) window.location.href='?action=delete_background&module=homepage&field=kontak_hero_background'">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                            <?php endif; ?>
-                                        </div>
-                                    </div>
-                                </div>
+                            <?php endif; ?>
+                        </div>
+                        
+                        <!-- STATISTIK -->
+                        <h3 style="margin: 2rem 0 1rem; color: var(--admin-primary); border-bottom: 2px solid var(--admin-border); padding-bottom: 0.5rem;">
+                            <i class="fas fa-chart-bar"></i> Statistik Beranda
+                        </h3>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem;">
+                            <div>
+                                <label style="font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Tahun Pengalaman</label>
+                                <input type="text" name="stats_years" value="<?= htmlspecialchars($homepageSettings['stats_years'] ?? '') ?>" placeholder="10+" style="margin-bottom: 0.5rem;">
+                                <input type="text" name="stats_years_label" value="<?= htmlspecialchars($homepageSettings['stats_years_label'] ?? '') ?>" placeholder="Tahun Pengalaman">
+                            </div>
+                            <div>
+                                <label style="font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Pelanggan</label>
+                                <input type="text" name="stats_customers" value="<?= htmlspecialchars($homepageSettings['stats_customers'] ?? '') ?>" placeholder="5000+" style="margin-bottom: 0.5rem;">
+                                <input type="text" name="stats_customers_label" value="<?= htmlspecialchars($homepageSettings['stats_customers_label'] ?? '') ?>" placeholder="Pelanggan Puas">
+                            </div>
+                            <div>
+                                <label style="font-size: 0.9rem; margin-bottom: 0.5rem; display: block;">Rating</label>
+                                <input type="text" name="stats_rating" value="<?= htmlspecialchars($homepageSettings['stats_rating'] ?? '') ?>" placeholder="4.9" style="margin-bottom: 0.5rem;">
+                                <input type="text" name="stats_rating_label" value="<?= htmlspecialchars($homepageSettings['stats_rating_label'] ?? '') ?>" placeholder="Rating">
                             </div>
                         </div>
                         
+                        <!-- HERO PEMESANAN -->
+                        <h3 style="margin: 2rem 0 1rem; color: var(--admin-primary); border-bottom: 2px solid var(--admin-border); padding-bottom: 0.5rem;">
+                            <i class="fas fa-ticket-alt"></i> Hero Section - Halaman Pemesanan
+                        </h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="form-group">
+                                <label>Judul</label>
+                                <input type="text" name="pemesanan_hero_title" value="<?= htmlspecialchars($homepageSettings['pemesanan_hero_title'] ?? '') ?>">
+                            </div>
+                            <div class="form-group">
+                                <label>Background</label>
+                                <input type="file" name="pemesanan_hero_background" accept="image/*">
+                                <?php if (!empty($homepageSettings['pemesanan_hero_background'])): ?>
+                                <div style="display: flex; gap: 10px; margin-top: 0.5rem;">
+                                    <img src="uploads/<?= htmlspecialchars($homepageSettings['pemesanan_hero_background']) ?>" style="max-width: 150px; max-height: 80px; border-radius: 4px;">
+                                    <button type="button" class="btn-danger" style="padding: 4px 8px; font-size: 0.8rem;"
+                                            onclick="if(confirm('Yakin?')) window.location.href='?action=delete_background&module=homepage&field=pemesanan_hero_background';">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Deskripsi</label>
+                            <textarea name="pemesanan_hero_description" rows="2"><?= htmlspecialchars($homepageSettings['pemesanan_hero_description'] ?? '') ?></textarea>
+                        </div>
+                        
+                        <!-- HERO GALERI -->
+                        <h3 style="margin: 2rem 0 1rem; color: var(--admin-primary); border-bottom: 2px solid var(--admin-border); padding-bottom: 0.5rem;">
+                            <i class="fas fa-images"></i> Hero Section - Halaman Galeri
+                        </h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="form-group">
+                                <label>Judul</label>
+                                <input type="text" name="galeri_hero_title" value="<?= htmlspecialchars($homepageSettings['galeri_hero_title'] ?? '') ?>">
+                            </div>
+                            <div class="form-group">
+                                <label>Background</label>
+                                <input type="file" name="galeri_hero_background" accept="image/*">
+                                <?php if (!empty($homepageSettings['galeri_hero_background'])): ?>
+                                <div style="display: flex; gap: 10px; margin-top: 0.5rem;">
+                                    <img src="uploads/<?= htmlspecialchars($homepageSettings['galeri_hero_background']) ?>" style="max-width: 150px; max-height: 80px; border-radius: 4px;">
+                                    <button type="button" class="btn-danger" style="padding: 4px 8px; font-size: 0.8rem;"
+                                            onclick="if(confirm('Yakin?')) window.location.href='?action=delete_background&module=homepage&field=galeri_hero_background';">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Deskripsi</label>
+                            <textarea name="galeri_hero_description" rows="2"><?= htmlspecialchars($homepageSettings['galeri_hero_description'] ?? '') ?></textarea>
+                        </div>
+                        
+                        <!-- HERO FAQ -->
+                        <h3 style="margin: 2rem 0 1rem; color: var(--admin-primary); border-bottom: 2px solid var(--admin-border); padding-bottom: 0.5rem;">
+                            <i class="fas fa-question-circle"></i> Hero Section - Halaman FAQ
+                        </h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="form-group">
+                                <label>Judul</label>
+                                <input type="text" name="faq_hero_title" value="<?= htmlspecialchars($homepageSettings['faq_hero_title'] ?? '') ?>">
+                            </div>
+                            <div class="form-group">
+                                <label>Background</label>
+                                <input type="file" name="faq_hero_background" accept="image/*">
+                                <?php if (!empty($homepageSettings['faq_hero_background'])): ?>
+                                <div style="display: flex; gap: 10px; margin-top: 0.5rem;">
+                                    <img src="uploads/<?= htmlspecialchars($homepageSettings['faq_hero_background']) ?>" style="max-width: 150px; max-height: 80px; border-radius: 4px;">
+                                    <button type="button" class="btn-danger" style="padding: 4px 8px; font-size: 0.8rem;"
+                                            onclick="if(confirm('Yakin?')) window.location.href='?action=delete_background&module=homepage&field=faq_hero_background';">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Deskripsi</label>
+                            <textarea name="faq_hero_description" rows="2"><?= htmlspecialchars($homepageSettings['faq_hero_description'] ?? '') ?></textarea>
+                        </div>
+                        
+                        <!-- HERO KONTAK -->
+                        <h3 style="margin: 2rem 0 1rem; color: var(--admin-primary); border-bottom: 2px solid var(--admin-border); padding-bottom: 0.5rem;">
+                            <i class="fas fa-phone"></i> Hero Section - Halaman Kontak
+                        </h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="form-group">
+                                <label>Judul</label>
+                                <input type="text" name="kontak_hero_title" value="<?= htmlspecialchars($homepageSettings['kontak_hero_title'] ?? '') ?>">
+                            </div>
+                            <div class="form-group">
+                                <label>Background</label>
+                                <input type="file" name="kontak_hero_background" accept="image/*">
+                                <?php if (!empty($homepageSettings['kontak_hero_background'])): ?>
+                                <div style="display: flex; gap: 10px; margin-top: 0.5rem;">
+                                    <img src="uploads/<?= htmlspecialchars($homepageSettings['kontak_hero_background']) ?>" style="max-width: 150px; max-height: 80px; border-radius: 4px;">
+                                    <button type="button" class="btn-danger" style="padding: 4px 8px; font-size: 0.8rem;"
+                                            onclick="if(confirm('Yakin?')) window.location.href='?action=delete_background&module=homepage&field=kontak_hero_background';">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Deskripsi</label>
+                            <textarea name="kontak_hero_description" rows="2"><?= htmlspecialchars($homepageSettings['kontak_hero_description'] ?? '') ?></textarea>
+                        </div>
+                        
                         <!-- SUBMIT BUTTON -->
-                        <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--admin-border);">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> Simpan Perubahan
+                        <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 2px solid var(--admin-border);">
+                            <button type="submit" class="btn btn-primary" style="padding: 12px 32px; font-size: 1rem;">
+                                <i class="fas fa-save"></i> Simpan Semua Pengaturan Hero
                             </button>
                         </div>
                     </form>
@@ -2850,8 +2592,273 @@ $cacheKiller = time() . mt_rand(1000, 9999);
             </div>
         </div>
 
-        <!-- SECTION BANNER (Hidden - Not in menu) -->
-        <div id="banner-section" class="content-section" style="display: none;">
+
+                        
+                        <div class="form-group">
+                            <label>Jam Operasional</label>
+                            <input type="text" name="company_hours" value="<?= htmlspecialchars($homepageSettings['company_hours'] ?? '') ?>" required placeholder="Senin - Minggu: 08.00 - 22.00 WIB">
+                            <small style="color: var(--admin-text-muted);">Tampil di: Footer dan Halaman Kontak</small>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" name="company_email" value="<?= htmlspecialchars($homepageSettings['company_email'] ?? '') ?>" required placeholder="info@cendanatravel.com">
+                                <small style="color: var(--admin-text-muted);">Tampil di: Footer dan Halaman Kontak</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>WhatsApp</label>
+                                <input type="text" name="company_whatsapp" value="<?= htmlspecialchars($homepageSettings['company_whatsapp'] ?? '') ?>" required placeholder="6285821841529">
+                                <small style="color: var(--admin-text-muted);">Format: 628xxx (tanpa +)</small>
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
+                            <div class="form-group">
+                                <label>Instagram</label>
+                                <input type="text" name="company_instagram" value="<?= htmlspecialchars($homepageSettings['company_instagram'] ?? '') ?>" placeholder="@cendanatravel_official">
+                                <small style="color: var(--admin-text-muted);">Tampil di: Footer (Social Media)</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>TikTok</label>
+                                <input type="text" name="company_tiktok" value="<?= htmlspecialchars($homepageSettings['company_tiktok'] ?? '') ?>" placeholder="@cendanatravel">
+                                <small style="color: var(--admin-text-muted);">Tampil di: Footer (Social Media)</small>
+                            </div>
+                        </div>
+                        
+                        <hr style="margin: 2rem 0; border: 0; border-top: 1px solid var(--admin-border);">
+                        
+                        <!-- HERO SECTION -->
+                        <h3 style="margin-bottom: 1.5rem; color: var(--admin-primary);">
+                            <i class="fas fa-image"></i> Hero Section (Banner Utama)
+                        </h3>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;">
+                            <div class="form-group">
+                                <label>Judul Utama</label>
+                                <input type="text" name="hero_title" value="<?= htmlspecialchars($homepageSettings['hero_title'] ?? '') ?>" required placeholder="Perjalanan Impian">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Sub Judul</label>
+                                <input type="text" name="hero_subtitle" value="<?= htmlspecialchars($homepageSettings['hero_subtitle'] ?? '') ?>" required placeholder="DIMULAI DARI SINI">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Deskripsi Hero</label>
+                            <textarea name="hero_description" rows="3" required><?= htmlspecialchars($homepageSettings['hero_description'] ?? '') ?></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Background Hero Section</label>
+                            <input type="file" name="hero_background" accept="image/*">
+                            <small style="color: var(--admin-text-muted); display: block; margin-top: 5px;">
+                                Format: JPG, PNG. Max 5MB. Kosongkan jika tidak ingin mengubah background.
+                            </small>
+                            <?php if (!empty($homepageSettings['hero_background'])): ?>
+                            <div style="margin-top: 10px; display: flex; align-items: center; gap: 15px;">
+                                <img src="uploads/<?= htmlspecialchars($homepageSettings['hero_background']) ?>" alt="Current Background" style="max-width: 300px; max-height: 150px; border-radius: 8px; border: 1px solid var(--admin-border);">
+                                <button type="button" 
+                                        class="btn-danger" 
+                                        style="padding: 8px 16px; height: fit-content;"
+                                        onclick="if(confirm('Yakin ingin menghapus background ini?')) { window.location.href='?action=delete_background&module=homepage&field=hero_background'; }">
+                                    <i class="fas fa-trash"></i> Hapus Background
+                                </button>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+                        
+                        <hr style="margin: 2rem 0; border: 0; border-top: 1px solid var(--admin-border);">
+                        
+                        <!-- STATISTIK -->
+                        <h3 style="margin-bottom: 1.5rem; color: var(--admin-primary);">
+                            <i class="fas fa-chart-bar"></i> Statistik
+                        </h3>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
+                            <div class="form-group">
+                                <label>Tahun Pengalaman</label>
+                                <input type="text" name="stats_years" value="<?= htmlspecialchars($homepageSettings['stats_years'] ?? '') ?>" required placeholder="10+">
+                                <input type="text" name="stats_years_label" value="<?= htmlspecialchars($homepageSettings['stats_years_label'] ?? '') ?>" required placeholder="Tahun Pengalaman" style="margin-top: 0.5rem;">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Jumlah Pelanggan</label>
+                                <input type="text" name="stats_customers" value="<?= htmlspecialchars($homepageSettings['stats_customers'] ?? '') ?>" required placeholder="5000+">
+                                <input type="text" name="stats_customers_label" value="<?= htmlspecialchars($homepageSettings['stats_customers_label'] ?? '') ?>" required placeholder="Pelanggan Puas" style="margin-top: 0.5rem;">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Rating</label>
+                                <input type="text" name="stats_rating" value="<?= htmlspecialchars($homepageSettings['stats_rating'] ?? '') ?>" required placeholder="4.9">
+                                <input type="text" name="stats_rating_label" value="<?= htmlspecialchars($homepageSettings['stats_rating_label'] ?? '') ?>" required placeholder="Rating" style="margin-top: 0.5rem;">
+                            </div>
+                        </div>
+                        
+                        <hr style="margin: 2rem 0; border: 0; border-top: 1px solid var(--admin-border);">
+                        
+                        <!-- FOOTER -->
+                        <h3 style="margin-bottom: 1.5rem; color: var(--admin-primary);">
+                            <i class="fas fa-align-left"></i> Footer & Tentang Kami
+                        </h3>
+                        
+                        <div class="form-group">
+                            <label>Tentang Kami (Deskripsi Footer)</label>
+                            <textarea name="footer_description" rows="3" required placeholder="Kami adalah penyedia layanan travel terpercaya..."><?= htmlspecialchars($homepageSettings['footer_description'] ?? '') ?></textarea>
+                            <small style="color: var(--admin-text-muted); display: block; margin-top: 0.5rem;">Tampil di bagian "Tentang Kami" pada Footer semua halaman</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Copyright Text</label>
+                            <input type="text" name="footer_copyright" value="<?= htmlspecialchars($homepageSettings['footer_copyright'] ?? '') ?>" required placeholder="© 2024 CV. Cendana Travel. All rights reserved.">
+                            <small style="color: var(--admin-text-muted); display: block; margin-top: 0.5rem;">Tampil di bagian bawah Footer</small>
+                        </div>
+                        
+                        <hr style="margin: 2rem 0; border: 0; border-top: 1px solid var(--admin-border);">
+                        
+                        <!-- HERO SETTINGS HALAMAN LAIN -->
+                        <h3 style="margin-bottom: 1.5rem; color: var(--admin-primary);">
+                            <i class="fas fa-pager"></i> Hero Section Halaman Lain
+                        </h3>
+                        
+                        <!-- Pemesanan -->
+                        <div style="background: var(--admin-bg); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                            <h4 style="margin-bottom: 1rem; color: var(--admin-text);">Halaman Pemesanan</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                <div class="form-group">
+                                    <label>Judul Hero</label>
+                                    <input type="text" name="pemesanan_hero_title" value="<?= htmlspecialchars($homepageSettings['pemesanan_hero_title'] ?? 'Pemesanan Travel') ?>" placeholder="Pemesanan Travel">
+                                </div>
+                                <div class="form-group">
+                                    <label>Background Hero</label>
+                                    <input type="file" name="pemesanan_hero_background" accept="image/*">
+                                    <?php if (!empty($homepageSettings['pemesanan_hero_background'])): ?>
+                                    <div style="display: flex; align-items: center; gap: 10px; margin-top: 0.5rem;">
+                                        <img src="uploads/<?= htmlspecialchars($homepageSettings['pemesanan_hero_background']) ?>" alt="Current" style="max-width: 150px; max-height: 80px; border-radius: 4px;">
+                                        <button type="button" 
+                                                class="btn-danger" 
+                                                style="padding: 6px 12px; font-size: 0.85rem;"
+                                                onclick="if(confirm('Yakin ingin menghapus background ini?')) { window.location.href='?action=delete_background&module=homepage&field=pemesanan_hero_background'; }">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Deskripsi</label>
+                                <textarea name="pemesanan_hero_description" rows="2"><?= htmlspecialchars($homepageSettings['pemesanan_hero_description'] ?? 'Pesan tiket pesawat, bus, dan kapal dengan mudah dan cepat') ?></textarea>
+                            </div>
+                        </div>
+                        
+                        <!-- Galeri -->
+                        <div style="background: var(--admin-bg); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                            <h4 style="margin-bottom: 1rem; color: var(--admin-text);">Halaman Galeri</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                <div class="form-group">
+                                    <label>Judul Hero</label>
+                                    <input type="text" name="galeri_hero_title" value="<?= htmlspecialchars($homepageSettings['galeri_hero_title'] ?? 'Galeri Perjalanan') ?>" placeholder="Galeri Perjalanan">
+                                </div>
+                                <div class="form-group">
+                                    <label>Background Hero</label>
+                                    <input type="file" name="galeri_hero_background" accept="image/*">
+                                    <?php if (!empty($homepageSettings['galeri_hero_background'])): ?>
+                                    <div style="display: flex; align-items: center; gap: 10px; margin-top: 0.5rem;">
+                                        <img src="uploads/<?= htmlspecialchars($homepageSettings['galeri_hero_background']) ?>" alt="Current" style="max-width: 150px; max-height: 80px; border-radius: 4px;">
+                                        <button type="button" 
+                                           class="btn-danger" 
+                                           style="padding: 6px 12px; font-size: 0.85rem;"
+                                           onclick="if(confirm('Yakin ingin menghapus background ini?')) { window.location.href='?action=delete_background&module=homepage&field=galeri_hero_background'; }">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Deskripsi</label>
+                                <textarea name="galeri_hero_description" rows="2"><?= htmlspecialchars($homepageSettings['galeri_hero_description'] ?? 'Koleksi momen indah dari perjalanan pelanggan kami') ?></textarea>
+                            </div>
+                        </div>
+                        
+                        <!-- FAQ -->
+                        <div style="background: var(--admin-bg); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                            <h4 style="margin-bottom: 1rem; color: var(--admin-text);">Halaman FAQ</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                <div class="form-group">
+                                    <label>Judul Hero</label>
+                                    <input type="text" name="faq_hero_title" value="<?= htmlspecialchars($homepageSettings['faq_hero_title'] ?? 'Pertanyaan yang Sering Diajukan') ?>" placeholder="FAQ">
+                                </div>
+                                <div class="form-group">
+                                    <label>Background Hero</label>
+                                    <input type="file" name="faq_hero_background" accept="image/*">
+                                    <?php if (!empty($homepageSettings['faq_hero_background'])): ?>
+                                    <div style="display: flex; align-items: center; gap: 10px; margin-top: 0.5rem;">
+                                        <img src="uploads/<?= htmlspecialchars($homepageSettings['faq_hero_background']) ?>" alt="Current" style="max-width: 150px; max-height: 80px; border-radius: 4px;">
+                                        <button type="button" 
+                                           class="btn-danger" 
+                                           style="padding: 6px 12px; font-size: 0.85rem;"
+                                           onclick="if(confirm('Yakin ingin menghapus background ini?')) { window.location.href='?action=delete_background&module=homepage&field=faq_hero_background'; }">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Deskripsi</label>
+                                <textarea name="faq_hero_description" rows="2"><?= htmlspecialchars($homepageSettings['faq_hero_description'] ?? 'Temukan jawaban untuk pertanyaan umum seputar layanan kami') ?></textarea>
+                            </div>
+                        </div>
+                        
+                        <!-- Kontak -->
+                        <div style="background: var(--admin-bg); padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                            <h4 style="margin-bottom: 1rem; color: var(--admin-text);">Halaman Kontak</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                <div class="form-group">
+                                    <label>Judul Hero</label>
+                                    <input type="text" name="kontak_hero_title" value="<?= htmlspecialchars($homepageSettings['kontak_hero_title'] ?? 'Hubungi Kami') ?>" placeholder="Hubungi Kami">
+                                </div>
+                                <div class="form-group">
+                                    <label>Background Hero</label>
+                                    <input type="file" name="kontak_hero_background" accept="image/*">
+                                    <?php if (!empty($homepageSettings['kontak_hero_background'])): ?>
+                                    <div style="display: flex; align-items: center; gap: 10px; margin-top: 0.5rem;">
+                                        <img src="uploads/<?= htmlspecialchars($homepageSettings['kontak_hero_background']) ?>" alt="Current" style="max-width: 150px; max-height: 80px; border-radius: 4px;">
+                                        <button type="button" 
+                                           class="btn-danger" 
+                                           style="padding: 6px 12px; font-size: 0.85rem;"
+                                           onclick="if(confirm('Yakin ingin menghapus background ini?')) { window.location.href='?action=delete_background&module=homepage&field=kontak_hero_background'; }">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Deskripsi</label>
+                                <textarea name="kontak_hero_description" rows="2"><?= htmlspecialchars($homepageSettings['kontak_hero_description'] ?? 'Kami siap membantu Anda merencanakan perjalanan impian') ?></textarea>
+                            </div>
+                        </div>
+                        
+                        <!-- SUBMIT BUTTON -->
+                        <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--admin-border);">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Simpan Pengaturan Beranda
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- KELOLA BERANDA SECTION -->
+        <!-- ============================================ -->
+        <div id="beranda-section" class="content-section">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                 <div>
                     <h1>Kelola Banner Beranda</h1>
@@ -3016,482 +3023,6 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                     </div>
                 </div>
             </div>
-        </div>
-
-
-
-        <!-- ============================================ -->
-        <!-- KONTEN BERANDA SECTION -->
-        <!-- ============================================ -->
-        <div id="konten-beranda-section" class="content-section">
-            <h1>Konten Beranda Dinamis</h1>
-            <p>Kelola semua konten yang ditampilkan di halaman beranda website</p>
-            
-            <!-- Content Type Tabs -->
-            <div class="transport-tabs" style="margin-bottom: 30px;">
-                <button class="tab-btn active" data-tab="why-choose">
-                    <i class="fas fa-check-circle"></i> Mengapa Memilih Kami
-                </button>
-                <button class="tab-btn" data-tab="payment-steps">
-                    <i class="fas fa-credit-card"></i> Cara Pembayaran
-                </button>
-                <button class="tab-btn" data-tab="order-steps">
-                    <i class="fas fa-shopping-cart"></i> Cara Memesan
-                </button>
-                <button class="tab-btn" data-tab="gallery-home">
-                    <i class="fas fa-images"></i> Galeri Beranda
-                </button>
-            </div>
-
-            <?php
-            // Include functions
-            require_once __DIR__ . '/includes/home_content_functions.php';
-            
-            // Fetch all data
-            $whyChooseUs = getAllWhyChooseUs();
-            $paymentSteps = getAllPaymentSteps();
-            $orderSteps = getAllOrderSteps();
-            $galleryHomeSelection = getAllGalleryHomeSelection();
-            $availableGallery = getAllGalleryForSelection();
-            ?>
-
-            <!-- TAB 1: MENGAPA MEMILIH KAMI -->
-            <div id="why-choose-tab" class="transport-tab-content active">
-                <div class="section-card">
-                    <div class="section-header">
-                        <h2>Mengapa Memilih Kami</h2>
-                        <button class="btn btn-primary" onclick="showAddWhyChooseForm()">
-                            <i class="fas fa-plus"></i> Tambah Poin Baru
-                        </button>
-                    </div>
-
-                    <!-- Add Form (Hidden by default) -->
-                    <div id="add-why-choose-form" style="display: none; margin-bottom: 2rem; padding: 1.5rem; background: var(--admin-bg-secondary); border-radius: 12px;">
-                        <h3 style="margin-bottom: 1rem; color: var(--admin-text-primary);">Tambah Poin Baru</h3>
-                        <form method="POST" enctype="multipart/form-data">
-                            <input type="hidden" name="action" value="create">
-                            <input type="hidden" name="module" value="why_choose">
-                            
-                            <div class="form-group">
-                                <label>Icon</label>
-                                <input type="file" name="icon" accept="image/*">
-                                <small style="color: var(--admin-text-muted);">Format: JPG, PNG, SVG (Maks 2MB)</small>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>Judul Poin *</label>
-                                <input type="text" name="title" required placeholder="Contoh: Legal & Terpercaya">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>Deskripsi *</label>
-                                <textarea name="description" required rows="3" placeholder="Jelaskan keunggulan ini..."></textarea>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>Urutan Tampil</label>
-                                <input type="number" name="sort_order" value="<?= getMaxSortOrder('why_choose_us') ?>" min="0">
-                            </div>
-                            
-                            <div style="display: flex; gap: 1rem;">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save"></i> Simpan
-                                </button>
-                                <button type="button" class="btn btn-secondary" onclick="hideAddWhyChooseForm()">
-                                    <i class="fas fa-times"></i> Batal
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <!-- List of Items -->
-                    <div class="table-responsive">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th width="80">Icon</th>
-                                    <th>Judul</th>
-                                    <th>Deskripsi</th>
-                                    <th width="100">Urutan</th>
-                                    <th width="100">Status</th>
-                                    <th width="150">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if (empty($whyChooseUs)): ?>
-                                <tr>
-                                    <td colspan="6" style="text-align: center; padding: 2rem; color: var(--admin-text-muted);">
-                                        <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
-                                        Belum ada data. Klik "Tambah Poin Baru" untuk menambahkan.
-                                    </td>
-                                </tr>
-                                <?php else: ?>
-                                <?php foreach ($whyChooseUs as $item): ?>
-                                <tr>
-                                    <td>
-                                        <?php if ($item['icon'] && file_exists($item['icon'])): ?>
-                                        <img src="<?= htmlspecialchars($item['icon']) ?>" alt="icon" style="width: 50px; height: 50px; object-fit: contain; border-radius: 8px;">
-                                        <?php else: ?>
-                                        <i class="fas fa-image" style="font-size: 2rem; color: var(--admin-text-muted);"></i>
-                                        <?php endif; ?>
-                                    </td>
-                                    <td><strong><?= htmlspecialchars($item['title']) ?></strong></td>
-                                    <td><?= htmlspecialchars(substr($item['description'], 0, 100)) ?><?= strlen($item['description']) > 100 ? '...' : '' ?></td>
-                                    <td><?= $item['sort_order'] ?></td>
-                                    <td>
-                                        <span class="status-badge status-<?= $item['is_active'] ? 'active' : 'inactive' ?>">
-                                            <?= $item['is_active'] ? 'Aktif' : 'Nonaktif' ?>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <div style="display: flex; gap: 8px;">
-                                            <button class="btn btn-small btn-primary" onclick="editWhyChoose(<?= $item['id'] ?>)" title="Edit">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <form method="POST" style="display: inline;" onsubmit="return confirm('Yakin ingin menghapus?')">
-                                                <input type="hidden" name="action" value="delete">
-                                                <input type="hidden" name="module" value="why_choose">
-                                                <input type="hidden" name="id" value="<?= $item['id'] ?>">
-                                                <button type="submit" class="btn btn-small btn-danger" title="Hapus">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 2: CARA PEMBAYARAN -->
-            <div id="payment-steps-tab" class="transport-tab-content">
-                <div class="section-card">
-                    <div class="section-header">
-                        <h2>Cara Pembayaran</h2>
-                        <button class="btn btn-primary" onclick="showAddPaymentStepForm()">
-                            <i class="fas fa-plus"></i> Tambah Langkah Baru
-                        </button>
-                    </div>
-
-                    <!-- Add Form -->
-                    <div id="add-payment-step-form" style="display: none; margin-bottom: 2rem; padding: 1.5rem; background: var(--admin-bg-secondary); border-radius: 12px;">
-                        <h3 style="margin-bottom: 1rem; color: var(--admin-text-primary);">Tambah Langkah Baru</h3>
-                        <form method="POST" enctype="multipart/form-data">
-                            <input type="hidden" name="action" value="create">
-                            <input type="hidden" name="module" value="payment_steps">
-                            
-                            <div class="form-group">
-                                <label>Icon</label>
-                                <input type="file" name="icon" accept="image/*">
-                                <small style="color: var(--admin-text-muted);">Format: JPG, PNG, SVG (Maks 2MB)</small>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>Judul Langkah *</label>
-                                <input type="text" name="title" required placeholder="Contoh: Pilih Layanan">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>Deskripsi *</label>
-                                <textarea name="description" required rows="3" placeholder="Jelaskan langkah ini..."></textarea>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>Urutan Tampil</label>
-                                <input type="number" name="sort_order" value="<?= getMaxSortOrder('payment_steps') ?>" min="0">
-                            </div>
-                            
-                            <div style="display: flex; gap: 1rem;">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save"></i> Simpan
-                                </button>
-                                <button type="button" class="btn btn-secondary" onclick="hideAddPaymentStepForm()">
-                                    <i class="fas fa-times"></i> Batal
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <!-- List -->
-                    <div class="table-responsive">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th width="80">Icon</th>
-                                    <th>Judul</th>
-                                    <th>Deskripsi</th>
-                                    <th width="100">Urutan</th>
-                                    <th width="100">Status</th>
-                                    <th width="150">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if (empty($paymentSteps)): ?>
-                                <tr>
-                                    <td colspan="6" style="text-align: center; padding: 2rem; color: var(--admin-text-muted);">
-                                        <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
-                                        Belum ada data. Klik "Tambah Langkah Baru" untuk menambahkan.
-                                    </td>
-                                </tr>
-                                <?php else: ?>
-                                <?php foreach ($paymentSteps as $item): ?>
-                                <tr>
-                                    <td>
-                                        <?php if ($item['icon'] && file_exists($item['icon'])): ?>
-                                        <img src="<?= htmlspecialchars($item['icon']) ?>" alt="icon" style="width: 50px; height: 50px; object-fit: contain; border-radius: 8px;">
-                                        <?php else: ?>
-                                        <i class="fas fa-image" style="font-size: 2rem; color: var(--admin-text-muted);"></i>
-                                        <?php endif; ?>
-                                    </td>
-                                    <td><strong><?= htmlspecialchars($item['title']) ?></strong></td>
-                                    <td><?= htmlspecialchars(substr($item['description'], 0, 100)) ?><?= strlen($item['description']) > 100 ? '...' : '' ?></td>
-                                    <td><?= $item['sort_order'] ?></td>
-                                    <td>
-                                        <span class="status-badge status-<?= $item['is_active'] ? 'active' : 'inactive' ?>">
-                                            <?= $item['is_active'] ? 'Aktif' : 'Nonaktif' ?>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <div style="display: flex; gap: 8px;">
-                                            <button class="btn btn-small btn-primary" onclick="editPaymentStep(<?= $item['id'] ?>)" title="Edit">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <form method="POST" style="display: inline;" onsubmit="return confirm('Yakin ingin menghapus?')">
-                                                <input type="hidden" name="action" value="delete">
-                                                <input type="hidden" name="module" value="payment_steps">
-                                                <input type="hidden" name="id" value="<?= $item['id'] ?>">
-                                                <button type="submit" class="btn btn-small btn-danger" title="Hapus">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 3: CARA MEMESAN -->
-            <div id="order-steps-tab" class="transport-tab-content">
-                <div class="section-card">
-                    <div class="section-header">
-                        <h2>Bagaimana Cara Memesan</h2>
-                        <button class="btn btn-primary" onclick="showAddOrderStepForm()">
-                            <i class="fas fa-plus"></i> Tambah Langkah Baru
-                        </button>
-                    </div>
-
-                    <!-- Add Form -->
-                    <div id="add-order-step-form" style="display: none; margin-bottom: 2rem; padding: 1.5rem; background: var(--admin-bg-secondary); border-radius: 12px;">
-                        <h3 style="margin-bottom: 1rem; color: var(--admin-text-primary);">Tambah Langkah Baru</h3>
-                        <form method="POST" enctype="multipart/form-data">
-                            <input type="hidden" name="action" value="create">
-                            <input type="hidden" name="module" value="order_steps">
-                            
-                            <div class="form-group">
-                                <label>Foto Langkah</label>
-                                <input type="file" name="image" accept="image/*">
-                                <small style="color: var(--admin-text-muted);">Format: JPG, PNG (Maks 5MB)</small>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>Judul Langkah *</label>
-                                <input type="text" name="title" required placeholder="Contoh: Pilih Layanan">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>Deskripsi *</label>
-                                <textarea name="description" required rows="3" placeholder="Jelaskan langkah ini..."></textarea>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>Urutan Tampil</label>
-                                <input type="number" name="sort_order" value="<?= getMaxSortOrder('order_steps') ?>" min="0">
-                            </div>
-                            
-                            <div style="display: flex; gap: 1rem;">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save"></i> Simpan
-                                </button>
-                                <button type="button" class="btn btn-secondary" onclick="hideAddOrderStepForm()">
-                                    <i class="fas fa-times"></i> Batal
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <!-- List -->
-                    <div class="table-responsive">
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th width="120">Foto</th>
-                                    <th>Judul</th>
-                                    <th>Deskripsi</th>
-                                    <th width="100">Urutan</th>
-                                    <th width="100">Status</th>
-                                    <th width="150">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if (empty($orderSteps)): ?>
-                                <tr>
-                                    <td colspan="6" style="text-align: center; padding: 2rem; color: var(--admin-text-muted);">
-                                        <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
-                                        Belum ada data. Klik "Tambah Langkah Baru" untuk menambahkan.
-                                    </td>
-                                </tr>
-                                <?php else: ?>
-                                <?php foreach ($orderSteps as $item): ?>
-                                <tr>
-                                    <td>
-                                        <?php if ($item['image'] && file_exists($item['image'])): ?>
-                                        <img src="<?= htmlspecialchars($item['image']) ?>" alt="foto" style="width: 100px; height: 70px; object-fit: cover; border-radius: 8px;">
-                                        <?php else: ?>
-                                        <i class="fas fa-image" style="font-size: 2rem; color: var(--admin-text-muted);"></i>
-                                        <?php endif; ?>
-                                    </td>
-                                    <td><strong><?= htmlspecialchars($item['title']) ?></strong></td>
-                                    <td><?= htmlspecialchars(substr($item['description'], 0, 100)) ?><?= strlen($item['description']) > 100 ? '...' : '' ?></td>
-                                    <td><?= $item['sort_order'] ?></td>
-                                    <td>
-                                        <span class="status-badge status-<?= $item['is_active'] ? 'active' : 'inactive' ?>">
-                                            <?= $item['is_active'] ? 'Aktif' : 'Nonaktif' ?>
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <div style="display: flex; gap: 8px;">
-                                            <button class="btn btn-small btn-primary" onclick="editOrderStep(<?= $item['id'] ?>)" title="Edit">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <form method="POST" style="display: inline;" onsubmit="return confirm('Yakin ingin menghapus?')">
-                                                <input type="hidden" name="action" value="delete">
-                                                <input type="hidden" name="module" value="order_steps">
-                                                <input type="hidden" name="id" value="<?= $item['id'] ?>">
-                                                <button type="submit" class="btn btn-small btn-danger" title="Hapus">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 4: GALERI BERANDA -->
-            <div id="gallery-home-tab" class="transport-tab-content">
-                <div class="section-card">
-                    <div class="section-header">
-                        <h2>Galeri Perjalanan (Tampil di Beranda)</h2>
-                        <button class="btn btn-primary" onclick="showAddGalleryHomeForm()" 
-                                <?= getGalleryHomeSelectionCount() >= 3 ? 'disabled title="Maksimal 3 foto"' : '' ?>>
-                            <i class="fas fa-plus"></i> Pilih Foto (Maks 3)
-                        </button>
-                    </div>
-
-                    <?php if (getGalleryHomeSelectionCount() >= 3): ?>
-                    <div style="padding: 1rem; background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; margin-bottom: 1rem; color: #856404;">
-                        <i class="fas fa-exclamation-triangle"></i> <strong>Batas Tercapai:</strong> Maksimal hanya 3 foto yang dapat ditampilkan di beranda. Hapus salah satu untuk menambah foto baru.
-                    </div>
-                    <?php endif; ?>
-
-                    <!-- Add Form -->
-                    <div id="add-gallery-home-form" style="display: none; margin-bottom: 2rem; padding: 1.5rem; background: var(--admin-bg-secondary); border-radius: 12px;">
-                        <h3 style="margin-bottom: 1rem; color: var(--admin-text-primary);">Pilih Foto dari Galeri</h3>
-                        <form method="POST">
-                            <input type="hidden" name="action" value="create">
-                            <input type="hidden" name="module" value="gallery_home">
-                            
-                            <div class="form-group">
-                                <label>Pilih Foto *</label>
-                                <select name="gallery_id" required style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--admin-border);">
-                                    <option value="">-- Pilih Foto --</option>
-                                    <?php foreach ($availableGallery as $gal): ?>
-                                    <option value="<?= $gal['id'] ?>"><?= htmlspecialchars($gal['title']) ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>Deskripsi Foto *</label>
-                                <textarea name="description" required rows="2" placeholder="Deskripsi singkat untuk foto ini..."></textarea>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>Urutan Tampil</label>
-                                <input type="number" name="sort_order" value="<?= getMaxSortOrder('gallery_home_selection') ?>" min="0">
-                            </div>
-                            
-                            <div style="display: flex; gap: 1rem;">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save"></i> Simpan
-                                </button>
-                                <button type="button" class="btn btn-secondary" onclick="hideAddGalleryHomeForm()">
-                                    <i class="fas fa-times"></i> Batal
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <!-- List -->
-                    <div class="gallery-grid">
-                        <?php if (empty($galleryHomeSelection)): ?>
-                        <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--admin-text-muted);">
-                            <i class="fas fa-images" style="font-size: 4rem; margin-bottom: 1rem; display: block;"></i>
-                            <p>Belum ada foto dipilih untuk beranda. Pilih maksimal 3 foto dari galeri.</p>
-                        </div>
-                        <?php else: ?>
-                        <?php foreach ($galleryHomeSelection as $item): ?>
-                        <div class="gallery-item">
-                            <div style="position: relative;">
-                                <?php if ($item['image_path'] && file_exists($item['image_path'])): ?>
-                                <img src="<?= htmlspecialchars($item['image_path']) ?>" alt="<?= htmlspecialchars($item['title']) ?>" 
-                                     style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
-                                <?php else: ?>
-                                <div style="width: 100%; height: 200px; background: #f8f9fa; display: flex; align-items: center; justify-content: center; border-radius: 8px 8px 0 0;">
-                                    <i class="fas fa-image" style="font-size: 3rem; color: #dee2e6;"></i>
-                                </div>
-                                <?php endif; ?>
-                            </div>
-                            <div style="padding: 1rem;">
-                                <h4 style="margin: 0 0 0.5rem 0; font-size: 1rem; color: var(--admin-text-primary);">
-                                    <?= htmlspecialchars($item['title']) ?>
-                                </h4>
-                                <p style="margin: 0 0 1rem 0; font-size: 0.85rem; color: var(--admin-text-muted);">
-                                    <?= htmlspecialchars($item['description']) ?>
-                                </p>
-                                <div style="display: flex; gap: 8px; justify-content: space-between; align-items: center;">
-                                    <span style="font-size: 0.8rem; color: var(--admin-text-muted);">Urutan: <?= $item['sort_order'] ?></span>
-                                    <form method="POST" style="display: inline;" onsubmit="return confirm('Yakin ingin menghapus foto ini dari beranda?')">
-                                        <input type="hidden" name="action" value="delete">
-                                        <input type="hidden" name="module" value="gallery_home">
-                                        <input type="hidden" name="id" value="<?= $item['id'] ?>">
-                                        <button type="submit" class="btn btn-small btn-danger">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <?php endforeach; ?>
-                        <?php endif; ?>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
 
@@ -4017,7 +3548,50 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                         <?php endif; ?>
                     </div>
                 </div>
+        <!-- ============================================ -->
+        <!-- TRANSPORTASI SECTION -->
+        <!-- ============================================ -->
+        <div id="transportasi-section" class="content-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div>
+                    <h1>Kelola Transportasi</h1>
+                    <p>Tambah, edit, atau hapus layanan transportasi yang tersedia</p>
+                </div>
+                <button class="btn btn-primary" onclick="openTransportModal()" style="white-space: nowrap;">
+                    <i class="fas fa-plus"></i> Tambah Transportasi
+                </button>
             </div>
+            
+            <!-- Transport Services List will be here -->
+            <?php if (!empty($transportServices)): ?>
+                <div class="transport-grid">
+                    <?php foreach ($transportServices as $service): ?>
+                        <!-- Transport card content -->
+                    <?php endforeach; ?>
+                </div>
+            <?php else: ?>
+                <div class="empty-state">
+                    <i class="fas fa-plane-slash"></i>
+                    <p>Belum ada layanan transportasi. Klik tombol "Tambah Transportasi" untuk menambahkan.</p>
+                </div>
+            <?php endif; ?>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- GALERI SECTION -->
+        <!-- ============================================ -->
+        <div id="galeri-section" class="content-section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div>
+                    <h1>Kelola Galeri</h1>
+                    <p>Tambah, edit, atau hapus foto di galeri</p>
+                </div>
+                <button class="btn btn-primary" onclick="openGalleryModal()">
+                    <i class="fas fa-plus"></i> Tambah Foto
+                </button>
+            </div>
+            
+            <!-- Gallery grid will be here -->
         </div>
 
         <!-- ============================================ -->
@@ -4037,12 +3611,9 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                         <input type="hidden" name="module" value="contact">
                         
                         <!-- 2 COLUMN GRID LAYOUT -->
-                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 3rem; position: relative;">
-                            <!-- Vertical Divider Line -->
-                            <div style="position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--admin-border); transform: translateX(-50%);"></div>
-                            
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem;">
                             <!-- LEFT COLUMN -->
-                            <div style="display: flex; flex-direction: column; gap: 1.5rem; position: relative; z-index: 1;">
+                            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
                                 <div class="form-group-horizontal" style="margin-bottom: 0;">
                                     <label>WhatsApp</label>
                                     <div class="form-input-wrapper">
@@ -4263,9 +3834,142 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                 </div>
             </div>
         </div>
-
-    </div>
-    <!-- End main-content -->
+        
+        <!-- ============================================ -->
+        <!-- KELOLA TRANSPORTASI SECTION -->
+        <!-- ============================================ -->
+        <div id="transportasi-section" class="content-section">
+            <h1>Kelola Jenis Transportasi</h1>
+            <p>Tambah, edit, atau hapus layanan transportasi (Pesawat, Kapal, Bus)</p>
+            
+            <!-- Form Tambah Layanan -->
+            <div class="section-card">
+                <div class="section-header">
+                    <h2>Tambah Layanan Transportasi Baru</h2>
+                </div>
+                <div class="section-content">
+                    <form method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="action" value="add">
+                        <input type="hidden" name="module" value="transport">
+                        
+                        <div class="form-group">
+                            <label>Jenis Transportasi</label>
+                            <select name="transport_type" required>
+                                <option value="">-- Pilih Jenis --</option>
+                                <?php foreach ($transportTypes as $type): ?>
+                                <option value="<?= $type['type_key'] ?>"><?= $type['type_name'] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Nama Layanan</label>
+                            <input type="text" name="name" required placeholder="Contoh: Lion Air, KM. Kelud, Bus Pariwisata">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Logo/Gambar</label>
+                            <input type="file" name="logo" accept="image/*">
+                            <small>Upload logo maskapai/operator (opsional)</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Rute/Deskripsi</label>
+                            <textarea name="route" required placeholder="Contoh: Penerbangan domestik terpercaya"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Harga</label>
+                            <input type="text" name="price" required placeholder="Contoh: Rp 450.000 - Rp 850.000">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Urutan Tampil</label>
+                            <input type="number" name="display_order" value="0" min="0">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" name="is_active" checked> Aktif
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Tambah Layanan
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Daftar Layanan per Jenis Transportasi -->
+            <?php 
+            $servicesByType = [];
+            foreach ($transportServices as $service) {
+                $servicesByType[$service['transport_type']][] = $service;
+            }
+            ?>
+            
+            <?php foreach ($transportTypes as $type): ?>
+            <div class="section-card">
+                <div class="section-header">
+                    <h2><?= $type['type_name'] ?> (<?= $type['type_key'] ?>)</h2>
+                </div>
+                <div class="section-content">
+                    <?php if (empty($servicesByType[$type['type_key']])): ?>
+                    <div style="text-align: center; padding: 2rem; color: var(--admin-text-muted);">
+                        <i class="fas fa-box-open" style="font-size: 3rem; margin-bottom: 15px; display: block; opacity: 0.3;"></i>
+                        Belum ada layanan <?= $type['type_name'] ?>
+                    </div>
+                    <?php else: ?>
+                    <div style="display: grid; gap: 1rem;">
+                        <?php foreach ($servicesByType[$type['type_key']] as $service): ?>
+                        <div style="padding: 1.25rem; background: var(--admin-bg-secondary); border-radius: 12px; border: 1px solid var(--admin-border); display: flex; align-items: center; gap: 1rem;">
+                            <?php if ($service['logo']): ?>
+                            <img src="<?= $service['logo'] ?>" alt="<?= $service['name'] ?>" 
+                                 style="width: 60px; height: 60px; object-fit: contain; border-radius: 8px; background: white; padding: 5px;">
+                            <?php else: ?>
+                            <div style="width: 60px; height: 60px; background: var(--admin-primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">
+                                <i class="fas fa-image"></i>
+                            </div>
+                            <?php endif; ?>
+                            
+                            <div style="flex: 1;">
+                                <h4 style="margin: 0 0 0.5rem 0; color: var(--admin-text-primary); font-size: 1.1rem;">
+                                    <?= htmlspecialchars($service['name']) ?>
+                                    <?php if (!$service['is_active']): ?>
+                                    <span class="badge badge-warning">Tidak Aktif</span>
+                                    <?php endif; ?>
+                                </h4>
+                                <p style="margin: 0 0 0.5rem 0; color: var(--admin-text-secondary); font-size: 0.9rem;">
+                                    <?= htmlspecialchars($service['route']) ?>
+                                </p>
+                                <strong style="color: var(--admin-success); font-size: 1rem;">
+                                    <?= htmlspecialchars($service['price']) ?>
+                                </strong>
+                            </div>
+                            
+                            <div style="display: flex; gap: 0.5rem;">
+                                <button onclick='editTransportFromDB(<?= json_encode($service) ?>)' class="btn btn-secondary" style="padding: 8px 12px; font-size: 0.85rem;">
+                                    <i class="fas fa-edit"></i> Edit
+                                </button>
+                                <form method="POST" style="display: inline;" 
+                                      onsubmit="return confirm('Yakin ingin menghapus layanan ini?')">
+                                    <input type="hidden" name="action" value="delete">
+                                    <input type="hidden" name="module" value="transport">
+                                    <input type="hidden" name="id" value="<?= $service['id'] ?>">
+                                    <button type="submit" class="btn btn-danger" style="padding: 8px 12px; font-size: 0.85rem;">
+                                        <i class="fas fa-trash"></i> Hapus
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
 
     <!-- Mobile Menu Toggle -->
     <div class="mobile-menu-toggle" onclick="toggleSidebar()">
@@ -4823,7 +4527,7 @@ $cacheKiller = time() . mt_rand(1000, 9999);
         // Tab switching functionality for home content
         function switchHomeContentTab(tabName) {
             // Get parent section to scope the query
-            const homeContentSection = document.getElementById('konten-beranda-section');
+            const homeContentSection = document.getElementById('home-content-section');
             if (!homeContentSection) return;
             
             // Remove active from all tabs and content within home content section
@@ -5005,8 +4709,9 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                     // Check if it's a transport tab or home content tab
                     if (tabName === 'pesawat' || tabName === 'kapal' || tabName === 'bus') {
                         switchTab(tabName);
-                    } else if (tabName === 'why-choose' || tabName === 'payment-steps' || 
-                               tabName === 'order-steps' || tabName === 'gallery-home') {
+                    } else if (tabName === 'layanan-unggulan' || tabName === 'mengapa-memilih' || 
+                               tabName === 'cara-pembayaran' || tabName === 'cara-memesan' || 
+                               tabName === 'galeri-beranda' || tabName === 'legalitas') {
                         switchHomeContentTab(tabName);
                     }
                 });
@@ -5099,57 +4804,6 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                 }, 5000);
             }
         });
-
-        // =====================================================
-        // KONTEN BERANDA - FORM TOGGLE FUNCTIONS
-        // =====================================================
-
-        // Why Choose Us
-        function showAddWhyChooseForm() {
-            document.getElementById('add-why-choose-form').style.display = 'block';
-        }
-        function hideAddWhyChooseForm() {
-            document.getElementById('add-why-choose-form').style.display = 'none';
-        }
-
-        // Payment Steps
-        function showAddPaymentStepForm() {
-            document.getElementById('add-payment-step-form').style.display = 'block';
-        }
-        function hideAddPaymentStepForm() {
-            document.getElementById('add-payment-step-form').style.display = 'none';
-        }
-
-        // Order Steps
-        function showAddOrderStepForm() {
-            document.getElementById('add-order-step-form').style.display = 'block';
-        }
-        function hideAddOrderStepForm() {
-            document.getElementById('add-order-step-form').style.display = 'none';
-        }
-
-        // Gallery Home
-        function showAddGalleryHomeForm() {
-            document.getElementById('add-gallery-home-form').style.display = 'block';
-        }
-        function hideAddGalleryHomeForm() {
-            document.getElementById('add-gallery-home-form').style.display = 'none';
-        }
-
-        // Edit functions (akan membuka modal atau inline form)
-        function editWhyChoose(id) {
-            alert('Fitur edit akan segera ditambahkan. ID: ' + id);
-            // TODO: Implementasi modal edit
-        }
-
-        function editPaymentStep(id) {
-            alert('Fitur edit akan segera ditambahkan. ID: ' + id);
-        }
-
-        function editOrderStep(id) {
-            alert('Fitur edit akan segera ditambahkan. ID: ' + id);
-        }
-
     </script>
     
     <!-- DEBUG: Transport Services Data Verification -->

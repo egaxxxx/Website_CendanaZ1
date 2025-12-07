@@ -35,9 +35,9 @@
     --spacing-sm: 0.5rem;
     --spacing-md: 1rem;
     --spacing-lg: 2rem;
-    --spacing-xl: 3rem;
-    --spacing-2xl: 4rem;
-    --spacing-3xl: 6rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 1rem;
+    --spacing-3xl: 2rem;
 
     /* Shadows */
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -141,44 +141,11 @@ a:hover {
 }
 
 /* ============================================
-   PROFESSIONAL SECTION SEPARATORS
+   SECTION POSITIONING
    ============================================ */
 
-/* Global section separator - subtle and elegant */
 section {
     position: relative;
-}
-
-/* Soft border between sections */
-section+section {
-    border-top: 1px solid rgba(212, 149, 110, 0.1);
-    box-shadow: 0 -1px 0 0 rgba(255, 255, 255, 0.8);
-}
-
-/* Alternative: Decorative gradient separator */
-.section-divider-line {
-    height: 1px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(212, 149, 110, 0.15) 10%,
-            rgba(184, 112, 77, 0.25) 50%,
-            rgba(212, 149, 110, 0.15) 90%,
-            transparent 100%);
-    margin: 3rem auto;
-    max-width: 90%;
-}
-
-/* Dot separator style */
-.section-dots-separator {
-    text-align: center;
-    padding: 2rem 0;
-}
-
-.section-dots-separator::before {
-    content: '• • •';
-    color: rgba(212, 149, 110, 0.3);
-    font-size: 1.5rem;
-    letter-spacing: 0.5rem;
 }
 
 /* ============================================
@@ -218,13 +185,13 @@ header {
     /* OPSI 3: Light Brown Pastel - Premium & Cozy (AKTIF) */
     background: #F5F1ED;
 
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
     z-index: 1000;
     transition: all 0.3s ease;
 }
 
 header.scrolled {
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.18);
 }
 
 /* ============================================
@@ -236,9 +203,9 @@ header.scrolled {
     align-items: center;
     padding-top: var(--spacing-md);
     padding-bottom: var(--spacing-md);
-    padding-left: 0;
+    padding-left: 32px;
     /* Padding diatur oleh .container */
-    padding-right: 0;
+    padding-right: 32px;
     /* Padding diatur oleh .container */
     min-height: 70px;
 }
@@ -1467,8 +1434,8 @@ section {
 .faq-item {
     background: var(--color-white);
     border-radius: var(--radius-lg);
-    padding: var(--spacing-lg);
-    margin-bottom: var(--spacing-md);
+    padding: 1.5rem;
+    margin-bottom: var(--spacing-lg);
     box-shadow: var(--shadow-md);
     transition: all 0.3s ease;
 }
@@ -1486,11 +1453,12 @@ section {
     background: none;
     border: none;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--color-dark);
-    font-size: 1rem;
+    font-size: 1.35rem;
     text-align: left;
     transition: color 0.3s ease;
+    line-height: 1.5;
 }
 
 .faq-item-header:hover {
@@ -1498,7 +1466,7 @@ section {
 }
 
 .faq-item-icon {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     color: var(--color-primary);
     transition: transform 0.3s ease;
     flex-shrink: 0;
@@ -1524,6 +1492,7 @@ section {
     color: var(--color-gray);
     line-height: 1.8;
     margin: 0;
+    font-size: 1.1rem;
 }
 
 /* ============================================
@@ -1532,7 +1501,7 @@ section {
 
 .booking-filter-section {
     background: linear-gradient(180deg, #EFF1F4 0%, #E9ECEF 100%);
-    padding: var(--spacing-2xl) 0;
+    padding: var(--spacing-lg) 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
@@ -1541,7 +1510,7 @@ section {
 }
 
 .filter-header {
-    margin-bottom: var(--spacing-2xl);
+    margin-bottom: var(--spacing-lg);
     position: relative;
 }
 
@@ -1705,14 +1674,13 @@ section {
    ============================================ */
 .transport-cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 320px));
-    gap: 1.5rem;
-    /* 24px gap antar card */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    /* 32px gap antar card */
     width: 100%;
     margin: 0;
     padding: 0;
-    justify-content: start;
-    /* Card rata kiri sejajar dengan logo navbar */
+    /* 3 card per baris di full screen */
 }
 
 .transport-card {
@@ -1725,9 +1693,8 @@ section {
     display: flex;
     flex-direction: column;
     height: 100%;
-    min-height: 400px;
-    max-width: 320px;
-    /* ✅ Batasi lebar maksimal */
+    min-height: 420px;
+    /* ✅ Card dapat mengisi lebar penuh grid */
 }
 
 .transport-card:hover {
@@ -1738,7 +1705,7 @@ section {
 
 .transport-card-image {
     width: 100%;
-    height: 180px;
+    height: 220px;
     background: linear-gradient(135deg, #F4A460 0%, #D4956E 100%);
     display: flex;
     align-items: center;
@@ -1775,11 +1742,11 @@ section {
 }
 
 .transport-card-content {
-    padding: var(--spacing-lg);
+    padding: 1.75rem;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    gap: var(--spacing-md);
+    gap: 1rem;
     min-height: 0;
 }
 
@@ -2050,9 +2017,17 @@ section {
     }
 }
 
+@media (min-width: 1400px) {
+    .transport-cards-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2.5rem;
+    }
+}
+
 @media (max-width: 1024px) {
     .transport-cards-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
     }
 }
 
@@ -2064,6 +2039,14 @@ section {
 
     .transport-card {
         min-height: 360px;
+    }
+
+    .transport-card-image {
+        height: 180px;
+    }
+
+    .transport-card-content {
+        padding: 1.25rem;
     }
 
     .transport-card-image {
@@ -2171,7 +2154,7 @@ section {
 
 .faq-booking-section {
     background: linear-gradient(180deg, #EEF1F5 0%, #E5E8EC 100%);
-    padding: var(--spacing-3xl) 0;
+    padding: 32px;
 }
 
 .faq-booking-header {
@@ -2192,12 +2175,11 @@ section {
 .faq-booking-content {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--spacing-md);
+    gap: var(--spacing-lg);
     margin-bottom: var(--spacing-2xl);
-    max-width: 900px;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding: 0 var(--spacing-lg);
 }
 
 .faq-booking-item {
@@ -2206,15 +2188,16 @@ section {
     border-radius: var(--radius-lg);
     overflow: hidden;
     transition: all 0.3s ease;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+    box-shadow: var(--shadow-md);
 }
 
 .faq-booking-item:hover {
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
 }
 
 .faq-booking-item.active {
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-xl);
 }
 
 .faq-booking-question {
@@ -2222,7 +2205,7 @@ section {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: var(--spacing-md);
+    padding: var(--spacing-lg);
     background: none;
     border: none;
     cursor: pointer;
@@ -2234,7 +2217,8 @@ section {
 
 /* Increase question font size for better readability */
 .faq-booking-question span {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
+    line-height: 1.6;
 }
 
 .faq-booking-question:hover {
@@ -2242,9 +2226,11 @@ section {
 }
 
 .faq-booking-icon {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     color: var(--color-primary);
     transition: transform 0.3s ease;
+    flex-shrink: 0;
+    margin-left: var(--spacing-md);
 }
 
 .faq-booking-item.active .faq-booking-icon {
@@ -2255,14 +2241,14 @@ section {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease;
-    padding: 0 var(--spacing-md);
+    padding: 0 var(--spacing-lg);
     background: #FFFFFF;
     visibility: hidden;
 }
 
 .faq-booking-item.active .faq-booking-answer {
     max-height: 800px;
-    padding: var(--spacing-sm) var(--spacing-md) var(--spacing-md);
+    padding: 0 var(--spacing-lg) var(--spacing-lg);
     background: #FFFFFF;
     visibility: visible;
 }
@@ -2271,6 +2257,7 @@ section {
     margin: 0;
     color: var(--color-gray);
     line-height: 1.8;
+    font-size: 1.05rem;
 }
 
 .faq-booking-cta {

@@ -3,9 +3,8 @@
  * HALAMAN GALERI - CV. CENDANA TRAVEL
  */
 
-// ✅ Load database
-require_once 'config/database.php';
-require_once 'includes/functions.php';
+// ✅ Load page configuration
+require_once 'includes/page_config.php';
 
 // ✅ Anti-cache headers
 header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
@@ -27,13 +26,14 @@ foreach ($galleries as &$gallery) {
 unset($gallery); // Break reference
 
 $companyInfoData = [
-    'name' => 'CV. Cendana Travel',
-    'whatsapp' => '6285821841529',
-    'instagram' => '@cendanatravel_official',
-    'email' => 'info@cendanatravel.com',
-    'address' => 'Jl. Cendana No.8, Tlk. Lerong Ulu, Kec. Sungai Kunjang<br>Kota Samarinda, Kalimantan Timur 75127',
-    'hours' => 'Senin - Minggu: 08.00 - 22.00 WIB',
-    'description' => 'Kami adalah penyedia layanan travel terpercaya dengan pengalaman lebih dari 10 tahun dalam melayani perjalanan Anda.'
+    'name' => $companyName,
+    'whatsapp' => $companyWhatsapp,
+    'instagram' => $companyInstagram,
+    'tiktok' => $companyTiktok,
+    'email' => $companyEmail,
+    'address' => $companyAddress,
+    'hours' => $companyHours,
+    'description' => $footerDescription
 ];
 ?>
 <!DOCTYPE html>
@@ -41,7 +41,7 @@ $companyInfoData = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galeri - <?php echo htmlspecialchars($companyInfoData['name']); ?></title>
+    <title>Galeri - <?php echo htmlspecialchars($companyName); ?></title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="icons.css">
 </head>
@@ -49,7 +49,7 @@ $companyInfoData = [
     <!-- Header Navigation -->
     <header>
         <div class="container header-container">
-            <a href="index.php" class="logo"><?php echo htmlspecialchars($companyInfoData['name']); ?></a>
+            <a href="index.php" class="logo"><?php echo htmlspecialchars($companyName); ?></a>
             
             <nav>
                 <ul class="nav-menu">
@@ -76,15 +76,15 @@ $companyInfoData = [
     </header>
 
     <!-- Hero Section -->
-    <section class="hero" id="home" style="min-height: 500px; margin-top: 70px;">
+    <section class="hero" id="home" style="min-height: 500px; margin-top: 70px;<?php if (!empty($homepageSettings['galeri_hero_background'])): ?> background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('uploads/<?php echo htmlspecialchars($homepageSettings['galeri_hero_background']); ?>'); background-size: cover; background-position: center;<?php endif; ?>">
         <div class="hero-overlay">
             <div class="container">
                 <div class="hero-content">
                     <h1 class="hero-title" style="font-size: 3rem;">
-                        Galeri Perjalanan
+                        <?php echo htmlspecialchars($homepageSettings['galeri_hero_title'] ?? 'Galeri Perjalanan'); ?>
                     </h1>
                     <p class="hero-description">
-                        Koleksi momen indah dari perjalanan pelanggan kami ke berbagai destinasi menakjubkan. Lihat pengalaman nyata dan fasilitas yang kami tawarkan.
+                        <?php echo htmlspecialchars($homepageSettings['galeri_hero_description'] ?? 'Koleksi momen indah dari perjalanan pelanggan kami ke berbagai destinasi menakjubkan'); ?>
                     </p>
                 </div>
             </div>
@@ -148,24 +148,6 @@ $companyInfoData = [
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section style="background: var(--color-primary); color: white; padding: var(--spacing-3xl) 0;">
-        <div class="container" style="text-align: center;">
-            <h2 style="color: white; margin-bottom: var(--spacing-lg);">Ingin Melihat Lebih Banyak?</h2>
-            <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: var(--spacing-2xl); font-size: 1.1rem;">
-                Ikuti media sosial kami untuk update terbaru dan promosi menarik
-            </p>
-            <div style="display: flex; gap: var(--spacing-lg); justify-content: center; flex-wrap: wrap;">
-                <a href="https://instagram.com/<?php echo str_replace('@', '', htmlspecialchars($companyInfoData['instagram'])); ?>" class="btn-hero btn-hero-primary" target="_blank">
-                    <i class="icon icon-camera"></i> Follow Instagram
-                </a>
-                <a href="pemesanan.php" class="btn-hero" style="background: rgba(255, 255, 255, 0.2); border: 2px solid white; color: white;">
-                    Pesan Sekarang
-                </a>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer Premium -->
     <footer class="footer-premium">
         <div class="container">
@@ -182,7 +164,7 @@ $companyInfoData = [
                     <div class="footer-hours-box">
                         <p class="footer-label-premium">Jam Operasional:</p>
                         <p class="footer-text-premium">
-                            Senin - Minggu: 08:00 - 22:00 WIB
+                            <?php echo htmlspecialchars($companyHours); ?>
                         </p>
                     </div>
                 </section>
@@ -227,7 +209,7 @@ $companyInfoData = [
                         <div>
                             <p class="footer-label-premium">Alamat</p>
                             <p class="footer-text-premium footer-address">
-                                Jl. Cendana No.8, Tlk. Lerong Ulu, Kec. Sungai Kunang, Kota Samarinda, Kalimantan Timur 75127
+                                <?php echo nl2br(htmlspecialchars($companyAddress)); ?>
                             </p>
                         </div>
                     </div>
@@ -238,7 +220,7 @@ $companyInfoData = [
             <!-- Footer Bottom: Copyright & Admin Login -->
             <div class="footer-bottom-premium">
                 <p class="footer-copyright-premium">
-                    &copy; 2024 Cv. Cendana Travel. All rights reserved.
+                    <?php echo htmlspecialchars($footerCopyright); ?>
                 </p>
                 <a href="auth.php" class="footer-admin-login">
                     <i class="fas fa-sign-in-alt"></i>
