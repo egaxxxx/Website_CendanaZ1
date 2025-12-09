@@ -315,12 +315,29 @@ section::after {
     margin: 0 auto;
 }
 
+/* Grid untuk asymmetric layout (dengan featured card) */
 .services-asymmetric-grid {
     display: grid;
     grid-template-columns: 1.2fr 1fr;
     grid-template-rows: repeat(2, 1fr);
     gap: 2rem;
     margin-top: 4rem;
+}
+
+/* Grid untuk uniform layout (semua card regular, tanpa featured) */
+.services-uniform-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-top: 4rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Service card di uniform grid menggunakan style small card */
+.services-uniform-grid .service-card-small {
+    max-width: 100%;
 }
 
 .service-card-featured {
@@ -1351,7 +1368,8 @@ section:not(:last-of-type) {
         font-size: 2.25rem;
     }
 
-    .services-asymmetric-grid {
+    .services-asymmetric-grid,
+    .services-uniform-grid {
         grid-template-columns: 1fr;
         grid-template-rows: auto;
         gap: 1.5rem;

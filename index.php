@@ -146,59 +146,88 @@ $companyInfoData = [
                 <p>Pilih moda transportasi favorit Anda dengan pelayanan premium.</p>
             </div>
 
-            <div class="services-asymmetric-grid">
-                <?php 
-                $delay = 0.1;
-                foreach ($serviceCards as $card): 
-                    if (!$card['is_active']) continue; // Skip inactive cards
-                ?>
-                    <?php if ($card['is_featured']): ?>
-                        <!-- Featured Service Card (Large) -->
-                        <article class="service-card-featured fade-in-up" style="animation-delay: <?= $delay ?>s;">
-                            <?php if ($card['badge_text']): ?>
-                            <span class="popular-badge"><?= htmlspecialchars($card['badge_text']) ?></span>
-                            <?php endif; ?>
-                            <div class="service-image">
-                                <img src="<?= htmlspecialchars($card['image']) ?>" alt="<?= htmlspecialchars($card['title']) ?>">
-                            </div>
-                            <div class="service-content">
-                                <div class="service-icon-inline">
-                                    <h3><?= htmlspecialchars($card['title']) ?></h3>
-                                </div>
-                                <p><?= htmlspecialchars($card['description']) ?></p>
-                                <?php 
-                                $features = json_decode($card['features'], true);
-                                if (!empty($features) && is_array($features)): 
-                                ?>
-                                <ul class="service-features">
-                                    <?php foreach ($features as $feature): ?>
-                                    <li>✓ <?= htmlspecialchars($feature) ?></li>
-                                    <?php endforeach; ?>
-                                </ul>
+            <?php 
+            // Filter active cards
+            $activeCards = array_filter($serviceCards, function($card) {
+                return $card['is_active'];
+            });
+            $activeCards = array_values($activeCards); // Reindex array
+            $totalCards = count($activeCards);
+            
+            // Process cards in groups of 3
+            $cardIndex = 0;
+            $delay = 0.1;
+            
+            while ($cardIndex < $totalCards):
+                $remainingCards = $totalCards - $cardIndex;
+                
+                // Determine grid type based on remaining cards
+                if ($remainingCards >= 3) {
+                    // Group of 3: Asymmetric grid (1 featured + 2 regular)
+                    $gridClass = 'services-asymmetric-grid';
+                    $cardsToRender = 3;
+                } else {
+                    // Less than 3: Uniform grid (all regular)
+                    $gridClass = 'services-uniform-grid';
+                    $cardsToRender = $remainingCards;
+                }
+            ?>
+                <div class="<?= $gridClass ?>" style="margin-top: <?= ($cardIndex > 0) ? '3rem' : '4rem' ?>;">
+                    <?php 
+                    for ($i = 0; $i < $cardsToRender; $i++):
+                        $card = $activeCards[$cardIndex];
+                        $isFirstInGroup = ($i === 0);
+                        $shouldBeFeatured = ($remainingCards >= 3 && $isFirstInGroup);
+                    ?>
+                        <?php if ($shouldBeFeatured): ?>
+                            <!-- Featured Service Card (Large) -->
+                            <article class="service-card-featured fade-in-up" style="animation-delay: <?= $delay ?>s;">
+                                <?php if ($card['badge_text']): ?>
+                                <span class="popular-badge"><?= htmlspecialchars($card['badge_text']) ?></span>
                                 <?php endif; ?>
-                                <a href="<?= htmlspecialchars($card['button_link']) ?>" class="service-btn"><?= htmlspecialchars($card['button_text']) ?></a>
-                            </div>
-                        </article>
-                    <?php else: ?>
-                        <!-- Regular Service Card (Small) -->
-                        <article class="service-card-small fade-in-up" style="animation-delay: <?= $delay ?>s;">
-                            <div class="service-image-small">
-                                <img src="<?= htmlspecialchars($card['image']) ?>" alt="<?= htmlspecialchars($card['title']) ?>">
-                            </div>
-                            <div class="service-content-small">
-                                <div class="service-icon-inline">
-                                    <h3><?= htmlspecialchars($card['title']) ?></h3>
+                                <div class="service-image">
+                                    <img src="<?= htmlspecialchars($card['image']) ?>" alt="<?= htmlspecialchars($card['title']) ?>">
                                 </div>
-                                <p><?= htmlspecialchars($card['description']) ?></p>
-                                <a href="<?= htmlspecialchars($card['button_link']) ?>" class="service-btn-small"><?= htmlspecialchars($card['button_text']) ?></a>
-                            </div>
-                        </article>
-                    <?php endif; ?>
-                <?php 
-                    $delay += 0.1;
-                endforeach; 
-                ?>
-            </div>
+                                <div class="service-content">
+                                    <div class="service-icon-inline">
+                                        <h3><?= htmlspecialchars($card['title']) ?></h3>
+                                    </div>
+                                    <p><?= htmlspecialchars($card['description']) ?></p>
+                                    <?php 
+                                    $features = json_decode($card['features'], true);
+                                    if (!empty($features) && is_array($features)): 
+                                    ?>
+                                    <ul class="service-features">
+                                        <?php foreach ($features as $feature): ?>
+                                        <li>✓ <?= htmlspecialchars($feature) ?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                    <?php endif; ?>
+                                    <a href="<?= htmlspecialchars($card['button_link']) ?>" class="service-btn"><?= htmlspecialchars($card['button_text']) ?></a>
+                                </div>
+                            </article>
+                        <?php else: ?>
+                            <!-- Regular Service Card (Small) -->
+                            <article class="service-card-small fade-in-up" style="animation-delay: <?= $delay ?>s;">
+                                <div class="service-image-small">
+                                    <img src="<?= htmlspecialchars($card['image']) ?>" alt="<?= htmlspecialchars($card['title']) ?>">
+                                </div>
+                                <div class="service-content-small">
+                                    <div class="service-icon-inline">
+                                        <h3><?= htmlspecialchars($card['title']) ?></h3>
+                                    </div>
+                                    <p><?= htmlspecialchars($card['description']) ?></p>
+                                    <a href="<?= htmlspecialchars($card['button_link']) ?>" class="service-btn-small"><?= htmlspecialchars($card['button_text']) ?></a>
+                                </div>
+                            </article>
+                        <?php endif; ?>
+                    <?php 
+                        $delay += 0.1;
+                        $cardIndex++;
+                    endfor; 
+                    ?>
+                </div>
+            <?php endwhile; ?>
         </div>
     </section>
 
