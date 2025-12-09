@@ -71,8 +71,15 @@ function deleteWhyChooseUs($id) {
     
     // Delete icon file
     $item = getWhyChooseUsById($id);
-    if ($item && $item['icon'] && file_exists($item['icon'])) {
-        unlink($item['icon']);
+    if ($item && $item['icon']) {
+        $iconPath = $item['icon'];
+        // Convert relative path to absolute
+        if ($iconPath[0] !== '/') {
+            $iconPath = __DIR__ . '/../' . $iconPath;
+        }
+        if (file_exists($iconPath)) {
+            unlink($iconPath);
+        }
     }
     
     $stmt = $conn->prepare("DELETE FROM why_choose_us WHERE id = ?");
@@ -149,8 +156,15 @@ function deletePaymentStep($id) {
     global $conn;
     
     $item = getPaymentStepById($id);
-    if ($item && $item['icon'] && file_exists($item['icon'])) {
-        unlink($item['icon']);
+    if ($item && $item['icon']) {
+        $iconPath = $item['icon'];
+        // Convert relative path to absolute
+        if ($iconPath[0] !== '/') {
+            $iconPath = __DIR__ . '/../' . $iconPath;
+        }
+        if (file_exists($iconPath)) {
+            unlink($iconPath);
+        }
     }
     
     $stmt = $conn->prepare("DELETE FROM payment_steps WHERE id = ?");
@@ -227,8 +241,15 @@ function deleteOrderStep($id) {
     global $conn;
     
     $item = getOrderStepById($id);
-    if ($item && $item['image'] && file_exists($item['image'])) {
-        unlink($item['image']);
+    if ($item && $item['image']) {
+        $imagePath = $item['image'];
+        // Convert relative path to absolute
+        if ($imagePath[0] !== '/') {
+            $imagePath = __DIR__ . '/../' . $imagePath;
+        }
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
     }
     
     $stmt = $conn->prepare("DELETE FROM order_steps WHERE id = ?");
@@ -392,8 +413,15 @@ function deleteLegalSecurity($id) {
     global $conn;
     
     $item = getLegalSecurityById($id);
-    if ($item && $item['icon'] && file_exists($item['icon'])) {
-        unlink($item['icon']);
+    if ($item && $item['icon']) {
+        $iconPath = $item['icon'];
+        // Convert relative path to absolute
+        if ($iconPath[0] !== '/') {
+            $iconPath = __DIR__ . '/../' . $iconPath;
+        }
+        if (file_exists($iconPath)) {
+            unlink($iconPath);
+        }
     }
     
     $stmt = $conn->prepare("DELETE FROM legal_security WHERE id = ?");
@@ -458,6 +486,158 @@ function uploadOrderStepImage($file) {
     
     if (move_uploaded_file($file['tmp_name'], $target_path)) {
         return 'uploads/order_steps/' . $filename;
+    }
+    
+    return null;
+}
+
+// =====================================================
+// SERVICE CARDS (Jelajahi Dunia Section)
+// =====================================================
+
+function getAllServiceCards() {
+    global $conn;
+    $sql = "SELECT * FROM service_cards ORDER BY sort_order ASC, id ASC";
+    $result = $conn->query($sql);
+    if ($result === false) {
+        error_log("SQL Error in getAllServiceCards: " . $conn->error);
+        return [];
+    }
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+function getServiceCardById($id) {
+    global $conn;
+    $stmt = $conn->prepare("SELECT * FROM service_cards WHERE id = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_assoc();
+}
+
+function createServiceCard($data, $image_file = null) {
+    global $conn;
+    
+    $image_path = null;
+    if ($image_file && $image_file['error'] == 0) {
+        $image_path = uploadServiceCardImage($image_file);
+    } else if (!empty($data['image_url'])) {
+        // Jika upload URL (dari unsplash dll)
+        $image_path = $data['image_url'];
+    }
+    
+    // Handle features array
+    $features = null;
+    if (!empty($data['features'])) {
+        // Jika sudah JSON
+        if (is_string($data['features'])) {
+            $features = $data['features'];
+        } else {
+            $features = json_encode($data['features']);
+        }
+    }
+    
+    $stmt = $conn->prepare("INSERT INTO service_cards (title, description, image, features, button_text, button_link, is_featured, badge_text, sort_order) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssssi", 
+        $data['title'], 
+        $data['description'], 
+        $image_path, 
+        $features,
+        $data['button_text'], 
+        $data['button_link'], 
+        $data['is_featured'],
+        $data['badge_text'],
+        $data['sort_order']
+    );
+    
+    return $stmt->execute();
+}
+
+function updateServiceCard($id, $data, $image_file = null) {
+    global $conn;
+    
+    $existing = getServiceCardById($id);
+    $image_path = $existing['image'];
+    
+    // Handle image upload
+    if ($image_file && $image_file['error'] == 0) {
+        // Delete old image if it's a local file
+        if ($image_path && !filter_var($image_path, FILTER_VALIDATE_URL) && file_exists($image_path)) {
+            unlink($image_path);
+        }
+        $image_path = uploadServiceCardImage($image_file);
+    } else if (!empty($data['image_url'])) {
+        // Jika update dengan URL baru
+        $image_path = $data['image_url'];
+    }
+    
+    // Handle features array
+    $features = null;
+    if (!empty($data['features'])) {
+        if (is_string($data['features'])) {
+            $features = $data['features'];
+        } else {
+            $features = json_encode($data['features']);
+        }
+    }
+    
+    $stmt = $conn->prepare("UPDATE service_cards SET title = ?, description = ?, image = ?, features = ?, button_text = ?, button_link = ?, is_featured = ?, badge_text = ?, sort_order = ? WHERE id = ?");
+    $stmt->bind_param("ssssssssii", 
+        $data['title'], 
+        $data['description'], 
+        $image_path, 
+        $features,
+        $data['button_text'], 
+        $data['button_link'], 
+        $data['is_featured'],
+        $data['badge_text'],
+        $data['sort_order'],
+        $id
+    );
+    
+    return $stmt->execute();
+}
+
+function deleteServiceCard($id) {
+    global $conn;
+    
+    $item = getServiceCardById($id);
+    if ($item && $item['image'] && !filter_var($item['image'], FILTER_VALIDATE_URL)) {
+        $imagePath = $item['image'];
+        // Convert relative path to absolute
+        if ($imagePath[0] !== '/') {
+            $imagePath = __DIR__ . '/../' . $imagePath;
+        }
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+    }
+    
+    $stmt = $conn->prepare("DELETE FROM service_cards WHERE id = ?");
+    $stmt->bind_param("i", $id);
+    
+    return $stmt->execute();
+}
+
+function uploadServiceCardImage($file) {
+    $upload_dir = __DIR__ . '/../uploads/service_cards/';
+    
+    if (!file_exists($upload_dir)) {
+        mkdir($upload_dir, 0755, true);
+    }
+    
+    $file_extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+    $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+    
+    if (!in_array($file_extension, $allowed_extensions)) {
+        return null;
+    }
+    
+    $filename = 'service_' . uniqid() . '.' . $file_extension;
+    $target_path = $upload_dir . $filename;
+    
+    if (move_uploaded_file($file['tmp_name'], $target_path)) {
+        return 'uploads/service_cards/' . $filename;
     }
     
     return null;

@@ -1,0 +1,140 @@
+╔═══════════════════════════════════════════════════════════════╗
+║     🎯 QUICK REFERENCE - CV. CENDANA TRAVEL DATABASE        ║
+╚═══════════════════════════════════════════════════════════════╝
+
+┌─────────────────────────────────────────────────────────────┐
+│ 📦 IMPORT DATABASE (PILIH SALAH SATU)                       │
+└─────────────────────────────────────────────────────────────┘
+
+  1️⃣  Via phpMyAdmin:
+      → http://localhost/phpmyadmin
+      → Import → cendana_travel_complete.sql
+
+  2️⃣  Via Terminal:
+      $ mysql -u root -pHananta123 < cendana_travel_complete.sql
+
+  3️⃣  Via Script:
+      $ ./restore_database.sh
+
+┌─────────────────────────────────────────────────────────────┐
+│ 💾 BACKUP DATABASE                                          │
+└─────────────────────────────────────────────────────────────┘
+
+  Manual:
+    $ mysqldump -u root -pHananta123 cendana_travel > backup.sql
+
+  Script:
+    $ ./backup_database.sh
+
+┌─────────────────────────────────────────────────────────────┐
+│ 🔑 CREDENTIALS                                              │
+└─────────────────────────────────────────────────────────────┘
+
+  Database:
+    Host: localhost
+    User: root
+    Pass: Hananta123
+    Name: cendana_travel
+
+  Admin Panel:
+    URL:  http://localhost/Website-Cendana/admin.php
+    User: admin
+    Pass: admin123
+
+┌─────────────────────────────────────────────────────────────┐
+│ 📊 TABEL UTAMA (27 TABEL)                                   │
+└─────────────────────────────────────────────────────────────┘
+
+  ✅ DIGUNAKAN FRONTEND:
+     • homepage_settings      → Hero, footer, stats
+     • why_choose_us          → Mengapa memilih kami (3)
+     • payment_steps          → Cara pembayaran (3)
+     • order_steps            → Cara memesan (2)
+     • transport_types        → Jenis transportasi (3)
+     • transport_services     → Layanan transportasi (11)
+     • gallery                → Galeri foto
+     • gallery_home_selection → Galeri beranda (max 3)
+     • faq                    → FAQ
+     • bookings               → Pemesanan
+
+  ⚙️  SISTEM:
+     • admin_users            → User admin
+     • admin_sessions         → Session admin
+     • company_info           → Info perusahaan (legacy)
+     • contact_info           → Info kontak
+
+┌─────────────────────────────────────────────────────────────┐
+│ 🚀 QUICK COMMANDS                                           │
+└─────────────────────────────────────────────────────────────┘
+
+  Cek koneksi database:
+    $ mysql -u root -pHananta123 -e "USE cendana_travel; SELECT 1;"
+
+  Lihat semua tabel:
+    $ mysql -u root -pHananta123 -e "USE cendana_travel; SHOW TABLES;"
+
+  Cek data konten beranda:
+    $ mysql -u root -pHananta123 -e "USE cendana_travel;
+      SELECT 'why_choose_us' as tabel, COUNT(*) FROM why_choose_us
+      UNION ALL SELECT 'payment_steps', COUNT(*) FROM payment_steps
+      UNION ALL SELECT 'order_steps', COUNT(*) FROM order_steps;"
+
+  Drop & reimport (HATI-HATI!):
+    $ mysql -u root -pHananta123 -e "DROP DATABASE IF EXISTS cendana_travel;"
+    $ mysql -u root -pHananta123 < cendana_travel_complete.sql
+
+┌─────────────────────────────────────────────────────────────┐
+│ 📁 FOLDER UPLOAD                                            │
+└─────────────────────────────────────────────────────────────┘
+
+  Buat folder (jika belum ada):
+    $ mkdir -p uploads/{icons,order_steps,gallery,Beranda,bus,kapal,pesawat}
+    $ mkdir -p JenisTransportasi
+    $ chmod -R 755 uploads/ JenisTransportasi/
+
+┌─────────────────────────────────────────────────────────────┐
+│ ⚠️  TROUBLESHOOTING                                         │
+└─────────────────────────────────────────────────────────────┘
+
+  Error: "Database already exists"
+    $ mysql -u root -pHananta123 -e "DROP DATABASE cendana_travel;"
+    $ mysql -u root -pHananta123 < cendana_travel_complete.sql
+
+  Error: "Access denied"
+    → Cek password di config/database.php (line 11)
+
+  Error: "Connection failed"
+    → Pastikan MySQL service running:
+    $ sudo systemctl status mysql
+    $ sudo systemctl start mysql
+
+  Website error / blank page:
+    → Cek PHP error log:
+    $ tail -f /var/log/httpd/error_log
+
+┌─────────────────────────────────────────────────────────────┐
+│ ✅ VERIFIKASI SETELAH IMPORT                                │
+└─────────────────────────────────────────────────────────────┘
+
+  [ ] Database cendana_travel muncul di phpMyAdmin
+  [ ] 27 tabel berhasil dibuat
+  [ ] Website bisa diakses (http://localhost/Website-Cendana)
+  [ ] Admin panel bisa login (admin/admin123)
+  [ ] Halaman beranda menampilkan konten
+  [ ] Folder uploads sudah ada
+  [ ] Backup script executable (chmod +x)
+
+┌─────────────────────────────────────────────────────────────┐
+│ 📚 FILE PENTING                                             │
+└─────────────────────────────────────────────────────────────┘
+
+  cendana_travel_complete.sql   → Database lengkap (IMPORT INI)
+  DATABASE_README.md             → Panduan lengkap import
+  backup_database.sh             → Script backup otomatis
+  restore_database.sh            → Script restore otomatis
+  LAPORAN_ANALISIS_DATABASE.md  → Analisis struktur database
+  config/database.php            → Konfigurasi koneksi database
+
+╔═══════════════════════════════════════════════════════════════╗
+║  💡 TIP: Bookmark file ini untuk referensi cepat!            ║
+╚═══════════════════════════════════════════════════════════════╝

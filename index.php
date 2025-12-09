@@ -9,6 +9,7 @@ $homepageSettings = getHomepageSettings();
 $contactInfo = getContactInfo();
 
 // Get dynamic home content
+$serviceCards = getAllServiceCards();
 $whyChooseUs = getAllWhyChooseUs();
 $paymentSteps = getAllPaymentSteps();
 $orderSteps = getAllOrderSteps();
@@ -146,52 +147,57 @@ $companyInfoData = [
             </div>
 
             <div class="services-asymmetric-grid">
-                <!-- Featured Service Card (Large) - Pesawat -->
-                <article class="service-card-featured fade-in-up" style="animation-delay: 0.1s;">
-                    <span class="popular-badge">Terpopuler</span>
-                    <div class="service-image">
-                        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1200&h=600&fit=crop&q=80" alt="Tiket Pesawat">
-                    </div>
-                    <div class="service-content">
-                        <div class="service-icon-inline">
-                            <h3>Tiket Pesawat</h3>
-                        </div>
-                        <p>Terbang ke seluruh destinasi domestik dan internasional dengan harga kompetitif. Proses booking instan dan terpercaya dengan sistem pembayaran yang aman.</p>
-                        <ul class="service-features">
-                            <li>✓ Penerbangan Internasional & Domestik</li>
-                            <li>✓ Proses Check-in Mudah</li>
-                            <li>✓ Garansi Harga Terbaik</li>
-                        </ul>
-                        <a href="pemesanan.php?type=pesawat" class="service-btn">Cari Penerbangan →</a>
-                    </div>
-                </article>
-                
-                <!-- Regular Service Cards (Small) -->
-                <article class="service-card-small fade-in-up" style="animation-delay: 0.2s;">
-                    <div class="service-image-small">
-                        <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800&h=500&fit=crop&q=80" alt="Tiket Bus Premium">
-                    </div>
-                    <div class="service-content-small">
-                        <div class="service-icon-inline">
-                            <h3>Tiket Bus Premium</h3>
-                        </div>
-                        <p>Perjalanan darat yang nyaman dengan armada terbaru dan fasilitas lengkap untuk perjalanan antar kota yang nyaman dan terjangkau.</p>
-                        <a href="pemesanan.php?type=bus" class="service-btn-small">Pesan Tiket Bus</a>
-                    </div>
-                </article>
-                
-                <article class="service-card-small fade-in-up" style="animation-delay: 0.3s;">
-                    <div class="service-image-small">
-                        <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&h=500&fit=crop&q=80" alt="Tiket Kapal Laut">
-                    </div>
-                    <div class="service-content-small">
-                        <div class="service-icon-inline">
-                            <h3>Tiket Kapal Laut</h3>
-                        </div>
-                        <p>Nikmati perjalanan laut antar pulau dengan aman dan pemandangan indah. Booking kapal penumpang yang nyaman dan aman ke berbagai pelabuhan.</p>
-                        <a href="pemesanan.php?type=kapal" class="service-btn-small">Pesan Tiket Kapal</a>
-                    </div>
-                </article>
+                <?php 
+                $delay = 0.1;
+                foreach ($serviceCards as $card): 
+                    if (!$card['is_active']) continue; // Skip inactive cards
+                ?>
+                    <?php if ($card['is_featured']): ?>
+                        <!-- Featured Service Card (Large) -->
+                        <article class="service-card-featured fade-in-up" style="animation-delay: <?= $delay ?>s;">
+                            <?php if ($card['badge_text']): ?>
+                            <span class="popular-badge"><?= htmlspecialchars($card['badge_text']) ?></span>
+                            <?php endif; ?>
+                            <div class="service-image">
+                                <img src="<?= htmlspecialchars($card['image']) ?>" alt="<?= htmlspecialchars($card['title']) ?>">
+                            </div>
+                            <div class="service-content">
+                                <div class="service-icon-inline">
+                                    <h3><?= htmlspecialchars($card['title']) ?></h3>
+                                </div>
+                                <p><?= htmlspecialchars($card['description']) ?></p>
+                                <?php 
+                                $features = json_decode($card['features'], true);
+                                if (!empty($features) && is_array($features)): 
+                                ?>
+                                <ul class="service-features">
+                                    <?php foreach ($features as $feature): ?>
+                                    <li>✓ <?= htmlspecialchars($feature) ?></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                                <?php endif; ?>
+                                <a href="<?= htmlspecialchars($card['button_link']) ?>" class="service-btn"><?= htmlspecialchars($card['button_text']) ?></a>
+                            </div>
+                        </article>
+                    <?php else: ?>
+                        <!-- Regular Service Card (Small) -->
+                        <article class="service-card-small fade-in-up" style="animation-delay: <?= $delay ?>s;">
+                            <div class="service-image-small">
+                                <img src="<?= htmlspecialchars($card['image']) ?>" alt="<?= htmlspecialchars($card['title']) ?>">
+                            </div>
+                            <div class="service-content-small">
+                                <div class="service-icon-inline">
+                                    <h3><?= htmlspecialchars($card['title']) ?></h3>
+                                </div>
+                                <p><?= htmlspecialchars($card['description']) ?></p>
+                                <a href="<?= htmlspecialchars($card['button_link']) ?>" class="service-btn-small"><?= htmlspecialchars($card['button_text']) ?></a>
+                            </div>
+                        </article>
+                    <?php endif; ?>
+                <?php 
+                    $delay += 0.1;
+                endforeach; 
+                ?>
             </div>
         </div>
     </section>
@@ -401,10 +407,10 @@ $companyInfoData = [
                 <!-- Polaroid Cards Stack -->
                 <div class="polaroid-cards-stack">
                     <?php 
-                    $cardPositions = ['left', 'center', 'right'];
+                    $cardPositions = ['far-left', 'left', 'center', 'right', 'far-right'];
                     $cardIndex = 0;
                     foreach ($galleryHomeSelection as $galItem): 
-                        $position = $cardPositions[$cardIndex % 3];
+                        $position = $cardPositions[$cardIndex % 5];
                         $cardIndex++;
                     ?>
                     <!-- Card <?= ucfirst($position) ?> -->
@@ -416,18 +422,20 @@ $companyInfoData = [
                         <?php endif; ?>
                     </div>
                     <?php 
-                    if ($cardIndex >= 3) break; // Max 3 photos
+                    if ($cardIndex >= 5) break; // Max 5 photos
                     endforeach; 
                     
-                    // Fill remaining slots if less than 3
+                    // Fill remaining slots if less than 5
                     $defaultImages = [
                         'https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?auto=format&fit=crop&w=600&q=80',
                         'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80',
-                        'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80'
+                        'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80',
+                        'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80',
+                        'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=600&q=80'
                     ];
                     
-                    while ($cardIndex < 3):
-                        $position = $cardPositions[$cardIndex % 3];
+                    while ($cardIndex < 5):
+                        $position = $cardPositions[$cardIndex % 5];
                     ?>
                     <div class="polaroid-card-home card-<?= $position ?>-home">
                         <img src="<?= $defaultImages[$cardIndex] ?>" alt="Galeri Perjalanan">

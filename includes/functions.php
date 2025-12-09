@@ -191,8 +191,19 @@ function deleteGallery($id) {
     
     // Ambil data galeri untuk hapus file gambar
     $gallery = getGalleryById($id);
-    if ($gallery && $gallery['image'] && file_exists($gallery['image'])) {
-        unlink($gallery['image']);
+    if ($gallery && $gallery['image']) {
+        // Buat absolute path dari relative path
+        $imagePath = $gallery['image'];
+        
+        // Jika path tidak dimulai dengan '/', tambahkan base directory
+        if ($imagePath[0] !== '/') {
+            $imagePath = __DIR__ . '/../' . $imagePath;
+        }
+        
+        // Hapus file jika ada
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
     }
     
     $sql = "DELETE FROM gallery WHERE id = $id";

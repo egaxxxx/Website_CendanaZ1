@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pemesanan Tiket - Cendana Travel</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ================= VARIABLES & RESET (SAMA DENGAN BERANDA) ================= */
+        :root {
+            --primary-bronze: #8c6b4a;
+            --light-bronze: #d4a775;
+            --dark-brown: #3e3228;
+            --bg-cream: #f9f6f2; 
+            --bg-white: #ffffff;
+            --text-dark: #333333;
+            --text-grey: #666666;
+            --shadow-soft: 0 10px 30px rgba(0,0,0,0.05);
+            --border-radius: 15px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+        }
+
+        body {
+            color: var(--text-dark);
+            line-height: 1.6;
+            background-color: var(--bg-cream);
+        }
+
+        /* ================= UTILITIES ================= */
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Padding besar agar konten tidak sesak */
+        section {
+            padding: 80px 0; 
+        }
+
+        .bg-white { background-color: var(--bg-white); }
+        .bg-cream { background-color: var(--bg-cream); border-top: 1px solid #efebe5; border-bottom: 1px solid #efebe5; }
+        
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--dark-brown);
+            margin-bottom: 10px;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-grey);
+            margin-bottom: 40px;
+        }
+
+        /* ================= 1. PAGE HEADER (Versi Pendek dari Hero) ================= */
+        .page-header {
+            /* Gradient Bronze khas Cendana Travel */
+            background: linear-gradient(135deg, #a68563, #8c6b4a);
+            padding: 100px 0 60px 0; /* Padding atas lebih besar untuk kompensasi navbar */
+            color: white;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .page-header p {
+            font-size: 16px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ================= 2. FILTER TRANSPORTASI ================= */
+        .transport-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .tab-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 30px;
+            border-radius: 50px;
+            border: 2px solid #eee;
+            background: white;
+            color: var(--text-grey);
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+        /* Style tombol Aktif (Pesawat) */
+        .tab-btn.active {
+            background-color: var(--primary-bronze);
+            color: white;
+            border-color: var(--primary-bronze);
+            box-shadow: 0 5px 15px rgba(140, 107, 74, 0.3);
+        }
+
+        .tab-btn:hover {
+            border-color: var(--light-bronze);
+            color: var(--primary-bronze);
+        }
+        .tab-btn.active:hover {
+            color: white;
+        }
+
+        .badge {
+            background: #fff;
+            color: var(--primary-bronze);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .tab-btn.active .badge {
+            color: var(--primary-bronze); /* Tetap bronze agar kontras */
+        }
+
+
+        /* ================= 3. GRID TIKET (MAIN CONTENT) ================= */
+        .ticket-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .ticket-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-soft);
+            overflow: hidden;
+            border: 1px solid #f0f0f0;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ticket-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+            border-color: var(--light-bronze);
+        }
+
+        .card-header {
+            padding: 20px;
+            background-color: #fdfbf9;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100px;
+        }
+        
+        .airline-logo {
+            max-height: 50px;
+            max-width: 80%;
+            /* Placeholder style jika gambar tidak ada */
+            font-size: 24px;
+            color: var(--text-grey);
+            font-weight: bold;
+        }
+
+        .card-body {
+            padding: 20px;
+            text-align: center;
+            flex-grow: 1; /* Agar tombol selalu di bawah rata */
+        }
+
+        .airline-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark-brown);
+            margin-bottom: 5px;
+        }
+
+        .flight-route {
+            font-size: 14px;
+            color: var(--text-grey);
+            margin-bottom: 15px;
+        }
+
+        .price-tag {
+            font-size: 14px;
+            color: #999;
+            text-decoration: line-through;
+            margin-bottom: 2px;
+            display: block;
+        }
+        
+        .price-final {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-bronze);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .btn-book {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(to right, var(--primary-bronze), var(--light-bronze));
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: opacity 0.3s;
+        }
+        .btn-book:hover {
+            opacity: 0.9;
+        }
+
+
+        /* ================= 4. FAQ SECTION ================= */
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .faq-summary {
+            padding: 15px 20px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--dark-brown);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            list-style: none; /* Menghilangkan segitiga default */
+        }
+        
+        .faq-summary::-webkit-details-marker { display: none; }
+
+        .faq-summary:after {
+            content: '+';
+            font-size: 20px;
+            color: var(--primary-bronze);
+        }
+
+        details[open] .faq-summary:after {
+            content: '-';
+        }
+
+        .faq-content {
+            padding: 0 20px 20px 20px;
+            color: var(--text-grey);
+            font-size: 14px;
+            border-top: 1px solid #f9f9f9;
+        }
+        
+        /* Tombol Tanya di Bawah */
+        .btn-faq-ask {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 30px;
+            background-color: var(--light-bronze);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* ================= RESPONSIVE ================= */
+        @media (max-width: 768px) {
+            .ticket-grid { grid-template-columns: 1fr; }
+            .transport-tabs { flex-direction: column; align-items: stretch; }
+            .tab-btn { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. HEADER HALAMAN (Gaya Gradient Bronze) -->
+    <header class="page-header">
+        <div class="container">
+            <h1>Temukan Tiket Perjalanan Terbaik</h1>
+            <p>Pesan tiket pesawat, kapal, dan bus dengan harga terbaik. Proses cepat, aman, dan terpercaya untuk perjalanan Anda.</p>
+        </div>
+    </header>
+
+    <!-- 2. PILIH TRANSPORTASI (Background Putih) -->
+    <section class="bg-white">
+        <div class="container">
+            <h2 class="section-title">Pilih Jenis Transportasi</h2>
+            <p class="section-subtitle">Temukan layanan yang sesuai dengan kebutuhan perjalanan Anda</p>
+            
+            <div class="transport-tabs">
+                <!-- Tombol Aktif -->
+                <a href="#" class="tab-btn active">
+                    <i class="fas fa-plane"></i> Pesawat <span class="badge">9</span>
+                </a>
+                <!-- Tombol Inaktif -->
+                <a href="#" class="tab-btn">
+                    <i class="fas fa-ship"></i> Kapal Laut <span class="badge">2</span>
+                </a>
+                <a href="#" class="tab-btn">
+                    <i class="fas fa-bus"></i> Bus Travel <span class="badge">1</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. DAFTAR TIKET (Background Cream - Pemisah) -->
+    <section class="bg-cream">
+        <div class="container">
+            <!-- Grid Layout -->
+            <div class="ticket-grid">
+                
+                <!-- Card 1 -->
+                <div class="ticket-card">
+                    <div class="card-header">
+                        <!-- Ganti dengan Logo Image -->
+                        <div class="airline-logo"><i class="fas fa-plane"></i> Super Air Jet</div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="airline-name">Super Air Jet</h3>
+                        <p class="flight-route">Jakarta - Bali - Lombok</p>
+                        <span class="price-tag">Rp 1.000.000</span>
+                        <span class="price-final">Rp 2.000.000</span>
+                        <a href="#" class="btn-book">Pesan Sekarang</a>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="ticket-card">
+                    <div class="card-header">
+                        <div class="airline-logo" style="color:#d63031;">Lion Air</div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="airline-name">Lion Air</h3>
+                        <p class="flight-route">Penerbangan domestik terpercaya</p>
+                        <span class="price-tag">Rp 450.000</span>
+                        <span class="price-final">Rp 850.000</span>
+                        <a href="#" class="btn-book">Pesan Sekarang</a>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="ticket-card">
+                    <div class="card-header">
+                        <div class="airline-logo" style="color:#0984e3;">Garuda Indonesia</div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="airline-name">Garuda Indonesia</h3>
+                        <p class="flight-route">Maskapai nasional Indonesia</p>
+                        <span class="price-tag">Rp 500.000</span>
+                        <span class="price-final">Rp 1.200.000</span>
+                        <a href="#" class="btn-book">Pesan Sekarang</a>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="ticket-card">
+                    <div class="card-header">
+                        <div class="airline-logo" style="color:#00b894;">Citilink</div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="airline-name">Citilink</h3>
+                        <p class="flight-route">Low cost carrier terbaik</p>
+                        <span class="price-tag">Rp 350.000</span>
+                        <span class="price-final">Rp 650.000</span>
+                        <a href="#" class="btn-book">Pesan Sekarang</a>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="ticket-card">
+                    <div class="card-header">
+                        <div class="airline-logo" style="color:#6c5ce7;">Sriwijaya Air</div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="airline-name">Sriwijaya Air</h3>
+                        <p class="flight-route">Jangkauan luas ke seluruh Indonesia</p>
+                        <span class="price-tag">Rp 400.000</span>
+                        <span class="price-final">Rp 750.000</span>
+                        <a href="#" class="btn-book">Pesan Sekarang</a>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="ticket-card">
+                    <div class="card-header">
+                        <div class="airline-logo" style="color:#e17055;">Pelita Air</div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="airline-name">Pelita Air</h3>
+                        <p class="flight-route">Penerbangan charter dan reguler</p>
+                        <span class="price-tag">Rp 350.000</span>
+                        <span class="price-final">Rp 650.000</span>
+                        <a href="#" class="btn-book">Pesan Sekarang</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. FAQ (Background Putih - Pemisah) -->
+    <section class="bg-white">
+        <div class="container" style="text-align: center;">
+            <h2 class="section-title">Pertanyaan Seputar Pemesanan</h2>
+            <p class="section-subtitle">Jawaban untuk pertanyaan yang sering ditanyakan</p>
+
+            <div class="faq-list" style="text-align: left;">
+                <details class="faq-item">
+                    <summary class="faq-summary">Bagaimana cara memesan tiket?</summary>
+                    <div class="faq-content">Pilih layanan transportasi, hubungi admin via WhatsApp, lakukan pembayaran, dan tiket akan dikirim ke email/WA Anda.</div>
+                </details>
+                
+                <details class="faq-item">
+                    <summary class="faq-summary">Mengapa menggunakan WhatsApp untuk pemesanan?</summary>
+                    <div class="faq-content">Agar komunikasi lebih cepat, personal, dan kami dapat memastikan ketersediaan seat secara real-time.</div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-summary">Berapa lama proses konfirmasi pemesanan?</summary>
+                    <div class="faq-content">Konfirmasi biasanya memakan waktu 5-10 menit setelah bukti pembayaran diterima.</div>
+                </details>
+
+                <details class="faq-item">
+                    <summary class="faq-summary">Apakah bisa melakukan perubahan atau pembatalan tiket?</summary>
+                    <div class="faq-content">Bisa, namun tunduk pada kebijakan masing-masing maskapai atau operator transportasi.</div>
+                </details>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <p style="font-size: 14px; color: #666;">Punya pertanyaan lain?</p>
+                <a href="#" class="btn-faq-ask">Lihat Semua FAQ</a>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

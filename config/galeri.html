@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redesign Galeri Pastel - Revisi Spread</title>
+    <style>
+        /* ================= RESET & BASIC ================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            /* Warna Pastel Lembut */
+            background: linear-gradient(180deg, #fdfbf7 0%, #faece6 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* ================= CONTAINER UTAMA ================= */
+        .gallery-section {
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+            /* Diperlebar agar kartu muat saat disebar */
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        /* ================= AREA FOTO TUMPUK (POLAROID) ================= */
+        .cards-wrapper {
+            position: relative;
+            height: 380px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 30px;
+            /* Agar kartu tidak terpotong */
+            perspective: 1000px;
+        }
+
+        .polaroid-card {
+            position: absolute;
+            width: 200px;
+            /* Ukuran sedikit dikecilkan agar proporsional */
+            height: 280px;
+            background-color: #fff;
+            padding: 10px 10px 50px 10px;
+            /* Padding bawah tebal ala Polaroid */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.5s ease;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .polaroid-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 2px;
+            filter: brightness(0.95);
+            /* Sedikit redup agar vintage */
+        }
+
+        /* --- POSISI KARTU (REVISI SPREAD) --- */
+
+        /* Kartu Kiri */
+        .card-left {
+            z-index: 1;
+            /* Geser ke kiri lebih jauh (-120px) & Miring (-15deg) */
+            transform: translateX(-120px) translateY(20px) rotate(-15deg);
+        }
+
+        /* Kartu Kanan */
+        .card-right {
+            z-index: 2;
+            /* Geser ke kanan lebih jauh (120px) & Miring (15deg) */
+            transform: translateX(120px) translateY(20px) rotate(15deg);
+        }
+
+        /* Kartu Tengah */
+        .card-center {
+            z-index: 3;
+            /* Naik sedikit ke atas (-20px) agar membentuk segitiga */
+            transform: translateY(-20px) rotate(0deg) scale(1.1);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            /* Shadow lebih kuat */
+        }
+
+        .card-center img {
+            filter: brightness(1.05);
+            /* Foto tengah lebih terang */
+        }
+
+        /* --- HOVER EFFECT (MEKAR LEBIH LEBAR) --- */
+        .cards-wrapper:hover .card-left {
+            transform: translateX(-150px) translateY(30px) rotate(-25deg);
+        }
+
+        .cards-wrapper:hover .card-right {
+            transform: translateX(150px) translateY(30px) rotate(25deg);
+        }
+
+        .cards-wrapper:hover .card-center {
+            transform: translateY(-40px) scale(1.15);
+        }
+
+        /* ================= TEXT & CONTENT ================= */
+        .content-area {
+            position: relative;
+            z-index: 10;
+        }
+
+        .gallery-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: #2c2c2c;
+            margin-bottom: 10px;
+        }
+
+        .gallery-subtitle {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Tombol Lonjong */
+        .btn-inspire {
+            display: inline-block;
+            background-color: #fff;
+            color: #333;
+            padding: 14px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 14px;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-inspire:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* RESPONSIVE (HP) */
+        @media (max-width: 600px) {
+            .polaroid-card {
+                width: 140px;
+                /* Ukuran kartu dikecilkan di HP */
+                height: 190px;
+                padding-bottom: 35px;
+            }
+
+            /* Jarak geser disesuaikan dengan layar kecil */
+            .card-left {
+                transform: translateX(-80px) translateY(10px) rotate(-10deg);
+            }
+
+            .card-right {
+                transform: translateX(80px) translateY(10px) rotate(10deg);
+            }
+
+            /* Hover di HP dikurangi agar tidak keluar layar */
+            .cards-wrapper:hover .card-left {
+                transform: translateX(-90px) rotate(-15deg);
+            }
+
+            .cards-wrapper:hover .card-right {
+                transform: translateX(90px) rotate(15deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="gallery-section">
+
+        <!-- AREA FOTO TUMPUK -->
+        <div class="cards-wrapper">
+            <!-- Foto 1 (Kiri) -->
+            <div class="polaroid-card card-left">
+                <!-- Ganti URL gambar di bawah -->
+                <img src="https://images.unsplash.com/photo-1504609773096-104ff2c73ba4?auto=format&fit=crop&w=600&q=80"
+                    alt="Peta">
+            </div>
+
+            <!-- Foto 3 (Kanan) -->
+            <div class="polaroid-card card-right">
+                <!-- Ganti URL gambar di bawah -->
+                <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80"
+                    alt="Van">
+            </div>
+
+            <!-- Foto 2 (Tengah) -->
+            <div class="polaroid-card card-center">
+                <!-- Ganti URL gambar di bawah -->
+                <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=600&q=80"
+                    alt="Gunung">
+            </div>
+        </div>
+
+        <!-- AREA TEKS -->
+        <div class="content-area">
+            <h2 class="gallery-title">Galeri Perjalanan</h2>
+            <p class="gallery-subtitle">
+                Temukan inspirasi destinasi wisata terbaik dari koleksi perjalanan kami yang tak terlupakan.
+            </p>
+            <a href="#" class="btn-inspire">Lihat Selengkapnya</a>
+        </div>
+
+    </section>
+
+</body>
+
+</html>

@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cendana Travel - Redesign Structure</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ================= VARIABLES & RESET ================= */
+        :root {
+            --primary-bronze: #8c6b4a;
+            --light-bronze: #d4a775;
+            --dark-brown: #3e3228;
+            --bg-cream: #f9f6f2; /* Warna pemisah pastel lembut */
+            --bg-white: #ffffff;
+            --text-dark: #333333;
+            --text-grey: #666666;
+            --shadow-soft: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+        }
+
+        body {
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* ================= UTILITIES ================= */
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* KUNCI PERBAIKAN: Padding besar untuk setiap section */
+        section {
+            padding: 80px 0; 
+        }
+
+        /* Kelas untuk Background Selang-seling */
+        .bg-white { background-color: var(--bg-white); }
+        .bg-cream { background-color: var(--bg-cream); border-top: 1px solid #efebe5; border-bottom: 1px solid #efebe5; }
+        
+        /* Typography Header */
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--dark-brown);
+            margin-bottom: 10px;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-grey);
+            margin-bottom: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ================= 1. HERO SECTION (Tetap Gelap) ================= */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(30, 20, 10, 0.8), rgba(30, 20, 10, 0.8)), url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1200&q=80'); /* Ganti URL gambar */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding-top: 80px; /* Kompensasi navbar */
+        }
+
+        .hero h1 { font-size: 48px; margin-bottom: 20px; color: #d4a775; }
+        .hero p { max-width: 700px; margin: 0 auto 30px; font-size: 18px; opacity: 0.9; }
+        
+        .btn-hero {
+            padding: 12px 30px;
+            background-color: var(--primary-bronze);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .btn-hero:hover { background-color: var(--light-bronze); }
+
+        /* Stats Floating Box (Agar tidak melayang aneh) */
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+        .stat-box {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(5px);
+            padding: 20px 40px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+            text-align: center;
+        }
+        .stat-box h3 { font-size: 32px; color: var(--light-bronze); }
+        .stat-box span { font-size: 14px; color: #ddd; }
+
+
+        /* ================= 2. LAYANAN (Jelajahi Dunia) - BG WHITE ================= */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.3s;
+            border: 1px solid #eee;
+        }
+
+        .service-card:hover { transform: translateY(-5px); }
+
+        .service-img {
+            height: 200px;
+            background-color: #ddd; /* Placeholder Image */
+            background-size: cover;
+            background-position: center;
+        }
+
+        .service-content { padding: 25px; }
+        .service-content h3 { color: var(--dark-brown); margin-bottom: 10px; }
+        .service-content p { font-size: 14px; color: var(--text-grey); margin-bottom: 20px; }
+        
+        .btn-service {
+            display: block;
+            text-align: center;
+            border: 1px solid var(--primary-bronze);
+            color: var(--primary-bronze);
+            padding: 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .btn-service:hover { background-color: var(--primary-bronze); color: white; }
+
+
+        /* ================= 3. MENGAPA KAMI (Why Us) - BG CREAM ================= */
+        /* Section ini pakai BG Cream untuk membedakan dari layanan */
+        .why-us-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .why-us-img {
+            flex: 1;
+            height: 400px;
+            background-color: #ccc; /* Placeholder Img */
+            border-radius: 15px;
+            box-shadow: var(--shadow-soft);
+            background-size: cover;
+        }
+
+        .why-us-content { flex: 1; }
+        
+        .feature-item {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #e8ded4; /* Warna icon pastel */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-bronze);
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+
+        /* ================= 4. CARA BAYAR - BG WHITE ================= */
+        .payment-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        .payment-card {
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--bg-cream); /* Kartu cream di atas background putih */
+            border-radius: 15px;
+            transition: 0.3s;
+        }
+        .payment-card:hover { background: #fff; box-shadow: var(--shadow-soft); }
+        .pay-icon {
+            width: 70px; height: 70px; background: #dacbbd; border-radius: 50%;
+            margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--dark-brown);
+        }
+
+
+        /* ================= 5. TESTIMONI - BG CREAM ================= */
+        .testi-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+        .testi-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+        .avatar-circle {
+            width: 60px; height: 60px; background: var(--primary-bronze); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 20px;
+        }
+
+
+        /* ================= 6. CARA MEMESAN (ZigZag) - BG WHITE ================= */
+        .order-step {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            margin-bottom: 60px;
+        }
+        /* Membalik urutan untuk item genap (ZigZag Layout) */
+        .order-step:nth-child(even) { flex-direction: row-reverse; }
+        
+        .step-img { flex: 1; height: 300px; background: #ddd; border-radius: 15px; background-size: cover; }
+        .step-text { flex: 1; padding: 20px; background: var(--bg-cream); border-radius: 15px; }
+
+
+        /* ================= 7. LEGALITAS - BG CREAM ================= */
+        .legality-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        .legality-item {
+            text-align: center;
+            padding: 30px 15px;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #eee;
+        }
+
+
+        /* ================= 8. CTA (Call to Action) - BRONZE ================= */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-bronze), #a68563);
+            text-align: center;
+            color: white;
+            padding: 100px 0;
+        }
+        .cta-btn {
+            background: white; color: var(--primary-bronze); padding: 15px 40px; border-radius: 50px;
+            text-decoration: none; font-weight: bold; margin-top: 20px; display: inline-block;
+        }
+
+        /* ================= RESPONSIVE ================= */
+        @media (max-width: 768px) {
+            .why-us-wrapper, .order-step, .testi-grid, .payment-grid, .legality-grid {
+                grid-template-columns: 1fr;
+                flex-direction: column;
+            }
+            .order-step:nth-child(even) { flex-direction: column; }
+            .hero h1 { font-size: 32px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. HERO SECTION -->
+    <header class="hero">
+        <div class="container">
+            <h1>Perjalanan Impian Dimulai Dari Sini</h1>
+            <p>Layanan travel profesional dengan pengalaman lebih dari 10 tahun. Kami mengutamakan kenyamanan dan keamanan Anda.</p>
+            <a href="#" class="btn-hero">Jelajahi Layanan</a>
+            
+            <div class="stats-container">
+                <div class="stat-box"><h3>10+</h3><span>Tahun Pengalaman</span></div>
+                <div class="stat-box"><h3>5000+</h3><span>Pelanggan Puas</span></div>
+                <div class="stat-box"><h3>4.9</h3><span>Rating Google</span></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. LAYANAN (Background Putih) -->
+    <section class="bg-white">
+        <div class="container">
+            <h2 class="section-title">Jelajahi Dunia</h2>
+            <p class="section-subtitle">Pilih moda transportasi favorit Anda dengan pelayanan premium.</p>
+            
+            <div class="services-grid">
+                <!-- Card 1 -->
+                <div class="service-card">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="service-content">
+                        <h3><i class="fas fa-plane"></i> Tiket Pesawat</h3>
+                        <p>Terbang ke seluruh destinasi domestik dan internasional dengan harga kompetitif.</p>
+                        <a href="#" class="btn-service">Cari Penerbangan</a>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="service-card">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="service-content">
+                        <h3><i class="fas fa-bus"></i> Tiket Bus Premium</h3>
+                        <p>Perjalanan darat nyaman dengan armada terbaru antar kota.</p>
+                        <a href="#" class="btn-service">Pesan Tiket Bus</a>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="service-card">
+                    <div class="service-img" style="background-image: url('https://images.unsplash.com/photo-1548286971-56c5476d05f3?auto=format&fit=crop&w=600&q=80');"></div>
+                    <div class="service-content">
+                        <h3><i class="fas fa-ship"></i> Tiket Kapal Laut</h3>
+                        <p>Nikmati perjalanan laut antar pulau dengan aman dan pemandangan indah.</p>
+                        <a href="#" class="btn-service">Pesan Tiket Kapal</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. MENGAPA KAMI (Background Cream - Pemisah) -->
+    <section class="bg-cream">
+        <div class="container">
+            <h2 class="section-title">Mengapa Memilih Kami?</h2>
+            <p class="section-subtitle">Prioritas utama kami adalah memberikan layanan travel terbaik.</p>
+            
+            <div class="why-us-wrapper">
+                <div class="why-us-img" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80');"></div>
+                <div class="why-us-content">
+                    <div class="feature-item">
+                        <div class="feature-icon"><i class="fas fa-check"></i></div>
+                        <div>
+                            <h4>Legal & Terpercaya</h4>
+                            <p>Perusahaan resmi dengan izin operasional lengkap dari badan pemerintah.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><i class="fas fa-headset"></i></div>
+                        <div>
+                            <h4>Layanan 24/7</h4>
+                            <p>Tim customer service responsif siap membantu kapan saja.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                        <div>
+                            <h4>Aman & Terjamin</h4>
+                            <p>Transaksi dijamin aman dengan sertifikat keamanan data.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. CARA PEMBAYARAN (Background Putih) -->
+    <section class="bg-white">
+        <div class="container">
+            <h2 class="section-title">Cara Pembayaran</h2>
+            <p class="section-subtitle">Ikuti langkah mudah untuk menyelesaikan pembayaran.</p>
+
+            <div class="payment-grid">
+                <div class="payment-card">
+                    <div class="pay-icon"><i class="fas fa-university"></i></div>
+                    <h3>Transfer Bank</h3>
+                    <p>Transfer ke rekening resmi kami. Mendukung semua bank besar.</p>
+                </div>
+                <div class="payment-card">
+                    <div class="pay-icon"><i class="fas fa-check-circle"></i></div>
+                    <h3>Konfirmasi</h3>
+                    <p>Kirim bukti transfer melalui WhatsApp untuk verifikasi cepat.</p>
+                </div>
+                <div class="payment-card">
+                    <div class="pay-icon"><i class="fas fa-ticket-alt"></i></div>
+                    <h3>Tiket Dikirim</h3>
+                    <p>E-ticket resmi akan dikirimkan langsung ke WhatsApp/Email Anda.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. TESTIMONI (Background Cream - Pemisah) -->
+    <section class="bg-cream">
+        <div class="container">
+            <h2 class="section-title">Apa Kata Pelanggan?</h2>
+            <p class="section-subtitle">Ribuan pelanggan puas mempercayai kami.</p>
+
+            <div class="testi-grid">
+                <div class="testi-card">
+                    <div class="avatar-circle">AH</div>
+                    <div>
+                        <h4>Ali Harsyah</h4>
+                        <div style="color: #f1c40f; margin-bottom: 5px;">★★★★★</div>
+                        <p>"Pelayanan sangat cepat, admin ramah. Booking tiket pesawat jadi mudah."</p>
+                    </div>
+                </div>
+                <div class="testi-card">
+                    <div class="avatar-circle">SA</div>
+                    <div>
+                        <h4>Siti Aminah</h4>
+                        <div style="color: #f1c40f; margin-bottom: 5px;">★★★★★</div>
+                        <p>"Perjalanan pertama sangat memuaskan. Terima kasih Cendana Travel!"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. CARA MEMESAN (Background Putih - ZigZag Layout) -->
+    <section class="bg-white">
+        <div class="container">
+            <h2 class="section-title">Bagaimana Cara Memesan?</h2>
+            <p class="section-subtitle">Proses mudah dalam 3 langkah sederhana.</p>
+
+            <!-- Step 1 -->
+            <div class="order-step">
+                <div class="step-img" style="background-image: url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="step-text">
+                    <h3>1. Pilih Layanan</h3>
+                    <p>Kunjungi halaman pemesanan. Pilih jenis transportasi (Pesawat, Bus, atau Kapal) sesuai kebutuhan Anda.</p>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="order-step">
+                <div class="step-img" style="background-image: url('https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="step-text">
+                    <h3>2. Hubungi Admin</h3>
+                    <p>Klik tombol pesan, Anda akan diarahkan ke WhatsApp admin kami untuk konfirmasi ketersediaan dan harga terkini.</p>
+                </div>
+            </div>
+
+             <!-- Step 3 -->
+             <div class="order-step">
+                <div class="step-img" style="background-image: url('https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="step-text">
+                    <h3>3. Lakukan Pembayaran</h3>
+                    <p>Lakukan transfer sesuai instruksi. E-ticket resmi akan dikirimkan setelah pembayaran terkonfirmasi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. GALERI (Sisipkan Kode Polaroid Anda Sebelumnya Di Sini) -->
+    <section class="bg-cream">
+        <div class="container" style="text-align: center;">
+            <h2 class="section-title">Galeri Perjalanan</h2>
+            <p>Kode galeri Polaroid yang sudah Anda buat bisa diletakkan di dalam section ini.</p>
+            <!-- Paste kode Polaroid di sini -->
+        </div>
+    </section>
+
+    <!-- 8. LEGALITAS (Background Putih) -->
+    <section class="bg-white">
+        <div class="container">
+            <h2 class="section-title">Legalitas & Keamanan</h2>
+            <p class="section-subtitle">Kami menjamin keamanan dalam setiap transaksi.</p>
+            
+            <div class="legality-grid">
+                <div class="legality-item">
+                    <i class="fas fa-file-contract" style="font-size: 30px; color: var(--primary-bronze); margin-bottom: 15px;"></i>
+                    <h4>Terdaftar Resmi</h4>
+                </div>
+                <div class="legality-item">
+                    <i class="fas fa-id-card" style="font-size: 30px; color: var(--primary-bronze); margin-bottom: 15px;"></i>
+                    <h4>Lisensi Operasional</h4>
+                </div>
+                <div class="legality-item">
+                    <i class="fas fa-lock" style="font-size: 30px; color: var(--primary-bronze); margin-bottom: 15px;"></i>
+                    <h4>Transaksi Aman</h4>
+                </div>
+                <div class="legality-item">
+                    <i class="fas fa-user-shield" style="font-size: 30px; color: var(--primary-bronze); margin-bottom: 15px;"></i>
+                    <h4>Perlindungan Data</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. CTA FINAL (Warna Bronze Pekat - Pembeda dengan footer) -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Siap Memulai Perjalanan Anda?</h2>
+            <p>Jangan tunda lagi! Hubungi kami sekarang dan dapatkan penawaran terbaik.</p>
+            <a href="#" class="cta-btn"><i class="fab fa-whatsapp"></i> Chat WhatsApp Sekarang</a>
+        </div>
+    </section>
+
+    <!-- 10. FOOTER (Gunakan kode Footer yang sudah Anda buat sebelumnya) -->
+    <!-- Paste kode Footer di sini -->
+
+</body>
+</html>
