@@ -776,30 +776,92 @@ section {
 .filter-tabs {
     display: flex;
     justify-content: center;
-    gap: 1rem;
+    gap: 1.25rem;
     flex-wrap: wrap;
+    margin-top: 2rem;
 }
 
 .filter-tab {
-    padding: 0.875rem 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
     background: #FFFFFF;
     border: 1.5px solid #E5E7EB;
-    border-radius: var(--radius-lg);
-    color: #6B7280;
-    font-weight: 500;
-    font-size: 0.95rem;
+    border-radius: 12px;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    position: relative;
 }
 
-/* Hover HANYA untuk tab NON-AKTIF - Background oranye + teks putih */
+.filter-tab-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #6B7280;
+    transition: color 0.25s ease;
+}
+
+.filter-tab-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.filter-tab-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #1F2937;
+    transition: color 0.25s ease;
+}
+
+.filter-tab-desc {
+    font-size: 0.8rem;
+    color: #9CA3AF;
+    transition: color 0.25s ease;
+}
+
+.filter-tab-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 26px;
+    height: 26px;
+    padding: 0 8px;
+    background: #F3F4F6;
+    color: #6B7280;
+    border-radius: 13px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-left: auto;
+    transition: all 0.25s ease;
+}
+
+/* Hover HANYA untuk tab NON-AKTIF */
 .filter-tab:not(.active):hover {
-    background: linear-gradient(135deg, #D4956E 0%, #E8A87A 100%);
+    background: linear-gradient(135deg, #FEF3E7 0%, #FDE8D7 100%);
     border-color: #D4956E;
-    color: #FFFFFF;
-    box-shadow: 0 4px 16px rgba(212, 149, 110, 0.25);
     transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(212, 149, 110, 0.15);
+}
+
+.filter-tab:not(.active):hover .filter-tab-icon {
+    color: #D4956E;
+}
+
+.filter-tab:not(.active):hover .filter-tab-name {
+    color: #D4956E;
+}
+
+.filter-tab:not(.active):hover .filter-tab-desc {
+    color: #B8704D;
+}
+
+.filter-tab:not(.active):hover .filter-tab-badge {
+    background: #D4956E;
+    color: #FFFFFF;
 }
 
 /* Focus state untuk aksesibilitas */
@@ -808,14 +870,31 @@ section {
     outline-offset: 2px;
 }
 
-/* Tab AKTIF - Background oranye + teks putih (tidak berubah saat hover) */
+/* Tab AKTIF - Background oranye + semua elemen putih */
 .filter-tab.active {
-    background: linear-gradient(135deg, #D4956E 0%, #E8A87A 100%);
+    background: linear-gradient(135deg, #D4956E 0%, #B8704D 100%);
     border-color: #D4956E;
-    color: #FFFFFF;
-    font-weight: 600;
-    box-shadow: 0 4px 16px rgba(212, 149, 110, 0.3);
     transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(212, 149, 110, 0.35);
+}
+
+.filter-tab.active .filter-tab-icon {
+    color: #FFFFFF;
+}
+
+.filter-tab.active .filter-tab-name {
+    color: #FFFFFF;
+    font-weight: 650;
+}
+
+.filter-tab.active .filter-tab-desc {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.filter-tab.active .filter-tab-badge {
+    background: rgba(255, 255, 255, 0.25);
+    color: #FFFFFF;
+    font-weight: 700;
 }
 
 .transport-grid {
@@ -973,28 +1052,32 @@ section {
 .faq-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-    gap: 1rem;
+    gap: 1.75rem;
 }
 
 .faq-item {
     background: #FFFFFF;
-    border: 1.5px solid #E5E7EB;
-    border-radius: var(--radius-lg);
+    border: 1px solid #e5e5e5;
+    border-radius: 16px;
     padding: 0;
     overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    margin-bottom: 24px;
+    transition: border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    will-change: border-color, box-shadow;
 }
 
 .faq-item:hover {
-    border-color: #D4956E;
-    box-shadow: 0 4px 12px rgba(212, 149, 110, 0.15);
+    border-color: #d28c5a;
+    box-shadow: 0 6px 18px rgba(210, 140, 90, 0.12);
     transform: translateY(-2px);
 }
 
 .faq-item.active {
-    border-color: #D4956E;
-    box-shadow: 0 4px 16px rgba(212, 149, 110, 0.2);
+    border-color: #d28c5a;
+    box-shadow: 0 6px 20px rgba(210, 140, 90, 0.15);
 }
 
 .faq-item-header {
@@ -1002,58 +1085,74 @@ section {
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
-    font-weight: 500;
+    font-weight: 650;
     color: #1F2937;
-    padding: 1.25rem 1.5rem;
+    padding: 24px 28px;
     width: 100%;
     background: none;
     border: none;
     text-align: left;
-    transition: color 0.2s ease;
-    font-size: 1rem;
+    transition: color 0.25s ease;
+    font-size: 17px;
+    line-height: 1.5;
 }
 
 .faq-item-header:hover {
-    color: #D4956E;
+    color: #d28c5a;
 }
 
 .faq-item-header:focus {
-    outline: 2px solid #D4956E;
+    outline: 2px solid #d28c5a;
     outline-offset: -2px;
 }
 
+.faq-item-header span {
+    flex: 1;
+    padding-right: 16px;
+}
+
 .faq-item-icon {
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     color: #9CA3AF;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                color 0.3s ease;
     flex-shrink: 0;
-    margin-left: 1rem;
+    margin-left: auto;
+    transform-origin: center;
 }
 
 .faq-item.active .faq-item-icon {
     transform: rotate(180deg);
-    color: #D4956E;
+    color: #d28c5a;
 }
 
 .faq-item-content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    margin-top: 0;
-    padding: 0 1.5rem;
+    opacity: 0;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                padding 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                border-top-color 0.3s ease;
+    border-top: 1px solid transparent;
+    padding: 0 28px;
+    will-change: max-height, opacity, padding;
 }
 
 .faq-item.active .faq-item-content {
-    max-height: 800px;
-    padding: 0 1.5rem 1.5rem;
+    max-height: 1200px;
+    opacity: 1;
+    border-top-color: #f0f0f0;
+    padding: 18px 28px 24px;
 }
 
 .faq-item-content p {
     margin: 0;
     color: #4B5563;
-    line-height: 1.8;
-    font-size: 0.95rem;
+    line-height: 1.6;
+    font-size: 15.5px;
     font-weight: 400;
+    transition: opacity 0.2s ease 0.1s;
 }
 
 /* ============================================
@@ -1135,6 +1234,30 @@ section {
 
     .faq-grid {
         grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+    
+    .faq-item {
+        margin-bottom: 18px;
+        border-radius: 14px;
+    }
+    
+    .faq-item-header {
+        padding: 20px 22px;
+        font-size: 16px;
+    }
+    
+    .faq-item-header span {
+        padding-right: 12px;
+    }
+    
+    .faq-item.active .faq-item-content {
+        padding: 16px 22px 20px;
+    }
+    
+    .faq-item-content p {
+        font-size: 15px;
+        line-height: 1.6;
     }
 }
 
@@ -1495,66 +1618,7 @@ section {
    FAQ ACCORDION STYLES
    ============================================ */
 
-.faq-item {
-    background: var(--color-white);
-    border-radius: var(--radius-lg);
-    padding: 1.5rem;
-    margin-bottom: var(--spacing-lg);
-    box-shadow: var(--shadow-md);
-    transition: all 0.3s ease;
-}
-
-.faq-item.active {
-    box-shadow: var(--shadow-lg);
-}
-
-.faq-item-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 0;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-weight: 700;
-    color: var(--color-dark);
-    font-size: 1.35rem;
-    text-align: left;
-    transition: color 0.3s ease;
-    line-height: 1.5;
-}
-
-.faq-item-header:hover {
-    color: var(--color-primary);
-}
-
-.faq-item-icon {
-    font-size: 1.5rem;
-    color: var(--color-primary);
-    transition: transform 0.3s ease;
-    flex-shrink: 0;
-    margin-left: var(--spacing-md);
-}
-
-.faq-item.active .faq-item-icon {
-    transform: rotate(180deg);
-}
-
-.faq-item-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-    margin-top: var(--spacing-md);
-}
-
-.faq-item.active .faq-item-content {
-    max-height: 500px;
-}
-
-.faq-item-content p {
-    color: var(--color-gray);
-    line-height: 1.8;
+/* DUPLIKAT CSS FAQ DIHAPUS - Style utama ada di baris 979-1058 */
     margin: 0;
     font-size: 1.1rem;
 }
@@ -1600,6 +1664,15 @@ section {
 }
 
 /* BLOK DUPLIKAT DIHAPUS - Lihat baris 771-808 untuk style .filter-tab yang aktif */
+
+/* ============================================
+   BOOKING FILTER SECTION - SPACING
+   ============================================ */
+
+.booking-filter-section {
+    padding: 3rem 0 2.5rem;
+    background: #FAFAFA;
+}
 
 /* ============================================
    BOOKING LIST SECTION - ENHANCED
@@ -1921,33 +1994,60 @@ section {
     .filter-tabs {
         flex-direction: column;
         align-items: stretch;
+        gap: 0.875rem;
     }
 
     .filter-tab {
-        justify-content: flex-start;
-        min-width: auto;
-        padding: 1rem 1.5rem;
-        gap: var(--spacing-md);
+        width: 100%;
+        padding: 16px 18px;
+        gap: 12px;
+    }
+
+    .filter-tab-icon {
+        font-size: 1.35rem;
     }
 
     .filter-tab-badge {
-        flex-shrink: 0;
+        min-width: 24px;
+        height: 24px;
+        font-size: 0.75rem;
     }
 
     .filter-tab-content {
-        display: flex;
-        flex-direction: column;
-        gap: var(--spacing-xs);
+        flex: 1;
     }
 
     .filter-tab-name {
-        font-weight: 600;
-        color: var(--color-dark);
+        font-size: 0.9rem;
     }
 
     .filter-tab-desc {
-        font-size: 0.85rem;
-        color: var(--color-gray);
+        font-size: 0.75rem;
+    }
+    
+    .faq-booking-item {
+        margin-bottom: 0;
+    }
+    
+    .faq-booking-question {
+        padding: 20px 22px;
+        font-size: 16px;
+    }
+    
+    .faq-booking-question span {
+        padding-right: 12px;
+    }
+    
+    .faq-booking-item.active .faq-booking-answer {
+        padding: 16px 22px 20px;
+    }
+    
+    .faq-booking-answer {
+        padding: 0 22px;
+    }
+    
+    .faq-booking-answer p {
+        font-size: 15px;
     }
 
     .company-logo-wrapper {
@@ -2019,6 +2119,34 @@ section {
 }
 
 @media (max-width: 425px) {
+    .filter-tabs {
+        gap: 0.75rem;
+    }
+    
+    .filter-tab {
+        padding: 14px 16px;
+    }
+    
+    .filter-tab-icon {
+        font-size: 1.25rem;
+    }
+    
+    .filter-tab-name {
+        font-size: 0.875rem;
+    }
+    
+    .filter-tab-desc {
+        font-size: 0.7rem;
+    }
+    
+    .faq-booking-header h2 {
+        font-size: 1.65rem;
+    }
+    
+    .faq-booking-header p {
+        font-size: 0.95rem;
+    }
+
     .transport-cards-grid {
         grid-template-columns: 1fr;
         gap: var(--spacing-md);
@@ -2165,89 +2293,141 @@ section {
 .faq-booking-content {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 0.75rem;
-    margin-bottom: 2rem;
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
     max-width: 900px;
     margin-left: auto;
     margin-right: auto;
 }
 
+/* FAQ Pemesanan menggunakan style yang SAMA dengan FAQ utama */
 .faq-booking-item {
     background: #FFFFFF;
-    border: 1px solid #E5E7EB;
-    border-radius: 8px;
+    border: 1px solid #e5e5e5;
+    border-radius: 16px;
+    padding: 0;
     overflow: hidden;
-    transition: border-color 0.2s ease;
+    margin-bottom: 0;
+    transition: border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    will-change: border-color, box-shadow;
 }
 
 .faq-booking-item:hover {
-    border-color: #D4956E;
+    border-color: #d28c5a;
+    box-shadow: 0 6px 18px rgba(210, 140, 90, 0.12);
+    transform: translateY(-2px);
 }
 
 .faq-booking-item.active {
-    border-color: #D4956E;
+    border-color: #d28c5a;
+    box-shadow: 0 6px 20px rgba(210, 140, 90, 0.15);
 }
 
 .faq-booking-question {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
+    font-weight: 650;
+    color: #1F2937;
+    padding: 24px 28px;
     width: 100%;
-    padding: 1rem 1.25rem;
     background: none;
     border: none;
-    cursor: pointer;
-    font-weight: 400;
-    color: #1F2937;
     text-align: left;
-    transition: color 0.2s ease;
+    transition: color 0.25s ease;
+    font-size: 17px;
+    line-height: 1.5;
 }
 
 .faq-booking-question span {
-    font-size: 0.95rem;
-    line-height: 1.5;
-    font-weight: 400;
+    flex: 1;
+    padding-right: 16px;
 }
 
 .faq-booking-question:hover {
-    color: #D4956E;
+    color: #d28c5a;
+}
+
+.faq-booking-question:focus {
+    outline: 2px solid #d28c5a;
+    outline-offset: -2px;
 }
 
 .faq-booking-icon {
-    font-size: 1rem;
-    color: #D1D5DB;
-    transition: all 0.2s ease;
+    font-size: 1.25rem;
+    color: #9CA3AF;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                color 0.3s ease;
     flex-shrink: 0;
-    margin-left: 1rem;
+    margin-left: auto;
+    transform-origin: center;
 }
 
 .faq-booking-item.active .faq-booking-icon {
     transform: rotate(180deg);
-    color: #D4956E;
+    color: #d28c5a;
 }
 
 .faq-booking-answer {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s ease;
-    padding: 0 1.25rem;
+    opacity: 0;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                padding 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                border-top-color 0.3s ease;
+    border-top: 1px solid transparent;
+    padding: 0 28px;
+    will-change: max-height, opacity, padding;
 }
 
 .faq-booking-item.active .faq-booking-answer {
-    max-height: 800px;
-    padding: 0 1.25rem 1rem;
+    max-height: 1200px;
+    opacity: 1;
+    border-top-color: #f0f0f0;
+    padding: 18px 28px 24px;
 }
 
 .faq-booking-answer p {
     margin: 0;
-    color: #6B7280;
+    color: #4B5563;
     line-height: 1.6;
-    font-size: 0.9rem;
+    font-size: 15.5px;
     font-weight: 400;
+    transition: opacity 0.2s ease 0.1s;
+}
+
+.faq-booking-section {
+    padding: 4rem 0 4.5rem;
+    background: #FAFAFA;
+}
+
+.faq-booking-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.faq-booking-header h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1F2937;
+    margin-bottom: 0.75rem;
+}
+
+.faq-booking-header p {
+    font-size: 1.05rem;
+    color: #6B7280;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .faq-booking-cta {
     text-align: center;
+    margin-top: 2rem;
 }
 
 .faq-booking-cta p {

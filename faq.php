@@ -94,7 +94,7 @@ if (empty($faqData)) {
             </div>
 
             <!-- FAQ Items Grid -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 1rem;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 1.75rem;">
                 <?php foreach ($faqData as $categoryIndex => $category): ?>
                     <div class="faq-category-group" data-category-index="<?php echo $categoryIndex; ?>" 
                          style="<?php echo $categoryIndex !== 0 ? 'display: none;' : ''; ?> grid-column: 1 / -1;">
@@ -251,18 +251,41 @@ if (empty($faqData)) {
     <script>
         function toggleFaqItem(button) {
             const item = button.parentElement;
-            const allItems = document.querySelectorAll('.faq-item');
+            const content = item.querySelector('.faq-item-content');
+            const isActive = item.classList.contains('active');
             
+            // Close all other items with smooth animation
+            const allItems = document.querySelectorAll('.faq-item');
             allItems.forEach(el => {
                 if (el !== item && el.classList.contains('active')) {
+                    const otherButton = el.querySelector('.faq-item-header');
+                    const otherContent = el.querySelector('.faq-item-content');
                     el.classList.remove('active');
+                    if (otherButton) otherButton.setAttribute('aria-expanded', 'false');
                 }
             });
             
-            item.classList.toggle('active');
+            // Toggle current item with animation
+            if (isActive) {
+                // Closing animation
+                item.classList.remove('active');
+                button.setAttribute('aria-expanded', 'false');
+            } else {
+                // Opening animation
+                item.classList.add('active');
+                button.setAttribute('aria-expanded', 'true');
+            }
         }
 
         function switchFaqCategory(categoryIndex) {
+            // Close all open FAQ items before switching category
+            const allItems = document.querySelectorAll('.faq-item');
+            allItems.forEach(item => {
+                item.classList.remove('active');
+                const button = item.querySelector('.faq-item-header');
+                if (button) button.setAttribute('aria-expanded', 'false');
+            });
+            
             // Hide all categories
             const categories = document.querySelectorAll('.faq-category-group');
             categories.forEach(cat => cat.style.display = 'none');
@@ -278,11 +301,6 @@ if (empty($faqData)) {
             const tabs = document.querySelectorAll('.filter-tab');
             tabs.forEach((tab, index) => {
                 tab.classList.toggle('active', index === categoryIndex);
-            });
-            
-            // Close all FAQ items
-            document.querySelectorAll('.faq-item').forEach(item => {
-                item.classList.remove('active');
             });
         }
     </script>

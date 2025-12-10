@@ -110,37 +110,18 @@ $companyInfoData = [
             background: linear-gradient(135deg, #E8A87A 0%, #D4956E 100%) !important;
         }
         
+        /* Completed message - simple text only */
         .gallery-completed {
-            display: flex !important;
-            flex-direction: column;
-            align-items: center;
-            padding: 4rem 2.5rem !important;
-            margin: 4rem auto 3rem !important;
-            max-width: 700px;
-            background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%) !important;
-            border-radius: 20px !important;
-            border: 2px solid #86EFAC !important;
+            display: block !important;
+            text-align: center;
+            padding: 0 !important;
+            margin: 3rem auto 2rem !important;
         }
         
-        .completed-icon {
-            width: 90px;
-            height: 90px;
-            background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%) !important;
-            border-radius: 50%;
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .gallery-completed h3 {
-            color: #166534 !important;
-            font-size: 1.75rem !important;
-            margin-bottom: 1rem;
-        }
-        
-        .gallery-completed p {
-            color: #15803D !important;
+        .completed-text {
+            color: #6B7280;
+            font-size: 0.95rem;
+            margin: 0;
         }
     </style>
 </head>
@@ -223,38 +204,17 @@ $companyInfoData = [
                 <!-- Photos will be rendered by JavaScript -->
             </div>
             
-            <!-- Pagination Controls - Premium Design -->
-            <div class="gallery-pagination" id="galleryPagination" style="display: none;">
-                <!-- Progress Bar -->
-                <div class="pagination-progress">
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill"></div>
-                    </div>
-                    <p class="progress-text" id="progressText">Menampilkan <strong>9</strong> dari <strong>24</strong> foto</p>
-                </div>
-                
-                <!-- Load More Button -->
+            <!-- Pagination Controls - Minimal Design -->
+            <div class="gallery-load-more" id="galleryPagination" style="display: none;">
+                <p class="load-more-text" id="progressText">Menampilkan <strong>9</strong> dari <strong>24</strong> foto</p>
                 <button class="btn-load-more" id="loadMoreBtn" onclick="loadMorePhotos()">
-                    <span class="btn-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-                            <path d="M12 5v14M5 12l7 7 7-7"/>
-                        </svg>
-                    </span>
-                    <span class="btn-text">Muat Foto Lainnya</span>
-                    <span class="btn-shine"></span>
+                    <span class="btn-text">Muat Foto Lagi</span>
                 </button>
             </div>
             
-            <!-- All Photos Loaded Message -->
+            <!-- All Photos Loaded Message - Simple -->
             <div class="gallery-completed" id="galleryCompleted" style="display: none;">
-                <div class="completed-icon">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                        <polyline points="22 4 12 14.01 9 11.01"/>
-                    </svg>
-                </div>
-                <h3>Semua Foto Telah Ditampilkan</h3>
-                <p>Anda telah melihat seluruh koleksi foto di galeri ini</p>
+                <p class="completed-text">Semua foto telah ditampilkan.</p>
             </div>
             
             <!-- Hidden PHP Data for JavaScript -->
@@ -487,38 +447,29 @@ $companyInfoData = [
             updateLoadMoreButton(filteredPhotos.length);
         }
         
-        // Update Load More button and progress bar
+        // Update Load More button
         function updateLoadMoreButton(totalFilteredPhotos) {
             const paginationSection = document.getElementById('galleryPagination');
             const completedSection = document.getElementById('galleryCompleted');
-            const progressFill = document.getElementById('progressFill');
             const progressText = document.getElementById('progressText');
             const loadMoreBtn = document.getElementById('loadMoreBtn');
             
             if (displayedCount < totalFilteredPhotos) {
-                // More photos available - show pagination
+                // More photos available - show load more
                 paginationSection.style.display = 'block';
                 completedSection.style.display = 'none';
-                
-                // Update progress bar
-                const percentage = (displayedCount / totalFilteredPhotos) * 100;
-                progressFill.style.width = percentage + '%';
                 
                 // Update text
                 progressText.innerHTML = `Menampilkan <strong>${displayedCount}</strong> dari <strong>${totalFilteredPhotos}</strong> foto`;
                 
-                // Calculate remaining
-                const remaining = totalFilteredPhotos - displayedCount;
-                if (remaining <= 9) {
-                    loadMoreBtn.querySelector('.btn-text').textContent = `Muat ${remaining} Foto Terakhir`;
-                } else {
-                    loadMoreBtn.querySelector('.btn-text').textContent = 'Muat Foto Lainnya';
-                }
+                // Update button state
+                loadMoreBtn.disabled = false;
+                loadMoreBtn.querySelector('.btn-text').textContent = 'Muat Foto Lagi';
                 
             } else if (totalFilteredPhotos > 0) {
                 // All photos shown - show completion message
                 paginationSection.style.display = 'none';
-                completedSection.style.display = 'flex';
+                completedSection.style.display = 'block';
                 
             } else {
                 // No photos
