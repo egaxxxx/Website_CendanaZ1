@@ -42,8 +42,107 @@ $companyInfoData = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galeri - <?php echo htmlspecialchars($companyName); ?></title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="galeri-modern.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="icons.css">
+    
+    <!-- Critical CSS untuk memastikan pagination style tampil -->
+    <style>
+        /* Force display dengan !important */
+        .gallery-pagination {
+            display: block !important;
+            max-width: 700px !important;
+            margin: 4rem auto 3rem !important;
+            padding: 2.5rem 2rem !important;
+            background: linear-gradient(135deg, #FFF8F3 0%, #FFFFFF 100%) !important;
+            border-radius: 16px !important;
+            border: 1px solid #E8BBA8 !important;
+            box-shadow: 0 4px 16px rgba(212, 149, 110, 0.12) !important;
+        }
+        
+        .progress-bar {
+            height: 10px !important;
+            background: #F3E8E0 !important;
+            border-radius: 100px !important;
+            margin-bottom: 1.25rem !important;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #D4956E 0%, #E8A87A 50%, #D4956E 100%) !important;
+            border-radius: 100px !important;
+            transition: width 0.6s ease !important;
+        }
+        
+        .progress-text {
+            text-align: center;
+            color: #6B7280 !important;
+            font-size: 1rem !important;
+            margin-bottom: 2rem !important;
+        }
+        
+        .progress-text strong {
+            color: #D4956E !important;
+            font-weight: 700;
+        }
+        
+        .btn-load-more {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            max-width: 350px;
+            margin: 0 auto !important;
+            padding: 18px 36px !important;
+            background: linear-gradient(135deg, #D4956E 0%, #B8704D 100%) !important;
+            border: 2px solid #D4956E !important;
+            border-radius: 14px !important;
+            font-size: 1.05rem !important;
+            font-weight: 700;
+            color: #FFFFFF !important;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(212, 149, 110, 0.35), 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        .btn-load-more:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(135deg, #E8A87A 0%, #D4956E 100%) !important;
+        }
+        
+        .gallery-completed {
+            display: flex !important;
+            flex-direction: column;
+            align-items: center;
+            padding: 4rem 2.5rem !important;
+            margin: 4rem auto 3rem !important;
+            max-width: 700px;
+            background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%) !important;
+            border-radius: 20px !important;
+            border: 2px solid #86EFAC !important;
+        }
+        
+        .completed-icon {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%) !important;
+            border-radius: 50%;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .gallery-completed h3 {
+            color: #166534 !important;
+            font-size: 1.75rem !important;
+            margin-bottom: 1rem;
+        }
+        
+        .gallery-completed p {
+            color: #15803D !important;
+        }
+    </style>
 </head>
 <body class="page-galeri">
     <!-- Header Navigation -->
@@ -119,34 +218,89 @@ $companyInfoData = [
                 </button>
             </div>
 
-            <!-- Gallery Grid -->
-            <div class="gallery-grid">
-                <?php if (count($galleries) > 0): ?>
-                    <?php foreach ($galleries as $gallery): ?>
-                        <article class="gallery-item" data-category="<?= htmlspecialchars($gallery['category'] ?? 'all') ?>">
-                            <img src="<?= htmlspecialchars($gallery['image']) ?>" 
-                                 alt="<?= htmlspecialchars($gallery['title']) ?>"
-                                 onerror="this.src='https://via.placeholder.com/500x300?text=Image+Not+Found'">
-                            <div class="gallery-overlay">
-                                <div class="gallery-overlay-content">
-                                    <h3><?= htmlspecialchars($gallery['title']) ?></h3>
-                                    <?php if (!empty($gallery['description'])): ?>
-                                        <p><?= htmlspecialchars($gallery['description']) ?></p>
-                                    <?php endif; ?>
-                                </div>
-                            </div>
-                        </article>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
-                        <i class="icon icon-image" style="font-size: 4rem; color: var(--color-light-gray); margin-bottom: 1rem;"></i>
-                        <p style="color: var(--color-gray); font-size: 1.1rem;">Belum ada foto di galeri</p>
-                        <p style="color: var(--color-light-gray); font-size: 0.9rem;">Silakan tambahkan foto melalui Admin Panel</p>
-                    </div>
-                <?php endif; ?>
+            <!-- Gallery Masonry Grid -->
+            <div class="gallery-masonry-grid" id="galleryGrid">
+                <!-- Photos will be rendered by JavaScript -->
             </div>
+            
+            <!-- Pagination Controls - Premium Design -->
+            <div class="gallery-pagination" id="galleryPagination" style="display: none;">
+                <!-- Progress Bar -->
+                <div class="pagination-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p class="progress-text" id="progressText">Menampilkan <strong>9</strong> dari <strong>24</strong> foto</p>
+                </div>
+                
+                <!-- Load More Button -->
+                <button class="btn-load-more" id="loadMoreBtn" onclick="loadMorePhotos()">
+                    <span class="btn-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                            <path d="M12 5v14M5 12l7 7 7-7"/>
+                        </svg>
+                    </span>
+                    <span class="btn-text">Muat Foto Lainnya</span>
+                    <span class="btn-shine"></span>
+                </button>
+            </div>
+            
+            <!-- All Photos Loaded Message -->
+            <div class="gallery-completed" id="galleryCompleted" style="display: none;">
+                <div class="completed-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                        <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                </div>
+                <h3>Semua Foto Telah Ditampilkan</h3>
+                <p>Anda telah melihat seluruh koleksi foto di galeri ini</p>
+            </div>
+            
+            <!-- Hidden PHP Data for JavaScript -->
+            <script id="galleryData" type="application/json">
+                <?php echo json_encode($galleries); ?>
+            </script>
+</section>
+
+<!-- Lightbox Modal dengan Navigation -->
+<div id="lightbox-modal" class="lightbox-modal">
+    <div class="lightbox-content">
+        <!-- Header -->
+        <div class="lightbox-header">
+            <h2 class="lightbox-title" id="lightbox-title">Detail Foto</h2>
+            <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
         </div>
-    </section>
+        
+        <!-- Body dengan Navigation -->
+        <div class="lightbox-body">
+            <!-- Previous Button -->
+            <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)" title="Foto Sebelumnya">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+            
+            <!-- Image Container -->
+            <div class="lightbox-image-container">
+                <img id="lightbox-image" src="" alt="">
+            </div>
+            
+            <!-- Next Button -->
+            <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)" title="Foto Selanjutnya">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Caption -->
+        <div id="lightbox-caption" class="lightbox-caption">
+            <div class="lightbox-caption-title" id="lightbox-caption-title"></div>
+            <div class="lightbox-caption-desc" id="lightbox-caption-desc"></div>
+        </div>
+    </div>
+</div>
 
     <!-- Footer Premium -->
     <footer class="footer-premium">
@@ -237,25 +391,327 @@ $companyInfoData = [
     </div>
 
     <script>
+        // ===== GALLERY DATA & PAGINATION =====
+        let allGalleryData = [];
+        let currentFilter = 'all';
+        let displayedCount = 0;
+        const PHOTOS_PER_BATCH = 9;
+        
+        // Load gallery data from PHP
+        function loadGalleryData() {
+            const dataScript = document.getElementById('galleryData');
+            if (dataScript) {
+                allGalleryData = JSON.parse(dataScript.textContent);
+                console.log('Loaded gallery data:', allGalleryData.length, 'photos');
+                
+                // Initial render - first 9 photos
+                displayedCount = 0;
+                renderGallery(true);
+            }
+        }
+        
+        // Render gallery photos
+        function renderGallery(reset = false) {
+            const grid = document.getElementById('galleryGrid');
+            
+            if (reset) {
+                grid.innerHTML = '';
+                displayedCount = 0;
+            }
+            
+            // Filter photos based on current filter
+            const filteredPhotos = currentFilter === 'all' 
+                ? allGalleryData 
+                : allGalleryData.filter(photo => {
+                    const category = (photo.category || 'all').toLowerCase();
+                    return category === currentFilter;
+                });
+            
+            // Get next batch of photos
+            const startIndex = displayedCount;
+            const endIndex = Math.min(startIndex + PHOTOS_PER_BATCH, filteredPhotos.length);
+            const photosToShow = filteredPhotos.slice(startIndex, endIndex);
+            
+            // Render photos
+            if (filteredPhotos.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+                        <i class="icon icon-image" style="font-size: 4rem; color: var(--color-light-gray); margin-bottom: 1rem;"></i>
+                        <p style="color: var(--color-gray); font-size: 1.1rem;">Tidak ada foto di kategori ini</p>
+                        <p style="color: var(--color-light-gray); font-size: 0.9rem;">Pilih kategori lain atau lihat semua foto</p>
+                    </div>
+                `;
+                document.getElementById('galleryPagination').style.display = 'none';
+                document.getElementById('galleryCompleted').style.display = 'none';
+                return;
+            }
+            
+            photosToShow.forEach((photo, index) => {
+                const article = document.createElement('article');
+                article.className = 'gallery-item showing';
+                article.dataset.category = (photo.category || 'all').toLowerCase();
+                
+                const imgSrc = photo.image;
+                const title = photo.title || 'Foto Galeri';
+                const description = photo.description || '';
+                
+                article.innerHTML = `
+                    <img src="${imgSrc}" 
+                         alt="${title}"
+                         loading="lazy"
+                         onerror="this.src='https://via.placeholder.com/500x300?text=Image+Not+Found'">
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-content">
+                            <h3>${title}</h3>
+                            ${description ? `<p>${description.substring(0, 80)}${description.length > 80 ? '...' : ''}</p>` : ''}
+                        </div>
+                    </div>
+                `;
+                
+                article.onclick = () => {
+                    openLightbox(imgSrc, title, description);
+                };
+                
+                // Stagger animation
+                setTimeout(() => {
+                    article.classList.remove('showing');
+                }, 500);
+                
+                grid.appendChild(article);
+            });
+            
+            // Update displayed count
+            displayedCount = endIndex;
+            
+            // Update Load More button visibility
+            updateLoadMoreButton(filteredPhotos.length);
+        }
+        
+        // Update Load More button and progress bar
+        function updateLoadMoreButton(totalFilteredPhotos) {
+            const paginationSection = document.getElementById('galleryPagination');
+            const completedSection = document.getElementById('galleryCompleted');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const loadMoreBtn = document.getElementById('loadMoreBtn');
+            
+            if (displayedCount < totalFilteredPhotos) {
+                // More photos available - show pagination
+                paginationSection.style.display = 'block';
+                completedSection.style.display = 'none';
+                
+                // Update progress bar
+                const percentage = (displayedCount / totalFilteredPhotos) * 100;
+                progressFill.style.width = percentage + '%';
+                
+                // Update text
+                progressText.innerHTML = `Menampilkan <strong>${displayedCount}</strong> dari <strong>${totalFilteredPhotos}</strong> foto`;
+                
+                // Calculate remaining
+                const remaining = totalFilteredPhotos - displayedCount;
+                if (remaining <= 9) {
+                    loadMoreBtn.querySelector('.btn-text').textContent = `Muat ${remaining} Foto Terakhir`;
+                } else {
+                    loadMoreBtn.querySelector('.btn-text').textContent = 'Muat Foto Lainnya';
+                }
+                
+            } else if (totalFilteredPhotos > 0) {
+                // All photos shown - show completion message
+                paginationSection.style.display = 'none';
+                completedSection.style.display = 'flex';
+                
+            } else {
+                // No photos
+                paginationSection.style.display = 'none';
+                completedSection.style.display = 'none';
+            }
+        }
+        
+        // Load more photos
+        function loadMorePhotos() {
+            renderGallery(false);
+        }
+        
+        // ===== FILTER GALLERY - SMOOTH ANIMATIONS =====
         function filterGallery(category) {
-            const items = document.querySelectorAll('.gallery-item');
             const tabs = document.querySelectorAll('.filter-tab');
             
             // Update active tab
             tabs.forEach(tab => tab.classList.remove('active'));
             event.target.closest('.filter-tab').classList.add('active');
             
-            // Filter items
-            items.forEach(item => {
-                if (category === 'all' || item.dataset.category === category) {
-                    item.style.display = 'block';
-                    setTimeout(() => item.style.opacity = '1', 0);
-                } else {
-                    item.style.opacity = '0';
-                    setTimeout(() => item.style.display = 'none', 300);
-                }
-            });
+            // Update current filter
+            currentFilter = category;
+            
+            // Re-render gallery with new filter
+            renderGallery(true);
         }
+        
+        // ===== LIGHTBOX MODAL WITH NAVIGATION =====
+        let currentPhotoIndex = 0;
+        let allPhotos = [];
+        
+        // Function to collect all visible photos
+        function collectPhotos() {
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            allPhotos = Array.from(galleryItems)
+                .filter(item => item.style.display !== 'none')
+                .map(item => {
+                    const img = item.querySelector('img');
+                    const titleEl = item.querySelector('.gallery-overlay-content h3');
+                    const descEl = item.querySelector('.gallery-overlay-content p');
+                    
+                    return {
+                        image: img ? img.src : '',
+                        title: titleEl ? titleEl.textContent : 'Foto Galeri',
+                        description: descEl ? descEl.textContent : ''
+                    };
+                })
+                .filter(photo => photo.image); // Only photos with valid images
+            
+            console.log('Photos collected:', allPhotos.length);
+        }
+        
+        // Collect photos when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            collectPhotos();
+        });
+        
+        function openLightbox(imageSrc, title, description) {
+            // Recollect photos (in case filter changed)
+            collectPhotos();
+            
+            const modal = document.getElementById('lightbox-modal');
+            const image = document.getElementById('lightbox-image');
+            const titleEl = document.getElementById('lightbox-caption-title');
+            const descEl = document.getElementById('lightbox-caption-desc');
+            
+            // Find current photo index
+            currentPhotoIndex = allPhotos.findIndex(photo => photo.image === imageSrc);
+            if (currentPhotoIndex === -1) currentPhotoIndex = 0;
+            
+            console.log('Opening lightbox, index:', currentPhotoIndex, 'of', allPhotos.length);
+            
+            // Set image
+            image.src = imageSrc;
+            image.alt = title;
+            
+            // Set title
+            if (titleEl) {
+                titleEl.textContent = title || 'Foto Galeri';
+            }
+            
+            // Set description
+            if (descEl) {
+                if (description && description.trim()) {
+                    descEl.textContent = description;
+                    descEl.classList.remove('lightbox-caption-empty');
+                } else {
+                    descEl.textContent = 'Tidak ada deskripsi';
+                    descEl.classList.add('lightbox-caption-empty');
+                }
+            }
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Update nav button visibility
+            updateNavButtons();
+        }
+        
+        function navigateLightbox(direction) {
+            if (allPhotos.length === 0) {
+                console.log('No photos available');
+                return;
+            }
+            
+            currentPhotoIndex += direction;
+            
+            // Loop around
+            if (currentPhotoIndex < 0) {
+                currentPhotoIndex = allPhotos.length - 1;
+            } else if (currentPhotoIndex >= allPhotos.length) {
+                currentPhotoIndex = 0;
+            }
+            
+            console.log('Navigate to index:', currentPhotoIndex);
+            
+            const photo = allPhotos[currentPhotoIndex];
+            if (photo && photo.image) {
+                // Update modal content directly
+                const image = document.getElementById('lightbox-image');
+                const titleEl = document.getElementById('lightbox-caption-title');
+                const descEl = document.getElementById('lightbox-caption-desc');
+                
+                image.src = photo.image;
+                image.alt = photo.title;
+                
+                if (titleEl) titleEl.textContent = photo.title;
+                
+                if (descEl) {
+                    if (photo.description && photo.description.trim()) {
+                        descEl.textContent = photo.description;
+                        descEl.classList.remove('lightbox-caption-empty');
+                    } else {
+                        descEl.textContent = 'Tidak ada deskripsi';
+                        descEl.classList.add('lightbox-caption-empty');
+                    }
+                }
+            }
+        }
+        
+        function updateNavButtons() {
+            const prevBtn = document.querySelector('.lightbox-prev');
+            const nextBtn = document.querySelector('.lightbox-next');
+            
+            if (allPhotos.length <= 1) {
+                if (prevBtn) prevBtn.style.display = 'none';
+                if (nextBtn) nextBtn.style.display = 'none';
+            } else {
+                if (prevBtn) prevBtn.style.display = 'flex';
+                if (nextBtn) nextBtn.style.display = 'flex';
+            }
+        }
+        
+        function closeLightbox() {
+            const modal = document.getElementById('lightbox-modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // Close lightbox on ESC key, navigate with arrow keys
+        document.addEventListener('keydown', function(e) {
+            const modal = document.getElementById('lightbox-modal');
+            if (!modal.classList.contains('active')) return;
+            
+            if (e.key === 'Escape') {
+                closeLightbox();
+            } else if (e.key === 'ArrowLeft') {
+                navigateLightbox(-1);
+            } else if (e.key === 'ArrowRight') {
+                navigateLightbox(1);
+            }
+        });
+        
+        // Close lightbox on background click
+        document.getElementById('lightbox-modal')?.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLightbox();
+            }
+        });
+        
+        // Initialize gallery on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadGalleryData();
+            
+            // Lazy loading images
+            const galleryGrid = document.getElementById('galleryGrid');
+            galleryGrid.addEventListener('load', function(e) {
+                if (e.target.tagName === 'IMG') {
+                    e.target.classList.add('loaded');
+                }
+            }, true);
+        });
     </script>
     <script src="config.js"></script>
     <script src="script.js"></script>

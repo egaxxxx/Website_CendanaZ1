@@ -119,10 +119,10 @@ function deleteBanner($id) {
 
 // fungsi buat gallery
 
-// ambil semua galeri
+// ambil semua galeri - sorted by most recent first
 function getAllGallery() {
     global $conn;
-    $sql = "SELECT * FROM gallery ORDER BY is_featured DESC, display_order ASC, id DESC";
+    $sql = "SELECT * FROM gallery ORDER BY created_at DESC, id DESC";
     return fetchAll($conn, $sql);
 }
 
@@ -458,7 +458,16 @@ function deleteHeroBackground($field) {
 //
 function getAllFAQ() {
     global $conn;
-    $sql = "SELECT * FROM faq WHERE is_active = 1 ORDER BY category ASC, display_order ASC, id ASC";
+    // Tampilkan SEMUA FAQ (termasuk non-aktif) untuk admin, urut berdasarkan kategori dan urutan
+    $sql = "SELECT * FROM faq ORDER BY 
+            CASE category 
+                WHEN 'Pemesanan' THEN 1
+                WHEN 'Pembayaran' THEN 2
+                WHEN 'Layanan' THEN 3
+                WHEN 'Umum' THEN 4
+                ELSE 5
+            END, 
+            display_order ASC, id ASC";
     return fetchAll($conn, $sql);
 }
 
@@ -515,6 +524,52 @@ function deleteFAQ($id) {
     $id = intval($id);
     $sql = "DELETE FROM faq WHERE id = $id";
     return $conn->query($sql);
+}
+
+//
+function getFAQGroupedByCategory() {
+    global $conn;
+    
+    // Ambil semua kategori unik
+    $categories = fetchAll($conn, "SELECT DISTINCT category FROM faq WHERE is_active = 1 ORDER BY 
+        CASE category 
+            WHEN 'Pemesanan' THEN 1
+            WHEN 'Pembayaran' THEN 2
+            WHEN 'Layanan' THEN 3
+            WHEN 'Umum' THEN 4
+            ELSE 5
+        END");
+    
+    $result = [];
+    
+    foreach ($categories as $cat) {
+        $category = $cat['category'];
+        
+        // Ambil FAQ untuk kategori ini
+        $categoryEscaped = escapeString($conn, $category);
+        $faqs = fetchAll($conn, "SELECT * FROM faq 
+                                 WHERE is_active = 1 AND category = '$categoryEscaped' 
+                                 ORDER BY display_order ASC, id ASC");
+        
+        // Format menjadi struktur items
+        $items = [];
+        foreach ($faqs as $faq) {
+            $items[] = [
+                'question' => $faq['question'],
+                'answer' => $faq['answer']
+            ];
+        }
+        
+        // Tambahkan ke result
+        if (!empty($items)) {
+            $result[] = [
+                'category' => $category,
+                'items' => $items
+            ];
+        }
+    }
+    
+    return $result;
 }
 
 //

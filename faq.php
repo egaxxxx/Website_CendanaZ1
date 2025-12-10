@@ -1,6 +1,6 @@
 <?php
 require_once 'includes/page_config.php';
-require_once 'includes/faq_data.php';
+require_once 'includes/functions.php';
 
 // Gunakan data LANGSUNG dari homepage_settings (via page_config.php)
 $companyInfoData = [
@@ -14,7 +14,14 @@ $companyInfoData = [
     'description' => $footerDescription
 ];
 
-$faqData = getFaqData();
+// Ambil FAQ dari DATABASE (bukan file statis) agar CRUD di admin berfungsi
+$faqData = getFAQGroupedByCategory();
+
+// Fallback jika database kosong, gunakan data statis
+if (empty($faqData)) {
+    require_once 'includes/faq_data.php';
+    $faqData = getFaqData();
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -22,7 +29,7 @@ $faqData = getFaqData();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FAQ - <?php echo htmlspecialchars($companyName); ?></title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="icons.css">
 </head>
 <body class="page-faq">
@@ -75,26 +82,27 @@ $faqData = getFaqData();
     <section class="faq-section">
         <div class="container">
             <!-- FAQ Tabs/Categories -->
-            <div class="filter-tabs" style="margin-bottom: var(--spacing-2xl);">
+            <div class="filter-tabs" style="margin-bottom: 3rem;">
                 <?php foreach ($faqData as $index => $category): ?>
                     <button class="filter-tab <?php echo $index === 0 ? 'active' : ''; ?>" 
                             onclick="switchFaqCategory(<?php echo $index; ?>)"
-                            data-category="<?php echo htmlspecialchars($category['category']); ?>">
+                            data-category="<?php echo htmlspecialchars($category['category']); ?>"
+                            aria-label="Filter kategori <?php echo htmlspecialchars($category['category']); ?>">
                         <?php echo htmlspecialchars($category['category']); ?>
                     </button>
                 <?php endforeach; ?>
             </div>
 
             <!-- FAQ Items Grid -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: var(--spacing-lg);">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 1rem;">
                 <?php foreach ($faqData as $categoryIndex => $category): ?>
                     <div class="faq-category-group" data-category-index="<?php echo $categoryIndex; ?>" 
                          style="<?php echo $categoryIndex !== 0 ? 'display: none;' : ''; ?> grid-column: 1 / -1;">
                         <?php foreach ($category['items'] as $itemIndex => $item): ?>
                             <div class="faq-item">
-                                <button class="faq-item-header" onclick="toggleFaqItem(this)">
+                                <button class="faq-item-header" onclick="toggleFaqItem(this)" aria-expanded="false">
                                     <span><?php echo htmlspecialchars($item['question']); ?></span>
-                                    <i class="icon icon-chevron-down faq-item-icon"></i>
+                                    <i class="icon icon-chevron-down faq-item-icon" aria-hidden="true"></i>
                                 </button>
                                 <div class="faq-item-content">
                                     <p><?php echo $item['answer']; ?></p>
@@ -108,9 +116,9 @@ $faqData = getFaqData();
     </section>
 
     <!-- Support Section -->
-    <section style="background: var(--color-light-gray); padding: var(--spacing-3xl) 0;">
+    <section style="background: var(--color-light-gray); padding: 5rem 0; margin-top: 4rem;">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header" style="margin-bottom: 3rem;">
                 <h2>Masih Punya Pertanyaan?</h2>
                 <p>Hubungi tim customer service kami yang siap membantu Anda 24/7</p>
             </div>

@@ -1,0 +1,935 @@
+/**
+ * ============================================
+ * GALERI MODERN - PROFESSIONAL DESIGN
+ * CV. Cendana Travel - Gallery Page Styles
+ * ============================================
+ */
+
+/* ============================================
+   UNIFORM GRID LAYOUT - SIMPLE & CLEAN
+   ============================================ */
+
+.gallery-masonry-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 0;
+}
+
+/* Gallery Items dengan tinggi uniform */
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--color-white);
+    aspect-ratio: 1;
+    /* Square items */
+}
+
+.gallery-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+}
+
+/* Image container */
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.08);
+}
+
+/* ============================================
+   OVERLAY dengan GRADIENT PREMIUM
+   ============================================ */
+
+.gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+            rgba(0, 0, 0, 0) 0%,
+            rgba(0, 0, 0, 0.3) 50%,
+            rgba(0, 0, 0, 0.8) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Gallery item hover stays hidden */
+.gallery-item:hover .gallery-overlay {
+    opacity: 0;
+    /* Keep overlay hidden */
+}
+
+.gallery-overlay-content {
+    color: white;
+    transform: translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gallery-item:hover .gallery-overlay-content {
+    transform: translateY(0);
+}
+
+.gallery-overlay-content h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.gallery-overlay-content p {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================
+   FILTER PILLS - MODERN DESIGN
+   ============================================ */
+
+.filter-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+    padding: 0;
+}
+
+.filter-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: white;
+    border: 2px solid #E5E7EB;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.filter-tab::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+.filter-tab:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(212, 149, 110, 0.2);
+}
+
+.filter-tab.active {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+    border-color: var(--color-primary);
+    color: white;
+    box-shadow: 0 4px 16px rgba(212, 149, 110, 0.3);
+}
+
+.filter-tab.active::before {
+    opacity: 1;
+}
+
+.filter-tab .icon {
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+}
+
+.filter-tab:hover .icon {
+    transform: scale(1.1);
+}
+
+/* ============================================
+   FILTER ANIMATIONS - SMOOTH TRANSITIONS
+   ============================================ */
+
+.gallery-item {
+    opacity: 1;
+    transform: scale(1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gallery-item.hiding {
+    opacity: 0;
+    transform: scale(0.8);
+    pointer-events: none;
+}
+
+.gallery-item.showing {
+    animation: fadeInScale 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ============================================
+   GALLERY PAGINATION - PREMIUM DESIGN
+   ============================================ */
+
+.gallery-pagination {
+    display: block;
+    max-width: 700px;
+    margin: 4rem auto 3rem;
+    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg, #FFF8F3 0%, #FFFFFF 100%);
+    border-radius: 16px;
+    border: 1px solid #E8BBA8;
+    box-shadow: 0 4px 16px rgba(212, 149, 110, 0.12);
+}
+
+/* Progress Section */
+.pagination-progress {
+    margin-bottom: 2rem;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background: #F3E8E0;
+    border-radius: 100px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #D4956E 0%, #E8A87A 50%, #D4956E 100%);
+    background-size: 200% 100%;
+    border-radius: 100px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    animation: shimmer 2s infinite linear;
+    box-shadow: 0 0 10px rgba(212, 149, 110, 0.4);
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 200% center;
+    }
+
+    100% {
+        background-position: -200% center;
+    }
+}
+
+.progress-text {
+    margin: 1.25rem 0 0 0;
+    text-align: center;
+    color: #6B7280;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.progress-text strong {
+    color: #D4956E;
+    font-weight: 700;
+    font-size: 1.1em;
+}
+
+/* Load More Button - SOLID COLOR */
+.btn-load-more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto;
+    padding: 18px 36px;
+    background: linear-gradient(135deg, #D4956E 0%, #B8704D 100%);
+    border: 2px solid #D4956E;
+    border-radius: 14px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+        0 4px 14px rgba(212, 149, 110, 0.35),
+        0 2px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Shine effect */
+.btn-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.4),
+            transparent);
+    transition: left 0.6s;
+}
+
+.btn-load-more:hover .btn-shine {
+    left: 150%;
+}
+
+.btn-load-more:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 8px 24px rgba(212, 149, 110, 0.45),
+        0 4px 12px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, #E8A87A 0%, #D4956E 100%);
+    border-color: #E8A87A;
+}
+
+.btn-load-more:active {
+    transform: translateY(-1px);
+    box-shadow:
+        0 4px 12px rgba(212, 149, 110, 0.35),
+        0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.btn-load-more:hover .btn-icon {
+    transform: translateY(4px);
+    animation: bounce 0.6s ease;
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(4px);
+    }
+}
+
+.btn-text {
+    font-family: inherit;
+    letter-spacing: 0.5px;
+}
+
+/* ============================================
+   GALLERY COMPLETED - ELEGANT SUCCESS
+   ============================================ */
+
+.gallery-completed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 2.5rem;
+    margin: 4rem auto 3rem;
+    max-width: 700px;
+    background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%);
+    border-radius: 20px;
+    border: 2px solid #86EFAC;
+    box-shadow: 0 8px 24px rgba(34, 197, 94, 0.12);
+}
+
+.completed-icon {
+    width: 90px;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
+    border-radius: 50%;
+    margin-bottom: 2rem;
+    box-shadow:
+        0 8px 24px rgba(34, 197, 94, 0.3),
+        0 4px 12px rgba(0, 0, 0, 0.1);
+    animation: scaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes scaleIn {
+    0% {
+        transform: scale(0) rotate(-180deg);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.completed-icon svg {
+    color: #FFFFFF;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.gallery-completed h3 {
+    margin: 0 0 1rem 0;
+    color: #166534;
+    font-size: 1.75rem;
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+.gallery-completed p {
+    margin: 0;
+    color: #15803D;
+    font-size: 1.05rem;
+    font-weight: 500;
+    opacity: 0.9;
+    line-height: 1.6;
+    max-width: 500px;
+}
+
+/* ============================================
+   LIGHTBOX MODAL - COLORFUL WITH NAVIGATION
+   Header > Foto Centered > Caption + Nav Buttons
+   ============================================ */
+
+/* Dark Overlay */
+.lightbox-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.93);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.lightbox-modal.active {
+    display: flex;
+    opacity: 1;
+}
+
+/* Modal Container - Colorful Card */
+.lightbox-content {
+    background: linear-gradient(135deg, #FFF5EB 0%, #FFFFFF 100%);
+    border-radius: 20px;
+    max-width: 950px;
+    width: 100%;
+    max-height: 90vh;
+    overflow: hidden;
+    box-shadow:
+        0 20px 50px rgba(212, 149, 110, 0.3),
+        0 10px 25px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    animation: fadeInScale 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 1px solid rgba(212, 149, 110, 0.2);
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.92);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ===== HEADER - GRADIENT COLORFUL ===== */
+.lightbox-header {
+    background: linear-gradient(135deg, #D4956E 0%, #E8A87A 100%);
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle shine effect */
+.lightbox-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: shine 3s infinite;
+}
+
+@keyframes shine {
+
+    0%,
+    100% {
+        left: -100%;
+    }
+
+    50% {
+        left: 100%;
+    }
+}
+
+.lightbox-title {
+    color: #FFFFFF;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
+}
+
+.lightbox-close {
+    background: rgba(255, 255, 255, 0.25);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    color: #FFFFFF;
+    font-size: 1.5rem;
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 1;
+}
+
+.lightbox-close:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.08);
+}
+
+/* ===== BODY WITH NAVIGATION ===== */
+.lightbox-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    overflow: hidden;
+    background: linear-gradient(180deg, #FFFFFF 0%, #FFF8F3 100%);
+    position: relative;
+    padding: 0 60px;
+    /* Space for nav buttons */
+}
+
+/* Navigation Buttons */
+.lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(212, 149, 110, 0.9);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    color: #FFFFFF;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+}
+
+.lightbox-nav:hover {
+    background: rgba(212, 149, 110, 1);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 4px 16px rgba(212, 149, 110, 0.4);
+}
+
+.lightbox-nav:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.lightbox-prev {
+    left: 10px;
+}
+
+.lightbox-next {
+    right: 10px;
+}
+
+/* Image Container */
+.lightbox-image-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem 0;
+    min-height: 400px;
+}
+
+#lightbox-image {
+    max-width: 100%;
+    max-height: 55vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(212, 149, 110, 0.25);
+}
+
+/* Caption - Warm Colors */
+.lightbox-caption {
+    background: linear-gradient(135deg, #FFE8D6 0%, #FFF8F3 100%);
+    padding: 2rem 2.5rem 2.5rem;
+    border-top: 2px solid rgba(212, 149, 110, 0.2);
+    flex-shrink: 0;
+}
+
+.lightbox-caption-title {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #8B4513;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+}
+
+.lightbox-caption-desc {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #6B5847;
+    margin: 0;
+}
+
+.lightbox-caption-empty {
+    font-style: italic;
+    color: #A89079;
+}
+
+/* ============================================
+   LOADING SKELETON - BETTER UX
+   ============================================ */
+
+.gallery-skeleton {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.skeleton-item {
+    background: linear-gradient(90deg,
+            #f0f0f0 25%,
+            #e0e0e0 50%,
+            #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: var(--radius-lg);
+    height: 300px;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* ============================================
+   EMPTY STATE - NO PHOTOS
+   ============================================ */
+
+.gallery-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 2rem;
+    background: rgba(243, 244, 246, 0.5);
+    border-radius: var(--radius-lg);
+    border: 2px dashed #D1D5DB;
+}
+
+.gallery-empty .icon {
+    font-size: 4rem;
+    color: #9CA3AF;
+    margin-bottom: 1rem;
+}
+
+.gallery-empty p {
+    color: #6B7280;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .gallery-masonry-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 16px;
+    }
+
+    .filter-tabs {
+        gap: 10px;
+    }
+
+    .filter-tab {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .gallery-masonry-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .gallery-item {
+        aspect-ratio: 1;
+    }
+
+    .filter-tabs {
+        gap: 8px;
+    }
+
+    .filter-tab {
+        padding: 10px 16px;
+        font-size: 0.85rem;
+    }
+
+    .gallery-overlay {
+        padding: 1rem;
+    }
+
+    .gallery-overlay-content h3 {
+        font-size: 1rem;
+    }
+
+    .gallery-overlay-content p {
+        font-size: 0.85rem;
+    }
+
+    /* Mobile Modal */
+    .lightbox-modal {
+        padding: 1rem;
+    }
+
+    .lightbox-content {
+        max-height: 95vh;
+        border-radius: 12px;
+    }
+
+    .lightbox-header {
+        padding: 1.25rem 1.5rem;
+    }
+
+    .lightbox-title {
+        font-size: 1.2rem;
+    }
+
+    .lightbox-close {
+        width: 36px;
+        height: 36px;
+        font-size: 1.3rem;
+    }
+
+    .lightbox-image-container {
+        padding: 1.5rem;
+        min-height: 300px;
+    }
+
+    #lightbox-image {
+        max-height: 45vh;
+    }
+
+    .lightbox-caption {
+        padding: 1.5rem;
+    }
+
+    .lightbox-caption-title {
+        font-size: 1.3rem;
+    }
+
+    .lightbox-caption-desc {
+        font-size: 0.95rem;
+    }
+}
+
+/* Small Mobile - Extra optimization */
+@media (max-width: 425px) {
+    .gallery-masonry-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .gallery-item {
+        border-radius: 12px;
+    }
+
+    .filter-tabs {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .filter-tab {
+        width: 100%;
+        justify-content: center;
+        padding: 12px 16px;
+    }
+
+    /* Pagination responsive */
+    .gallery-pagination {
+        margin: 3rem auto 1.5rem;
+    }
+
+    .btn-load-more {
+        max-width: 100%;
+        padding: 16px 28px;
+        font-size: 0.95rem;
+    }
+
+    .progress-text {
+        font-size: 0.9rem;
+    }
+
+    .gallery-completed {
+        padding: 2.5rem 1.5rem;
+    }
+
+    .gallery-completed h3 {
+        font-size: 1.3rem;
+    }
+
+    .gallery-completed p {
+        font-size: 0.95rem;
+    }
+
+    .completed-icon {
+        width: 70px;
+        height: 70px;
+    }
+
+    /* Extra small modal adjustments */
+    .lightbox-modal {
+        padding: 0.5rem;
+    }
+
+    .lightbox-content {
+        border-radius: 16px;
+    }
+
+    .lightbox-header {
+        padding: 1rem 1.25rem;
+    }
+
+    .lightbox-title {
+        font-size: 1.2rem;
+    }
+
+    .lightbox-close {
+        width: 38px;
+        height: 38px;
+    }
+
+    .lightbox-body {
+        padding: 1.5rem 1.25rem;
+    }
+
+    #lightbox-image {
+        max-height: 45vh;
+        border-radius: 10px;
+    }
+
+    .lightbox-caption {
+        padding: 1.25rem 1rem;
+    }
+
+    .lightbox-caption-title {
+        font-size: 1.25rem;
+    }
+
+    .lightbox-caption-desc {
+        font-size: 0.9rem;
+        padding-left: 0.75rem;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+.filter-tab:focus {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.gallery-item:focus {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 4px;
+}
+
+/* ============================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+
+/* GPU acceleration untuk smooth animations */
+.gallery-item,
+.gallery-overlay,
+.gallery-overlay-content,
+.filter-tab {
+    will-change: transform, opacity;
+}
+
+/* Lazy loading support */
+.gallery-item img[loading="lazy"] {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-item img[loading="lazy"].loaded {
+    opacity: 1;
+}
