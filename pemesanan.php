@@ -165,11 +165,11 @@ $servicesDataJSON = json_encode($servicesData, JSON_HEX_TAG | JSON_HEX_AMP | JSO
     </header>
 
     <!-- Hero Section with Gradient Background -->
-    <section class="booking-hero" <?php if (!empty($homepageSettings['pemesanan_hero_background'])): ?>style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('uploads/<?php echo htmlspecialchars($homepageSettings['pemesanan_hero_background']); ?>'); background-size: cover; background-position: center;"<?php endif; ?>>
+    <section class="page-hero-standard" <?php if (!empty($homepageSettings['pemesanan_hero_background'])): ?>style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('uploads/<?php echo htmlspecialchars($homepageSettings['pemesanan_hero_background']); ?>'); background-size: cover; background-position: center;"<?php endif; ?>>
         <div class="container">
-            <div class="booking-hero-content">
-                <h1 class="booking-hero-title"><?php echo htmlspecialchars($homepageSettings['pemesanan_hero_title'] ?? 'Pemesanan Travel'); ?></h1>
-                <p class="booking-hero-subtitle"><?php echo htmlspecialchars($homepageSettings['pemesanan_hero_description'] ?? 'Pesan tiket pesawat, bus, dan kapal dengan mudah dan cepat'); ?></p>
+            <div class="page-hero-content">
+                <h1 class="page-hero-title"><?php echo htmlspecialchars($homepageSettings['pemesanan_hero_title'] ?? 'Pemesanan Travel'); ?></h1>
+                <p class="page-hero-subtitle"><?php echo htmlspecialchars($homepageSettings['pemesanan_hero_description'] ?? 'Pesan tiket pesawat, bus, dan kapal dengan mudah dan cepat'); ?></p>
             </div>
         </div>
         

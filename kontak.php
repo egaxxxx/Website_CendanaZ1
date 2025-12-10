@@ -54,10 +54,12 @@ $companyInfoData = [
     </header>
 
     <!-- New Hero Banner + Overlapping Two Column Layout (Matches Screenshot 3) -->
-    <section class="contact-hero-banner" <?php if (!empty($homepageSettings['kontak_hero_background'])): ?>style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('uploads/<?php echo htmlspecialchars($homepageSettings['kontak_hero_background']); ?>'); background-size: cover; background-position: center;"<?php endif; ?>>
+    <section class="page-hero-standard" <?php if (!empty($homepageSettings['kontak_hero_background'])): ?>style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('uploads/<?php echo htmlspecialchars($homepageSettings['kontak_hero_background']); ?>'); background-size: cover; background-position: center;"<?php endif; ?>>
         <div class="container">
-            <h1><?php echo htmlspecialchars($homepageSettings['kontak_hero_title'] ?? 'Hubungi Kami'); ?></h1>
-            <p><?php echo htmlspecialchars($homepageSettings['kontak_hero_description'] ?? 'Kami siap membantu kebutuhan perjalanan Anda'); ?></p>
+            <div class="page-hero-content">
+                <h1 class="page-hero-title"><?php echo htmlspecialchars($homepageSettings['kontak_hero_title'] ?? 'Hubungi Kami'); ?></h1>
+                <p class="page-hero-subtitle"><?php echo htmlspecialchars($homepageSettings['kontak_hero_description'] ?? 'Kami siap membantu kebutuhan perjalanan Anda'); ?></p>
+            </div>
         </div>
     </section>
     <section class="contact-section-wrapper">

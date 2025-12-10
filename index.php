@@ -47,6 +47,12 @@ $companyInfoData = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($companyInfoData['name']); ?> - Layanan Travel Terpercaya</title>
+    
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="icons.css">
     <link rel="stylesheet" href="beranda-dynamic.css">
@@ -97,13 +103,13 @@ $companyInfoData = [
         <div class="hero-content-layer">
             <div class="container">
                 <div class="hero-content fade-in-up">
-                    <h1 class="hero-title">
-                        <?php echo htmlspecialchars($homepageSettings['hero_title'] ?? 'Perjalanan Impian'); ?><br>
-                        <span class="hero-company"><?php echo htmlspecialchars($homepageSettings['hero_subtitle'] ?? 'Dimulai dari Sini'); ?></span>
+                    <h1 class="hero-title hero-title-premium">
+                        <span class="hero-title-main"><?php echo htmlspecialchars($homepageSettings['hero_title'] ?? 'Jelajahi Dunia,'); ?></span><br>
+                        <span class="hero-title-accent"><?php echo htmlspecialchars($homepageSettings['hero_subtitle'] ?? 'Kapan Saja & Di Mana Saja'); ?></span>
                     </h1>
                     
-                    <p class="hero-description">
-                        <?php echo htmlspecialchars($homepageSettings['hero_description'] ?? 'Layanan travel profesional dengan pengalaman lebih dari 10 tahun. Kami mengutamakan kenyamanan dan keamanan perjalanan Anda ke seluruh penjuru nusantara.'); ?>
+                    <p class="hero-description hero-description-premium">
+                        <?php echo htmlspecialchars($homepageSettings['hero_description'] ?? 'Pilih moda transportasi favorit Anda dengan pelayanan premium dan pengalaman perjalanan yang tak terlupakan.'); ?>
                     </p>
                     
                     <div class="hero-cta">
@@ -142,8 +148,8 @@ $companyInfoData = [
     <section class="services-section services-dynamic">
         <div class="container">
             <div class="section-header fade-in-up">
-                <h2>Jelajahi Dunia,<br><span style="color: #D4956E;">Kapan Saja & Dimana Saja</span></h2>
-                <p>Pilih moda transportasi favorit Anda dengan pelayanan premium.</p>
+                <h2 class="section-title-premium">Jelajahi Dunia,<br><span style="color: #D4956E;">Kapan Saja & Dimana Saja</span></h2>
+                <p class="section-subtitle-premium">Pilih moda transportasi favorit Anda dengan pelayanan premium.</p>
             </div>
 
             <div class="services-asymmetric-grid">
@@ -212,8 +218,8 @@ $companyInfoData = [
             
             <!-- Right Side - Content -->
             <div class="split-content slide-in-right">
-                <h2>Mengapa Memilih Kami?</h2>
-                <p style="font-size: 1.1rem; color: #6B7280; margin-bottom: 2rem;">Kepercayaan pelanggan adalah prioritas utama kami dalam memberikan layanan travel terbaik</p>
+                <h2 class="section-title-premium">Mengapa Memilih Kami?</h2>
+                <p class="section-subtitle-premium">Kepercayaan pelanggan adalah prioritas utama kami dalam memberikan layanan travel terbaik</p>
                 
                 <ul class="benefit-list">
                     <?php foreach ($whyChooseUs as $item): ?>
@@ -242,8 +248,8 @@ $companyInfoData = [
     <section class="payment-methods-section payment-carousel">
         <div class="container">
             <div class="section-header fade-in-up">
-                <h2>Cara Pembayaran</h2>
-                <p>Ikuti langkah berikut untuk menyelesaikan pembayaran dengan mudah dan aman.</p>
+                <h2 class="section-title-premium">Cara Pembayaran</h2>
+                <p class="section-subtitle-premium">Ikuti langkah berikut untuk menyelesaikan pembayaran dengan mudah dan aman.</p>
             </div>
 
             <div class="horizontal-scroll-wrapper">
@@ -270,14 +276,18 @@ $companyInfoData = [
         </div>
     </section>
 
-    <!-- SECTION 2: TESTIMONI PELANGGAN - SLIDER -->
+    <!-- SECTION 2: TESTIMONI PELANGGAN - SLIDER FULL WIDTH -->
     <section class="testimonials-new-section testimonials-slider">
-        <div class="container">
-            <div class="section-header fade-in-up">
-                <h2>Apa Kata Pelanggan Kami?</h2>
-                <p>Ribuan pelanggan puas telah mempercayai layanan kami untuk perjalanan mereka</p>
+        <div class="testimonial-section-header">
+            <div class="container">
+                <div class="section-header fade-in-up">
+                    <h2>Apa Kata Pelanggan Kami?</h2>
+                    <p>Ribuan pelanggan puas telah mempercayai layanan kami untuk perjalanan mereka</p>
+                </div>
             </div>
+        </div>
 
+        <div class="testimonial-wrapper">
             <div class="testimonial-carousel">
                 <div class="testimonial-track" id="testimonialTrack">
                     <!-- Testimonial Slide 1 -->
@@ -339,15 +349,80 @@ $companyInfoData = [
                         </div>
                         <p class="testimonial-text">"Perjalanan pertama saya sangat memuaskan. Dari booking hingga sampai tujuan semuanya lancar. Terima kasih Cendana Travel! Customer service yang ramah dan profesional, akan selalu menggunakan layanan ini."</p>
                     </div>
+
+                    <!-- Testimonial Slide 4 -->
+                    <div class="testimonial-slide">
+                        <div class="testimonial-header">
+                            <div class="testimonial-avatar" style="background: linear-gradient(135deg, #E8A87A 0%, #D4956E 100%);">
+                                <span>RS</span>
+                            </div>
+                            <div class="testimonial-info">
+                                <h4>Rahma Sari</h4>
+                                <div class="testimonial-rating">
+                                    <i class="icon icon-star-fill"></i>
+                                    <i class="icon icon-star-fill"></i>
+                                    <i class="icon icon-star-fill"></i>
+                                    <i class="icon icon-star-fill"></i>
+                                    <i class="icon icon-star-fill"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="testimonial-text">"Pelayanan ramah dan informatif. Admin selalu sabar menjawab setiap pertanyaan saya. Tiket pesawat dan kapal semua beres tanpa kendala. Sangat membantu untuk yang sering bepergian."</p>
+                    </div>
+
+                    <!-- Testimonial Slide 5 -->
+                    <div class="testimonial-slide">
+                        <div class="testimonial-header">
+                            <div class="testimonial-avatar" style="background: linear-gradient(135deg, #C9A88A 0%, #B8704D 100%);">
+                                <span>DN</span>
+                            </div>
+                            <div class="testimonial-info">
+                                <h4>Dimas Nurhadi</h4>
+                                <div class="testimonial-rating">
+                                    <i class="icon icon-star-fill"></i>
+                                    <i class="icon icon-star-fill"></i>
+                                    <i class="icon icon-star-fill"></i>
+                                    <i class="icon icon-star-fill"></i>
+                                    <i class="icon icon-star-fill"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="testimonial-text">"Awalnya ragu menggunakan jasa travel baru, tetapi Cendana Travel terbukti profesional. Harga transparan, jadwal jelas, dan pengingat keberangkatan dikirim tepat waktu."</p>
+                    </div>
+
+                    <!-- Testimonial Slide 6 -->
+                    <div class="testimonial-slide">
+                        <div class="testimonial-header">
+                            <div class="testimonial-avatar" style="background: linear-gradient(135deg, #DEB887 0%, #C9A88A 100%);">
+                                <span>YL</span>
+                            </div>
+                            <div class="testimonial-info">
+                                <h4>Yulia Lestari</h4>
+                                <div class="testimonial-rating">
+                                    <i class="icon icon-star-fill"></i>
+                                    <i class="icon icon-star-fill"></i>
+                                    <i class="icon icon-star-fill"></i>
+                                    <i class="icon icon-star-fill"></i>
+                                    <i class="icon icon-star-fill"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="testimonial-text">"Saya memesan tiket bus untuk perjalanan keluarga besar. Prosesnya cepat, bus yang digunakan bersih dan nyaman. Anak-anak juga senang, perjalanan jadi terasa aman dan menyenangkan."</p>
+                    </div>
                 </div>
 
-                <!-- Carousel Dots -->
-                <div class="carousel-dots" id="carouselDots">
-                    <span class="carousel-dot active" data-slide="0"></span>
-                    <span class="carousel-dot" data-slide="1"></span>
-                    <span class="carousel-dot" data-slide="2"></span>
                 </div>
             </div>
+        </div>
+
+        <!-- Carousel Dots -->
+        <div class="carousel-dots" id="carouselDots">
+            <span class="carousel-dot active" data-slide="0"></span>
+            <span class="carousel-dot" data-slide="1"></span>
+            <span class="carousel-dot" data-slide="2"></span>
+            <span class="carousel-dot" data-slide="3"></span>
+            <span class="carousel-dot" data-slide="4"></span>
+            <span class="carousel-dot" data-slide="5"></span>
         </div>
     </section>
 

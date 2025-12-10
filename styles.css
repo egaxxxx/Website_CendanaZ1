@@ -347,6 +347,27 @@ nav {
     margin-top: 70px;
 }
 
+/* Homepage Hero - White Background with Premium Spacing */
+.hero-dynamic {
+    background: #FFFFFF;
+    padding: 5rem 0 6rem;
+    min-height: 650px;
+    height: auto;
+}
+
+.hero-dynamic::before {
+    background: none;
+}
+
+.hero-dynamic .hero-content {
+    color: var(--color-dark);
+    padding-top: 2rem;
+}
+
+.hero-dynamic .hero-cta {
+    margin-bottom: 3.5rem;
+}
+
 .hero::before {
     content: '';
     position: absolute;
@@ -381,6 +402,33 @@ nav {
     animation: fadeInUp 0.8s ease;
 }
 
+/* Premium Hero Typography for Homepage */
+.hero-title-premium {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+}
+
+.hero-title-main {
+    display: block;
+    color: #1A1A1A;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hero-title-accent {
+    display: block;
+    color: #D4956E;
+    font-weight: 700;
+    background: linear-gradient(135deg, #D4956E 0%, #E8A87A 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
 .hero-company {
     display: block;
     font-size: 1.2em;
@@ -398,6 +446,18 @@ nav {
     color: rgba(255, 255, 255, 0.9);
     animation: fadeInUp 0.8s ease 0.2s backwards;
     font-weight: 300;
+}
+
+/* Premium Description for Homepage */
+.hero-description-premium {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    line-height: 1.7;
+    color: #4A4A4A;
+    max-width: 680px;
+    margin: 0 auto 2.5rem;
+    font-weight: 400;
+    text-shadow: none;
 }
 
 .hero-cta {
@@ -441,6 +501,29 @@ nav {
     color: var(--color-primary);
 }
 
+/* Button styling untuk Homepage Hero (Background Putih) */
+.hero-dynamic .btn-hero-primary {
+    background: linear-gradient(135deg, #D4956E 0%, #B8704D 100%);
+    color: #FFFFFF;
+    box-shadow: 0 4px 14px rgba(212, 149, 110, 0.35);
+}
+
+.hero-dynamic .btn-hero-primary:hover {
+    background: linear-gradient(135deg, #E8A87A 0%, #D4956E 100%);
+    box-shadow: 0 6px 20px rgba(212, 149, 110, 0.45);
+}
+
+.hero-dynamic .btn-hero-secondary {
+    background: transparent;
+    color: #D4956E;
+    border: 2px solid #D4956E;
+}
+
+.hero-dynamic .btn-hero-secondary:hover {
+    background: #D4956E;
+    color: #FFFFFF;
+}
+
 .hero-stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -466,6 +549,27 @@ nav {
     transform: translateY(-5px);
 }
 
+/* Stat Cards untuk Homepage (Background Putih) */
+.hero-dynamic .stat-card {
+    background: linear-gradient(135deg, #FAFAFA 0%, #F5F5F5 100%);
+    border: 1px solid #E5E5E5;
+    color: var(--color-dark);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.hero-dynamic .stat-card:hover {
+    background: linear-gradient(135deg, #F5F5F5 0%, #EFEFEF 100%);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.hero-dynamic .stat-number {
+    color: #D4956E;
+}
+
+.hero-dynamic .stat-label {
+    color: #6B7280;
+}
+
 .stat-number {
     font-size: 2.5rem;
     font-weight: 800;
@@ -482,17 +586,39 @@ nav {
         min-height: 600px;
         margin-top: 70px;
     }
+    
+    .hero-dynamic {
+        min-height: 520px;
+        padding: 3.5rem 0 4rem;
+    }
 
     .hero-title {
         font-size: 2.5rem;
+    }
+    
+    .hero-title-premium {
+        font-size: clamp(1.85rem, 6vw, 2.5rem);
+        margin-bottom: 1.25rem;
+        line-height: 1.2;
     }
 
     .hero-description {
         font-size: 1.1rem;
     }
+    
+    .hero-description-premium {
+        font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+        line-height: 1.65;
+        max-width: 92%;
+        margin-bottom: 2rem;
+    }
 
     .hero-cta {
         flex-direction: column;
+    }
+    
+    .hero-dynamic .hero-cta {
+        margin-bottom: 2.5rem;
     }
 
     .hero-stats {
@@ -596,7 +722,65 @@ nav {
 }
 
 /* ============================================
-   BOOKING HERO (PEMESANAN) STYLES
+   STANDARDIZED PAGE HERO (Pemesanan, Galeri, FAQ, Kontak)
+   ============================================ */
+
+.page-hero-standard {
+    position: relative;
+    min-height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #E8BBA8 0%, #D4956E 50%, #B8704D 100%);
+    padding: 5rem 0;
+    margin-top: 70px;
+    overflow: hidden;
+}
+
+.page-hero-standard::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><pattern id="grid-hero" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/></pattern></defs><rect width="1200" height="600" fill="url(%23grid-hero)" /></svg>');
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.page-hero-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto;
+    color: var(--color-white);
+}
+
+.page-hero-title {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: clamp(2rem, 5vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: #FFFFFF;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.page-hero-subtitle {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: clamp(0.9375rem, 2vw, 1.0625rem);
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.95);
+    max-width: 640px;
+    margin: 0;
+    font-weight: 400;
+}
+
+/* ============================================
+   BOOKING HERO (PEMESANAN) STYLES - LEGACY
    ============================================ */
 
 .booking-hero {
@@ -668,7 +852,23 @@ nav {
     right: 30%;
 }
 
+/* Responsive for Standardized Page Hero */
 @media (max-width: 768px) {
+    .page-hero-standard {
+        min-height: 240px;
+        padding: 4rem 0;
+    }
+    
+    .page-hero-title {
+        font-size: clamp(1.75rem, 6vw, 2.25rem);
+        margin-bottom: 0.875rem;
+    }
+    
+    .page-hero-subtitle {
+        font-size: clamp(0.9rem, 2.5vw, 1rem);
+        max-width: 92%;
+    }
+
     .booking-hero {
         padding: calc(var(--spacing-xl) + 70px) 0 var(--spacing-lg);
     }
@@ -679,6 +879,23 @@ nav {
 
     .booking-hero-subtitle {
         font-size: 1rem;
+    }
+}
+
+@media (max-width: 425px) {
+    .page-hero-standard {
+        min-height: 220px;
+        padding: 3.5rem 0;
+    }
+    
+    .page-hero-title {
+        font-size: clamp(1.5rem, 7vw, 1.85rem);
+        margin-bottom: 0.75rem;
+    }
+    
+    .page-hero-subtitle {
+        font-size: 0.875rem;
+        line-height: 1.6;
     }
 }
 
@@ -983,6 +1200,7 @@ section {
 
 .gallery-section {
     background: var(--color-light-gray);
+    margin-top: 3.5rem;
 }
 
 .gallery-grid {
@@ -3755,8 +3973,8 @@ section {
 
 /* Payment Methods Section Container */
 .payment-methods-section {
-    background: var(--color-light-gray);
-    padding: var(--spacing-3xl) 0;
+    background: #FAFAFA;
+    padding: 4.5rem 0 5rem;
     position: relative;
     overflow: hidden;
 }

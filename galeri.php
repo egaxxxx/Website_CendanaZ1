@@ -156,17 +156,15 @@ $companyInfoData = [
     </header>
 
     <!-- Hero Section -->
-    <section class="hero" id="home" style="min-height: 500px; margin-top: 70px;<?php if (!empty($homepageSettings['galeri_hero_background'])): ?> background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('uploads/<?php echo htmlspecialchars($homepageSettings['galeri_hero_background']); ?>'); background-size: cover; background-position: center;<?php endif; ?>">
-        <div class="hero-overlay">
-            <div class="container">
-                <div class="hero-content">
-                    <h1 class="hero-title" style="font-size: 3rem;">
-                        <?php echo htmlspecialchars($homepageSettings['galeri_hero_title'] ?? 'Galeri Perjalanan'); ?>
-                    </h1>
-                    <p class="hero-description">
-                        <?php echo htmlspecialchars($homepageSettings['galeri_hero_description'] ?? 'Koleksi momen indah dari perjalanan pelanggan kami ke berbagai destinasi menakjubkan'); ?>
-                    </p>
-                </div>
+    <section class="page-hero-standard" id="home" <?php if (!empty($homepageSettings['galeri_hero_background'])): ?>style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('uploads/<?php echo htmlspecialchars($homepageSettings['galeri_hero_background']); ?>'); background-size: cover; background-position: center;"<?php endif; ?>>
+        <div class="container">
+            <div class="page-hero-content">
+                <h1 class="page-hero-title">
+                    <?php echo htmlspecialchars($homepageSettings['galeri_hero_title'] ?? 'Galeri Perjalanan'); ?>
+                </h1>
+                <p class="page-hero-subtitle">
+                    <?php echo htmlspecialchars($homepageSettings['galeri_hero_description'] ?? 'Koleksi momen indah dari perjalanan pelanggan kami ke berbagai destinasi menakjubkan'); ?>
+                </p>
             </div>
         </div>
     </section>

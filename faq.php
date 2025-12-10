@@ -63,17 +63,15 @@ if (empty($faqData)) {
     </header>
 
     <!-- Hero Section -->
-    <section class="hero" id="home" style="min-height: 500px; margin-top: 70px;" <?php if (!empty($homepageSettings['faq_hero_background'])): ?>style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('uploads/<?php echo htmlspecialchars($homepageSettings['faq_hero_background']); ?>'); background-size: cover; background-position: center; min-height: 500px; margin-top: 70px;"<?php endif; ?>>
-        <div class="hero-overlay">
-            <div class="container">
-                <div class="hero-content">
-                    <h1 class="hero-title" style="font-size: 3rem;">
-                        <?php echo htmlspecialchars($homepageSettings['faq_hero_title'] ?? 'Pusat Bantuan & FAQ'); ?>
-                    </h1>
-                    <p class="hero-description">
-                        <?php echo htmlspecialchars($homepageSettings['faq_hero_description'] ?? 'Jawaban lengkap untuk semua pertanyaan seputar layanan perjalanan kami. Temukan informasi yang Anda butuhkan.'); ?>
-                    </p>
-                </div>
+    <section class="page-hero-standard" id="home" <?php if (!empty($homepageSettings['faq_hero_background'])): ?>style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('uploads/<?php echo htmlspecialchars($homepageSettings['faq_hero_background']); ?>'); background-size: cover; background-position: center;"<?php endif; ?>>
+        <div class="container">
+            <div class="page-hero-content">
+                <h1 class="page-hero-title">
+                    <?php echo htmlspecialchars($homepageSettings['faq_hero_title'] ?? 'Pusat Bantuan & FAQ'); ?>
+                </h1>
+                <p class="page-hero-subtitle">
+                    <?php echo htmlspecialchars($homepageSettings['faq_hero_description'] ?? 'Jawaban lengkap untuk semua pertanyaan seputar layanan perjalanan kami. Temukan informasi yang Anda butuhkan.'); ?>
+                </p>
             </div>
         </div>
     </section>

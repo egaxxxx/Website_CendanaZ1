@@ -60,43 +60,73 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     // ============================================
-    // 3. TESTIMONIAL CAROUSEL
+    // 3. TESTIMONIAL CAROUSEL - 3 CARDS + 1 HALF
     // ============================================
 
     const testimonialTrack = document.getElementById('testimonialTrack');
     const carouselDots = document.querySelectorAll('.carousel-dot');
+    const testimonialSlides = document.querySelectorAll('.testimonial-slide');
 
-    if (testimonialTrack && carouselDots.length > 0) {
-        let currentSlide = 0;
-        const totalSlides = carouselDots.length;
+    if (testimonialTrack && carouselDots.length > 0 && testimonialSlides.length > 0) {
+        let currentIndex = 0;
+        const totalSlides = testimonialSlides.length;
         let autoPlayInterval;
+        let isTransitioning = false;
+        const gap = 24; // gap antar card
+
+        function calculateOffset() {
+            // Hitung offset berdasarkan offsetWidth card pertama + gap
+            const firstCard = testimonialSlides[0];
+            const cardWidth = firstCard.offsetWidth;
+            const slideStep = cardWidth + gap;
+            return currentIndex * slideStep;
+        }
 
         function goToSlide(slideIndex) {
-            currentSlide = slideIndex;
-            const offset = -currentSlide * 100;
-            testimonialTrack.style.transform = `translateX(${offset}%)`;
+            if (isTransitioning) return;
+            
+            isTransitioning = true;
+            currentIndex = slideIndex;
+            
+            // Calculate pixel-based offset
+            const offset = calculateOffset();
+            testimonialTrack.style.transform = `translateX(-${offset}px)`;
 
             // Update dots
             carouselDots.forEach((dot, index) => {
-                if (index === currentSlide) {
+                if (index === currentIndex) {
                     dot.classList.add('active');
                 } else {
                     dot.classList.remove('active');
                 }
             });
+
+            // Reset transition lock after animation completes
+            setTimeout(() => {
+                isTransitioning = false;
+            }, 600);
         }
 
         function nextSlide() {
-            const next = (currentSlide + 1) % totalSlides;
+            const next = (currentIndex + 1) % totalSlides;
             goToSlide(next);
         }
 
+        function prevSlide() {
+            const prev = (currentIndex - 1 + totalSlides) % totalSlides;
+            goToSlide(prev);
+        }
+
         function startAutoPlay() {
-            autoPlayInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+            stopAutoPlay();
+            autoPlayInterval = setInterval(nextSlide, 6000); // 6 seconds
         }
 
         function stopAutoPlay() {
-            clearInterval(autoPlayInterval);
+            if (autoPlayInterval) {
+                clearInterval(autoPlayInterval);
+                autoPlayInterval = null;
+            }
         }
 
         // Dot navigation
@@ -108,12 +138,12 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
 
-        // Start auto-play
-        startAutoPlay();
-
         // Pause on hover
-        testimonialTrack.addEventListener('mouseenter', stopAutoPlay);
-        testimonialTrack.addEventListener('mouseleave', startAutoPlay);
+        const testimonialCarousel = document.querySelector('.testimonial-carousel');
+        if (testimonialCarousel) {
+            testimonialCarousel.addEventListener('mouseenter', stopAutoPlay);
+            testimonialCarousel.addEventListener('mouseleave', startAutoPlay);
+        }
 
         // Touch/swipe support for mobile
         let touchStartX = 0;
@@ -136,15 +166,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (Math.abs(diff) > swipeThreshold) {
                 if (diff > 0) {
-                    // Swipe left - next slide
                     nextSlide();
                 } else {
-                    // Swipe right - previous slide
-                    const prev = (currentSlide - 1 + totalSlides) % totalSlides;
-                    goToSlide(prev);
+                    prevSlide();
                 }
             }
         }
+
+        // Recalculate on window resize
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                goToSlide(currentIndex);
+            }, 250);
+        });
+
+        // Initialize
+        goToSlide(0);
+        startAutoPlay();
     }
 
 
