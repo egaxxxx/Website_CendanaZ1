@@ -571,91 +571,254 @@ section:not(:last-of-type) {
 }
 
 /* ============================================
-   4. WHY US SPLIT SCREEN
+   4. WHY US GRID REDESIGN (Replacing Split Screen)
    ============================================ */
 
-.why-us-split {
-    padding: 0;
-    background-color: #f9f6f2;
-}
+/* ============================================
+   4. WHY US SPLIT REDESIGN - REFINED (3 COLUMNS)
+   ============================================ */
 
-.split-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 600px;
-}
-
-.split-image {
-    background: transparent;
+.why-us-split-section {
+    padding: 6rem 0;
+    background-color: #f5f5f0;
+    /* User requested beige/grey color */
     position: relative;
     overflow: hidden;
 }
 
-.split-image img {
-    width: 100%;
+/* Subtle pattern/blob background */
+.why-us-split-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60%;
     height: 100%;
-    object-fit: cover;
-    opacity: 1;
+    background: linear-gradient(135deg, #fffcf9 0%, #fff 100%);
+    z-index: 0;
+    border-bottom-left-radius: 100px;
 }
 
-.split-content {
-    padding: 6rem 5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.why-us-split-container {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    /* Fixed width sidebar for stability */
+    gap: 4rem;
+    align-items: start;
+    position: relative;
+    z-index: 1;
 }
 
-.split-content h2 {
-    font-size: 2.5rem;
+/* LEFT SIDE */
+.why-us-sticky-wrapper {
+    position: sticky;
+    top: 100px;
+}
+
+.section-badge {
+    background: rgba(212, 149, 110, 0.15);
+    color: #D4956E;
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 0.8rem;
     font-weight: 700;
-    color: #2a1f1a;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+}
+
+.why-us-content-side h2 {
+    font-size: 2.75rem;
+    font-weight: 800;
+    color: #1a202c;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+}
+
+.why-us-content-side p {
+    font-size: 1.05rem;
+    color: #718096;
+    line-height: 1.7;
     margin-bottom: 2rem;
 }
 
-.split-content .benefit-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+/* Image Decor */
+.why-us-image-decor {
+    position: relative;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    aspect-ratio: 4/5;
 }
 
-.split-content .benefit-item {
+.why-us-image-decor img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.why-us-image-decor:hover img {
+    transform: scale(1.05);
+}
+
+.decor-badge {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: #ffffff;
+    padding: 15px 20px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    gap: 10px;
+    animation: float 4s ease-in-out infinite;
+}
+
+.badge-number {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #D4956E;
+}
+
+.badge-text {
+    font-size: 0.8rem;
+    line-height: 1.2;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.btn-why-us {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #2D3748;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    padding: 10px 0;
+    transition: all 0.3s ease;
+}
+
+.btn-why-us:hover {
+    color: #D4956E;
+    gap: 15px;
+}
+
+/* RIGHT SIDE: 3 Column Grid */
+.why-us-grid-compact.three-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
-    padding: 2rem 0;
-    border-bottom: 1px solid rgba(212, 149, 110, 0.15);
 }
 
-.split-content .benefit-item:last-child {
-    border-bottom: none;
+/* Feature Card Refined */
+.feature-card-compact {
+    background: #ffffff;
+    padding: 1.75rem;
+    border-radius: 16px;
+    border: 1px solid #f1f1f1;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
-.split-content .benefit-icon {
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, #F0D5C9 0%, #E8BBA8 100%);
-    border-radius: 50%;
+.feature-card-compact:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+    border-color: #e2e8f0;
+}
+
+.feature-icon-compact {
+    width: 48px;
+    height: 48px;
+    background: #FFF5F0;
+    color: #D4956E;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.8rem;
-    color: #D4956E;
-    flex-shrink: 0;
+    margin-bottom: 1.25rem;
+    font-size: 1.25rem;
+    transition: all 0.3s ease;
 }
 
-.split-content .benefit-text h3 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #2a1f1a;
+.feature-card-compact:hover .feature-icon-compact {
+    background: #D4956E;
+    color: #ffffff;
+    transform: rotate(10deg);
+}
+
+.feature-content-compact h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2d3748;
     margin-bottom: 0.5rem;
+    line-height: 1.3;
 }
 
-.split-content .benefit-text p {
-    font-size: 1rem;
-    line-height: 1.7;
-    color: #6B7280;
+.feature-content-compact p {
+    font-size: 0.9rem;
+    color: #718096;
+    line-height: 1.6;
     margin: 0;
 }
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .why-us-grid-compact.three-columns {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .why-us-split-container {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+    }
+
+    .why-us-sticky-wrapper {
+        position: static;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        align-items: center;
+    }
+
+    .why-us-image-decor {
+        margin-bottom: 0;
+        grid-row: span 2;
+    }
+}
+
+@media (max-width: 768px) {
+    .why-us-sticky-wrapper {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .why-us-image-decor {
+        display: none;
+        /* Hide image on mobile to save space */
+    }
+
+    .btn-why-us {
+        justify-content: center;
+    }
+
+    .why-us-grid-compact.three-columns {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
 
 /* ============================================
    5. PAYMENT HORIZONTAL SCROLL
@@ -757,22 +920,39 @@ section:not(:last-of-type) {
 .testimonial-carousel {
     position: relative;
     margin-top: 2.5rem;
+    overflow: hidden;
+    /* Strict masking */
+    padding-bottom: 3rem;
+    /* Space for bottom shadow/dots */
+    width: 100%;
 }
 
 .testimonial-track {
     display: flex;
-    gap: 2rem;
+    gap: 0;
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
+}
+
+.testimonial-page {
+    min-width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
 }
 
 .testimonial-slide {
-    flex: 0 0 100%;
-    max-width: 800px;
-    margin: 0 auto;
+    width: 100% !important;
+    max-width: none;
+    margin: 0;
     background: #ffffff;
-    padding: 4rem 3rem;
+    padding: 3rem;
     border-radius: 28px;
     box-shadow: 0 20px 60px rgba(212, 149, 110, 0.15);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid rgba(212, 149, 110, 0.1);
 }
 
 .testimonial-slide .testimonial-header {
@@ -873,8 +1053,10 @@ section:not(:last-of-type) {
 .booking-step-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: center;
+    gap: 40px;
+    /* Reduced gap slightly */
+    align-items: stretch;
+    /* Force equal height */
     margin-bottom: 50px;
     position: relative;
     z-index: 1;
@@ -891,14 +1073,17 @@ section:not(:last-of-type) {
     overflow: hidden;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
     background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
-    aspect-ratio: 1/1;
-    min-height: 400px;
+    height: 100%;
+    /* Fill the grid cell height */
+    min-height: 300px;
+    /* Minimum height for safety */
 }
 
 .booking-step-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    /* Cover the area */
     transition: transform 0.6s ease;
 }
 
@@ -911,9 +1096,9 @@ section:not(:last-of-type) {
     padding: 60px 50px;
     background: rgba(255, 255, 255, 0.95);
     border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(212, 149, 110, 0.15);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(212, 149, 110, 0.1);
+    border: none;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1365,52 +1550,66 @@ section:not(:last-of-type) {
     }
 
     .services-dynamic .section-header h2 {
-        font-size: 2.25rem;
+        font-size: 2rem;
     }
 
-    .services-asymmetric-grid,
-    .services-uniform-grid {
+    .testimonial-page {
         grid-template-columns: 1fr;
-        grid-template-rows: auto;
+        /* Stack on mobile */
         gap: 1.5rem;
     }
 
-    .service-card-featured {
-        grid-row: span 1;
-    }
-
-    .service-card-featured .service-image {
-        height: 250px;
-    }
-
-    .service-card-featured .service-content {
+    .testimonial-slide {
         padding: 2rem;
     }
 
-    .service-card-small .service-image-small {
-        height: 180px;
-    }
-
-    .split-layout {
+    .services-asymmetric-grid,
+    .services-uniform-grid,
+    .why-us-split-container {
         grid-template-columns: 1fr;
-    }
-
-    .split-image {
-        min-height: 400px;
-    }
-
-    .split-content {
-        padding: 4rem 3rem;
-    }
-
-    .legality-grid-2x2 {
-        grid-template-columns: 1fr;
+        grid-template-rows: auto;
         gap: 2rem;
     }
 
-    .cta-content-centered h2 {
-        font-size: 2.5rem;
+    .why-us-split-container {
+        gap: 3rem;
     }
+
+    grid-row: span 1;
+}
+
+.service-card-featured .service-image {
+    height: 250px;
+}
+
+.service-card-featured .service-content {
+    padding: 2rem;
+}
+
+.service-card-small .service-image-small {
+    height: 180px;
+}
+
+.split-layout {
+    grid-template-columns: 1fr;
+}
+
+.split-image {
+    min-height: 400px;
+}
+
+.split-content {
+    padding: 4rem 3rem;
+}
+
+.legality-grid-2x2 {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+.cta-content-centered h2 {
+    font-size: 2.5rem;
+}
 }
 
 @media (max-width: 768px) {

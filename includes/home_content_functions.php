@@ -10,6 +10,56 @@ require_once __DIR__ . '/../config/database.php';
 // MENGAPA MEMILIH KAMI (Why Choose Us)
 // =====================================================
 
+function getWhyChoosePresets() {
+    return [
+        'legal' => [
+            'title' => 'Legal & Terpercaya',
+            'description' => 'Perusahaan travel resmi dengan izin operasional lengkap dan badan pemerintah yang kompeten.',
+            'icon_class' => 'icon-user-shield'
+        ],
+        'service' => [
+            'title' => 'Layanan 24/7',
+            'description' => 'Tim customer service yang responsif siap membantu Anda kapan saja, bahkan di hari libur.',
+            'icon_class' => 'icon-clock'
+        ],
+        'secure' => [
+            'title' => 'Aman & Terjamin',
+            'description' => 'Semua transaksi dijamin aman dengan sertifikat keamanan dan perlindungan data pelanggan yang ketat.',
+            'icon_class' => 'icon-key'
+        ],
+        'price' => [
+            'title' => 'Harga Terjangkau',
+            'description' => 'Penawaran harga terbaik yang kompetitif dan transparan tanpa biaya tersembunyi untuk setiap perjalanan Anda.',
+            'icon_class' => 'icon-tag'
+        ],
+        'comfortable' => [
+            'title' => 'Armada Nyaman',
+            'description' => 'Didukung armada terbaru yang terawat dengan fasilitas lengkap demi kenyamanan perjalanan Anda.',
+            'icon_class' => 'icon-star'
+        ],
+        'driver' => [
+            'title' => 'Supir Berpengalaman',
+            'description' => 'Tim pengemudi profesional yang ramah, berpengalaman, dan mengutamakan keselamatan penumpang.',
+            'icon_class' => 'icon-user-shield'
+        ],
+        'route' => [
+            'title' => 'Rute Terlengkap',
+            'description' => 'Menjangkau berbagai destinasi populer dengan pilihan rute perjalanan yang fleksibel.',
+            'icon_class' => 'icon-map'
+        ],
+        'punctual' => [
+            'title' => 'Tepat Waktu',
+            'description' => 'Kami menghargai waktu Anda dengan jaminan keberangkatan dan penjemputan yang tepat waktu.',
+            'icon_class' => 'icon-clock'
+        ],
+        'easy' => [
+            'title' => 'Pemesanan Mudah',
+            'description' => 'Sistem pemesanan yang praktis dan cepat, bisa dilakukan secara online kapan saja dan di mana saja.',
+            'icon_class' => 'icon-ticket'
+        ]
+    ];
+}
+
 function getAllWhyChooseUs() {
     global $conn;
     $sql = "SELECT * FROM why_choose_us ORDER BY sort_order ASC, id ASC";
@@ -34,12 +84,34 @@ function createWhyChooseUs($data, $icon_file = null) {
     global $conn;
     
     $icon_path = null;
-    if ($icon_file && $icon_file['error'] == 0) {
+    $title = $data['title'] ?? '';
+    $description = $data['description'] ?? '';
+
+    // Handle Preset
+    if (!empty($data['preset_key'])) {
+        $presets = getWhyChoosePresets();
+        if (isset($presets[$data['preset_key']])) {
+            $preset = $presets[$data['preset_key']];
+            $title = $preset['title'];
+            $description = $preset['description']; // Default desc, user can override if we allowed editing, but per request admin just selects.
+            // But wait, the user request says "admin tinggal milih judul poin dan iconnya bakal muncul".
+            // It doesn't explicitly say description is auto-filled but it's implied "Select option" -> "Done".
+            // I will use the preset description but allow it to be overwritten if passed (though UI might not show it).
+            // Actually, let's look at admin.php form later. For now, prioritize preset values if key exists.
+            
+            $icon_path = 'class:' . $preset['icon_class'];
+        }
+    }
+
+    // If not preset (legacy or custom if we kept it), handle file upload
+    if (!$icon_path && $icon_file && $icon_file['error'] == 0) {
         $icon_path = uploadIcon($icon_file, 'why_choose_us');
     }
     
+    // Fallback if still no icon, maybe keep null or empty
+    
     $stmt = $conn->prepare("INSERT INTO why_choose_us (icon, title, description, sort_order) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("sssi", $icon_path, $data['title'], $data['description'], $data['sort_order']);
+    $stmt->bind_param("sssi", $icon_path, $title, $description, $data['sort_order']);
     
     return $stmt->execute();
 }
@@ -50,18 +122,61 @@ function updateWhyChooseUs($id, $data, $icon_file = null) {
     // Get existing data
     $existing = getWhyChooseUsById($id);
     $icon_path = $existing['icon'];
+    $title = $data['title'] ?? $existing['title'];
+    $description = $data['description'] ?? $existing['description'];
     
-    // Handle icon upload
+    // Handle Preset Update
+    if (!empty($data['preset_key'])) {
+        $presets = getWhyChoosePresets();
+        if (isset($presets[$data['preset_key']])) {
+            $preset = $presets[$data['preset_key']];
+            $title = $preset['title'];
+            // Prioritize user-submitted description; update from preset only if user explicit description is empty
+            // Actually for update, if $data['description'] is passed, use it.
+            // But $description var above is already set to $data['description'] ?? $existing['description']
+            // So we just need to NOT overwrite it with preset description unconditionally.
+            
+            // Logic: If user submitted a new description (different from existing), keep it.
+            // If user didn't submit (empty in post?), we might fallback.
+            // But standard behavior: trust the POST data if it's there.
+            
+            // However, the form field name is 'description'. 
+            // If it's in $data['description'], we use that. 
+            // We should ONLY overwrite if for some reason we want to force preset text.
+            // The previous code unconditionally overwrote it. We remove that.
+            
+            // $description is already set at top of function.
+            // But if we want to "reset" to preset default, the user would have to empty the field?
+            // Let's just say: if preset is changed, we usually want default text, BUT frontend handles that.
+            // Backend receives the final text. So we should just NOT touch $description here implies we trust the input.
+            // EXCEPT if we want to ensure preset icon is set.
+            
+            // So I will just comment out the overwrite, or only set if $description is empty.
+            if (empty($description)) {
+                $description = $preset['description'];
+            }
+            
+            $icon_path = 'class:' . $preset['icon_class'];
+            
+            // Clean up old file if it was a file
+            if ($existing['icon'] && !str_starts_with($existing['icon'], 'class:') && file_exists(__DIR__ . '/../' . $existing['icon'])) {
+                // Determine if it's a file path (simple heuristic check)
+                 // Note: 'class:...' is not a file.
+            }
+        }
+    }
+
+    // Handle icon upload (Manual override)
     if ($icon_file && $icon_file['error'] == 0) {
         // Delete old icon
-        if ($icon_path && file_exists($icon_path)) {
+        if ($icon_path && !str_starts_with($icon_path, 'class:') && file_exists($icon_path)) {
             unlink($icon_path);
         }
         $icon_path = uploadIcon($icon_file, 'why_choose_us');
     }
     
     $stmt = $conn->prepare("UPDATE why_choose_us SET icon = ?, title = ?, description = ?, sort_order = ? WHERE id = ?");
-    $stmt->bind_param("sssii", $icon_path, $data['title'], $data['description'], $data['sort_order'], $id);
+    $stmt->bind_param("sssii", $icon_path, $title, $description, $data['sort_order'], $id);
     
     return $stmt->execute();
 }
@@ -99,6 +214,35 @@ function toggleWhyChooseUsStatus($id) {
 // CARA PEMBAYARAN (Payment Steps)
 // =====================================================
 
+// =====================================================
+// CARA PEMBAYARAN (Payment Steps)
+// =====================================================
+
+function getPaymentPresets() {
+    return [
+        'wa_step_1' => [
+            'title' => 'Hubungi Admin',
+            'description' => 'Chat admin kami via WhatsApp untuk konfirmasi total tagihan dan nomor rekening tujuan.',
+            'icon_class' => 'fab fa-whatsapp'
+        ],
+        'wa_step_2' => [
+            'title' => 'Lakukan Pembayaran',
+            'description' => 'Transfer pembayaran sesuai nominal ke rekening yang diinformasikan oleh admin.',
+            'icon_class' => 'fas fa-money-bill-wave'
+        ],
+        'wa_step_3' => [
+            'title' => 'Kirim Bukti Transfer',
+            'description' => 'Foto dan kirimkan bukti transaksi Anda ke WhatsApp admin sebagai verifikasi.',
+            'icon_class' => 'fas fa-camera'
+        ],
+        'wa_step_4' => [
+            'title' => 'Tiket Dikirim',
+            'description' => 'Setelah lunas, E-tiket resmi akan dikirimkan langsung ke WhatsApp Anda.',
+            'icon_class' => 'fas fa-ticket-alt'
+        ]
+    ];
+}
+
 function getAllPaymentSteps() {
     global $conn;
     $sql = "SELECT * FROM payment_steps ORDER BY sort_order ASC, id ASC";
@@ -123,12 +267,35 @@ function createPaymentStep($data, $icon_file = null) {
     global $conn;
     
     $icon_path = null;
-    if ($icon_file && $icon_file['error'] == 0) {
+    $title = $data['title'] ?? '';
+    $description = $data['description'] ?? '';
+
+    // Handle Preset
+    if (!empty($data['preset_key'])) {
+        $presets = getPaymentPresets();
+        if (isset($presets[$data['preset_key']])) {
+            $preset = $presets[$data['preset_key']];
+            $title = $preset['title'];
+            // Use preset description only if user input is empty
+            if (empty($description)) {
+                $description = $preset['description'];
+            }
+            $icon_path = 'class:' . $preset['icon_class'];
+        }
+    }
+
+    // Fallback Manual Upload (if needed/legacy)
+    if (!$icon_path && $icon_file && $icon_file['error'] == 0) {
         $icon_path = uploadIcon($icon_file, 'payment_steps');
     }
     
+    // Default fallback icon if nothing selected
+    if (!$icon_path) {
+        $icon_path = 'class:icon-check-circle';
+    }
+    
     $stmt = $conn->prepare("INSERT INTO payment_steps (icon, title, description, sort_order) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("sssi", $icon_path, $data['title'], $data['description'], $data['sort_order']);
+    $stmt->bind_param("sssi", $icon_path, $title, $description, $data['sort_order']);
     
     return $stmt->execute();
 }
@@ -138,16 +305,39 @@ function updatePaymentStep($id, $data, $icon_file = null) {
     
     $existing = getPaymentStepById($id);
     $icon_path = $existing['icon'];
+    $title = $data['title'] ?? $existing['title'];
+    $description = $data['description'] ?? $existing['description'];
     
+    // Handle Preset
+    if (!empty($data['preset_key'])) {
+        $presets = getPaymentPresets();
+        if (isset($presets[$data['preset_key']])) {
+            $preset = $presets[$data['preset_key']];
+            $title = $preset['title'];
+            // Only overwrite description if user explicitly emptied it or wants reset? 
+            // Better behavior: Keep existing description unless user changes it. 
+            // Actually, usually in admin form, the input fields contain current values.
+            // So we trust the POST data.
+            
+            $icon_path = 'class:' . $preset['icon_class'];
+            
+            // Cleanup old file if exists
+            if ($existing['icon'] && !str_starts_with($existing['icon'], 'class:') && file_exists(__DIR__ . '/../' . $existing['icon'])) {
+                // unlink(__DIR__ . '/../' . $existing['icon']); // Optional cleanup
+            }
+        }
+    }
+    
+    // Handle Manual Upload Override
     if ($icon_file && $icon_file['error'] == 0) {
-        if ($icon_path && file_exists($icon_path)) {
+        if ($icon_path && !str_starts_with($icon_path, 'class:') && file_exists($icon_path)) {
             unlink($icon_path);
         }
         $icon_path = uploadIcon($icon_file, 'payment_steps');
     }
     
     $stmt = $conn->prepare("UPDATE payment_steps SET icon = ?, title = ?, description = ?, sort_order = ? WHERE id = ?");
-    $stmt->bind_param("sssii", $icon_path, $data['title'], $data['description'], $data['sort_order'], $id);
+    $stmt->bind_param("sssii", $icon_path, $title, $description, $data['sort_order'], $id);
     
     return $stmt->execute();
 }

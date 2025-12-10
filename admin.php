@@ -663,6 +663,7 @@ $cacheKiller = time() . mt_rand(1000, 9999);
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+    <link rel="stylesheet" href="icons.css">
     <link rel="stylesheet" href="admin-enhancements.css">
     <script src="config.js"></script>
     
@@ -2065,11 +2066,12 @@ $cacheKiller = time() . mt_rand(1000, 9999);
             height: 100%;
             background: rgba(0, 0, 0, 0.75);
             z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(8px);
-            animation: fadeIn 0.3s ease;
+            /* Grid layout for foolproof centering that handles overflow */
+            display: grid;
+            place-items: center; /* Center horizontally/vertically */
+            overflow-y: auto; /* Allow scrolling the overlay */
+            padding: 20px;
+            box-sizing: border-box; /* Include padding in dimensions */
         }
 
         @keyframes fadeIn {
@@ -2080,14 +2082,18 @@ $cacheKiller = time() . mt_rand(1000, 9999);
         .modal-content {
             background: var(--admin-bg-secondary);
             border-radius: 24px;
-            width: 90%;
+            width: 100%;
             max-width: 600px;
-            max-height: 90vh;
-            overflow-y: auto;
+            /* Remove max-height to let content grow naturally. Overlay handles scrolling. */
+            height: auto;
+            max-height: none; 
+            
             box-shadow: var(--admin-shadow-lg);
             border: 1px solid var(--admin-border);
             position: relative;
-            margin: auto;
+            margin: auto; /* Ensures centering in Grid and handles safe overflow */
+            display: flex;
+            flex-direction: column; 
         }
 
         .modal-header {
@@ -3325,8 +3331,16 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                                 <?php foreach ($whyChooseUs as $item): ?>
                                 <tr style="border-bottom: 1px solid var(--admin-border); transition: background 0.2s;" onmouseover="this.style.background='var(--admin-bg-secondary)'" onmouseout="this.style.background='transparent'">
                                     <td style="padding: 1rem; text-align: center;">
-                                        <?php if ($item['icon'] && file_exists($item['icon'])): ?>
-                                        <img src="<?= htmlspecialchars($item['icon']) ?>?v=<?= time() ?>" alt="<?= htmlspecialchars($item['title']) ?>" 
+                                        <?php 
+                                        $icon = $item['icon'];
+                                        if ($icon && substr($icon, 0, 6) === 'class:'): 
+                                            $iconClass = substr($icon, 6);
+                                        ?>
+                                        <div style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; background: var(--admin-bg-secondary); border-radius: 8px; margin: 0 auto; color: var(--admin-accent-peach); font-size: 1.5rem;">
+                                            <i class="icon <?= htmlspecialchars($iconClass) ?>"></i>
+                                        </div>
+                                        <?php elseif ($icon && file_exists($icon)): ?>
+                                        <img src="<?= htmlspecialchars($icon) ?>?v=<?= time() ?>" alt="<?= htmlspecialchars($item['title']) ?>" 
                                              style="width: 60px; height: 60px; object-fit: contain; border-radius: 8px; background: var(--admin-bg-secondary); padding: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                                         <?php else: ?>
                                         <div style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; background: var(--admin-bg-secondary); border-radius: 8px; margin: 0 auto;">
@@ -3387,29 +3401,49 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                         <input type="hidden" name="id" id="whyChooseId">
                         
                         <div class="form-group">
-                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Icon <span style="color: #e74c3c; font-size: 0.9rem;">(Opsional)</span></label>
-                            <div id="currentIconPreview" style="margin-bottom: 1rem; display: none;">
-                                <img id="currentIcon" src="" alt="Current Icon" style="width: 80px; height: 80px; object-fit: contain; border-radius: 8px; background: var(--admin-bg-secondary); padding: 8px;">
-                                <p style="margin: 0.5rem 0; font-size: 0.85rem; color: var(--admin-text-muted);">Icon saat ini</p>
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Pilih Poin <span style="color: #e74c3c;">*</span></label>
+                            <select name="preset_key" id="whyChoosePreset" class="form-control" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--admin-border); border-radius: 8px; font-size: 1rem; background: var(--admin-bg-secondary); color: var(--admin-text-primary);" onchange="updateWhyChoosePreview()">
+                                <option value="" disabled selected>-- Pilih Keunggulan --</option>
+                                <?php 
+                                $presets = getWhyChoosePresets();
+                                foreach ($presets as $key => $preset): 
+                                ?>
+                                <option value="<?= $key ?>" 
+                                    data-title="<?= htmlspecialchars($preset['title']) ?>"
+                                    data-desc="<?= htmlspecialchars($preset['description']) ?>"
+                                    data-icon="<?= htmlspecialchars($preset['icon_class']) ?>">
+                                    <?= htmlspecialchars($preset['title']) ?>
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <!-- Preview Section -->
+                        <div id="presetPreview" style="margin-bottom: 1.5rem; padding: 1rem; background: var(--admin-bg-secondary); border-radius: 12px; display: none; align-items: center; gap: 1rem; border: 1px dashed var(--admin-border);">
+                            <div style="background: var(--admin-accent-peach); width: 50px; height: 50px; min-width: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; flex-shrink: 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                                <i id="previewIcon" class=""></i>
                             </div>
-                            <input type="file" name="icon" id="whyChooseIcon" accept="image/*" style="width: 100%; padding: 0.75rem; border: 2px dashed var(--admin-border); border-radius: 8px; background: var(--admin-bg-secondary);">
-                            <small style="color: var(--admin-text-muted); display: block; margin-top: 0.5rem;">Format: JPG, PNG, SVG • Maksimal 2MB</small>
+                            <div style="flex: 1;">
+                                <h4 id="previewTitle" style="margin: 0 0 0.25rem 0; color: var(--admin-text-primary);"></h4>
+                                <p id="previewDesc" style="margin: 0; font-size: 0.9rem; color: var(--admin-text-secondary); line-height: 1.4;"></p>
+                            </div>
                         </div>
+
+                        <!-- Hidden fields to store data if needed, or just let backend handle it from preset_key -->
+                        <!-- But wait, if we want to allow editing the description, we should show it.
+                             The user said "admin langsung memilih saja". 
+                             If I show the description as an input *populated* by the selection, they can edit it if they want.
+                             But simplicity is key. I'll include the description textarea but populate it. -->
                         
                         <div class="form-group">
-                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Judul Poin <span style="color: #e74c3c;">*</span></label>
-                            <input type="text" name="title" id="whyChooseTitle" required placeholder="Contoh: Legal & Terpercaya" style="width: 100%; padding: 0.75rem; border: 1px solid var(--admin-border); border-radius: 8px; font-size: 1rem;">
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Deskripsi (Otomatis)</label>
+                            <textarea name="description" id="whyChooseDescription" rows="3" style="width: 100%; padding: 0.75rem; border: 1px solid var(--admin-border); border-radius: 8px; font-size: 0.9rem; resize: vertical; background: var(--admin-bg-secondary); color: var(--admin-text-primary);"></textarea>
+                            <small style="color: var(--admin-text-muted);">Deskripsi akan terisi otomatis, namun Anda dapat mengubahnya.</small>
                         </div>
-                        
-                        <div class="form-group">
-                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Deskripsi <span style="color: #e74c3c;">*</span></label>
-                            <textarea name="description" id="whyChooseDescription" required rows="4" placeholder="Jelaskan keunggulan ini secara detail..." style="width: 100%; padding: 0.75rem; border: 1px solid var(--admin-border); border-radius: 8px; font-size: 1rem; resize: vertical;"></textarea>
-                        </div>
-                        
+
                         <div class="form-group">
                             <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Urutan Tampil</label>
                             <input type="number" name="sort_order" id="whyChooseSortOrder" value="0" min="0" style="width: 100%; padding: 0.75rem; border: 1px solid var(--admin-border); border-radius: 8px; font-size: 1rem;">
-                            <small style="color: var(--admin-text-muted); display: block; margin-top: 0.5rem;">Semakin kecil angka, semakin atas urutannya</small>
                         </div>
                         
                         <div style="display: flex; gap: 1rem; margin-top: 2rem;">
@@ -3460,13 +3494,16 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                                 <?php foreach ($paymentSteps as $item): ?>
                                 <tr style="border-bottom: 1px solid var(--admin-border); transition: background 0.2s;" onmouseover="this.style.background='var(--admin-bg-secondary)'" onmouseout="this.style.background='transparent'">
                                     <td style="padding: 1rem; text-align: center;">
-                                        <?php if ($item['icon'] && file_exists($item['icon'])): ?>
+                                        <?php if ($item['icon'] && (strpos($item['icon'], 'class:') === 0 || strpos($item['icon'], 'fa-') !== false || strpos($item['icon'], 'icon-') !== false)): ?>
+                                            <?php 
+                                            $iconClass = strpos($item['icon'], 'class:') === 0 ? substr($item['icon'], 6) : $item['icon'];
+                                            ?>
+                                            <i class="<?= htmlspecialchars($iconClass) ?>" style="font-size: 2rem; color: #D4956E;"></i>
+                                        <?php elseif ($item['icon'] && file_exists($item['icon'])): ?>
                                         <img src="<?= htmlspecialchars($item['icon']) ?>?v=<?= time() ?>" alt="<?= htmlspecialchars($item['title']) ?>" 
-                                             style="width: 60px; height: 60px; object-fit: contain; border-radius: 8px; background: var(--admin-bg-secondary); padding: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                             style="width: 40px; height: 40px; object-fit: contain;">
                                         <?php else: ?>
-                                        <div style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; background: var(--admin-bg-secondary); border-radius: 8px; margin: 0 auto;">
-                                            <i class="fas fa-image" style="font-size: 1.5rem; color: var(--admin-text-muted); opacity: 0.5;"></i>
-                                        </div>
+                                            <i class="fas fa-image" style="font-size: 2rem; color: var(--admin-text-muted); opacity: 0.3;"></i>
                                         <?php endif; ?>
                                     </td>
                                     <td style="padding: 1rem;">
@@ -3522,19 +3559,37 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                         <input type="hidden" name="id" id="paymentStepId">
                         
                         <div class="form-group">
-                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Icon <span style="color: #e74c3c; font-size: 0.9rem;">(Opsional)</span></label>
-                            <div id="currentPaymentIconPreview" style="margin-bottom: 1rem; display: none;">
-                                <img id="currentPaymentIcon" src="" alt="Current Icon" style="width: 80px; height: 80px; object-fit: contain; border-radius: 8px; background: var(--admin-bg-secondary); padding: 8px;">
-                                <p style="margin: 0.5rem 0; font-size: 0.85rem; color: var(--admin-text-muted);">Icon saat ini</p>
-                            </div>
-                            <input type="file" name="icon" id="paymentStepIcon" accept="image/*" style="width: 100%; padding: 0.75rem; border: 2px dashed var(--admin-border); border-radius: 8px; background: var(--admin-bg-secondary);">
-                            <small style="color: var(--admin-text-muted); display: block; margin-top: 0.5rem;">Format: JPG, PNG, SVG • Maksimal 2MB</small>
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Pilih Langkah Pembayaran <span style="color: #e74c3c;">*</span></label>
+                            <select name="preset_key" id="paymentStepPreset" class="form-control" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--admin-border); border-radius: 8px; font-size: 1rem; background: var(--admin-bg-secondary); color: var(--admin-text-primary);" onchange="updatePaymentStepPreview()">
+                                <option value="" disabled selected>-- Pilih Langkah --</option>
+                                <?php 
+                                $paymentPresets = getPaymentPresets();
+                                foreach ($paymentPresets as $key => $preset): 
+                                ?>
+                                <option value="<?= $key ?>" 
+                                    data-title="<?= htmlspecialchars($preset['title']) ?>"
+                                    data-desc="<?= htmlspecialchars($preset['description']) ?>"
+                                    data-icon="<?= htmlspecialchars($preset['icon_class']) ?>">
+                                    <?= htmlspecialchars($preset['title']) ?>
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
+                            <small style="color: var(--admin-text-muted); display: block; margin-top: 0.5rem;">Judul dan Icon akan otomatis disesuaikan.</small>
                         </div>
                         
-                        <div class="form-group">
-                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Judul Langkah <span style="color: #e74c3c;">*</span></label>
-                            <input type="text" name="title" id="paymentStepTitle" required placeholder="Contoh: Pilih Layanan" style="width: 100%; padding: 0.75rem; border: 1px solid var(--admin-border); border-radius: 8px; font-size: 1rem;">
+                        <!-- Preview Section -->
+                        <div id="paymentPresetPreview" style="margin-bottom: 1.5rem; padding: 1rem; background: var(--admin-bg-secondary); border-radius: 12px; display: none; align-items: center; gap: 1rem; border: 1px dashed var(--admin-border);">
+                            <div style="background: var(--admin-accent-peach); width: 50px; height: 50px; min-width: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; flex-shrink: 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                                <i id="paymentPreviewIcon" class=""></i>
+                            </div>
+                            <div style="flex: 1;">
+                                <h4 id="paymentPreviewTitle" style="margin: 0 0 0.25rem 0; color: var(--admin-text-primary);"></h4>
+                                <p id="paymentPreviewDesc" style="margin: 0; font-size: 0.9rem; color: var(--admin-text-secondary); line-height: 1.4;"></p>
+                            </div>
                         </div>
+
+                        <!-- Hidden Title Field (Optional, handled by backend from preset_key) -->
+                        <!-- But to be safe if backend expects title in $_POST for other logic, we can keep hidden or just rely on backend -->
                         
                         <div class="form-group">
                             <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Deskripsi <span style="color: #e74c3c;">*</span></label>
@@ -3597,9 +3652,9 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                                     <td style="padding: 1rem; text-align: center;">
                                         <?php if ($item['image'] && file_exists($item['image'])): ?>
                                         <img src="<?= htmlspecialchars($item['image']) ?>?v=<?= time() ?>" alt="<?= htmlspecialchars($item['title']) ?>" 
-                                             style="width: 110px; height: 75px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                             style="width: 120px; height: 80px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                                         <?php else: ?>
-                                        <div style="width: 110px; height: 75px; display: flex; align-items: center; justify-content: center; background: var(--admin-bg-secondary); border-radius: 8px; margin: 0 auto;">
+                                        <div style="width: 120px; height: 80px; display: flex; align-items: center; justify-content: center; background: var(--admin-bg-secondary); border-radius: 8px; margin: 0 auto;">
                                             <i class="fas fa-image" style="font-size: 1.5rem; color: var(--admin-text-muted); opacity: 0.5;"></i>
                                         </div>
                                         <?php endif; ?>
@@ -5467,7 +5522,9 @@ $cacheKiller = time() . mt_rand(1000, 9999);
             
             // Reset form
             form.reset();
-            document.getElementById('currentIconPreview').style.display = 'none';
+            // Reset preview
+            document.getElementById('presetPreview').style.display = 'none';
+            document.getElementById('whyChoosePreset').selectedIndex = 0; // Reset select
             
             if (mode === 'add') {
                 title.textContent = 'Tambah Poin Baru';
@@ -5495,14 +5552,68 @@ $cacheKiller = time() . mt_rand(1000, 9999);
         function loadWhyChooseData(id) {
             const data = whyChooseData[id];
             if (data) {
-                document.getElementById('whyChooseTitle').value = data.title;
-                document.getElementById('whyChooseDescription').value = data.description;
-                document.getElementById('whyChooseSortOrder').value = data.sort_order;
+                // Find preset that matches the title
+                const select = document.getElementById('whyChoosePreset');
+                let found = false;
                 
-                if (data.icon) {
-                    document.getElementById('currentIcon').src = data.icon;
-                    document.getElementById('currentIconPreview').style.display = 'block';
+                // Try to find matching preset by title
+                for (let i = 0; i < select.options.length; i++) {
+                    if (select.options[i].getAttribute('data-title') === data.title) {
+                        select.selectedIndex = i;
+                        found = true;
+                        break;
+                    }
                 }
+                
+                // If not found (legacy data), maybe reset selection or select first?
+                // For now, if not found, we don't select anything, user has to pick.
+                if (!found) {
+                    select.value = "";
+                }
+                
+                // Trigger change to update preview (this sets default desc)
+                updateWhyChoosePreview();
+                
+                // RESTORE original description from database
+                if (data.description) {
+                    document.getElementById('whyChooseDescription').value = data.description;
+                    document.getElementById('previewDesc').textContent = data.description;
+                }
+                
+                document.getElementById('whyChooseSortOrder').value = data.sort_order;
+            }
+        }
+        
+        // Add listener for real-time description preview update
+        document.getElementById('whyChooseDescription').addEventListener('input', function() {
+            document.getElementById('previewDesc').textContent = this.value;
+        });
+
+        // New function to update preview based on selection
+        function updateWhyChoosePreview() {
+            const select = document.getElementById('whyChoosePreset');
+            const option = select.options[select.selectedIndex];
+            
+            if (option && option.value) {
+                const title = option.getAttribute('data-title');
+                const desc = option.getAttribute('data-desc');
+                const iconClass = option.getAttribute('data-icon');
+                
+                // Update Description Field
+                document.getElementById('whyChooseDescription').value = desc;
+                
+                // Update Preview
+                document.getElementById('previewTitle').textContent = title;
+                document.getElementById('previewDesc').textContent = desc;
+                document.getElementById('previewIcon').className = 'icon icon-lg ' + iconClass; // Add 'icon' class for font-family
+                
+                document.getElementById('presetPreview').style.display = 'flex';
+            } else {
+                // Don't clear description if just unselecting, or maybe do?
+                // If they unselect, might be manual mode if we supported it. 
+                // But for now unselecting hides preview.
+                // document.getElementById('whyChooseDescription').value = ''; 
+                document.getElementById('presetPreview').style.display = 'none';
             }
         }
 
@@ -5515,7 +5626,9 @@ $cacheKiller = time() . mt_rand(1000, 9999);
             const idField = document.getElementById('paymentStepId');
             
             form.reset();
-            document.getElementById('currentPaymentIconPreview').style.display = 'none';
+            // Reset preview
+            document.getElementById('paymentPresetPreview').style.display = 'none';
+            document.getElementById('paymentStepPreset').selectedIndex = 0;
             
             if (mode === 'add') {
                 title.textContent = 'Tambah Langkah Baru';
@@ -5541,14 +5654,68 @@ $cacheKiller = time() . mt_rand(1000, 9999);
         function loadPaymentStepData(id) {
             const data = paymentStepsData[id];
             if (data) {
-                document.getElementById('paymentStepTitle').value = data.title;
-                document.getElementById('paymentStepDescription').value = data.description;
-                document.getElementById('paymentStepSortOrder').value = data.sort_order;
+                // Try to find matching preset by title
+                const select = document.getElementById('paymentStepPreset');
+                let found = false;
                 
-                if (data.icon) {
-                    document.getElementById('currentPaymentIcon').src = data.icon;
-                    document.getElementById('currentPaymentIconPreview').style.display = 'block';
+                for (let i = 0; i < select.options.length; i++) {
+                    if (select.options[i].getAttribute('data-title') === data.title) {
+                        select.selectedIndex = i;
+                        found = true;
+                        break;
+                    }
                 }
+                
+                if (!found) {
+                    select.value = "";
+                }
+                
+                // Trigger preview update
+                updatePaymentStepPreview();
+
+                // Restore description (allow override)
+                if (data.description) {
+                    document.getElementById('paymentStepDescription').value = data.description;
+                    document.getElementById('paymentPreviewDesc').textContent = data.description;
+                }
+
+                // Handle legacy or custom data without preset? 
+                // For now assuming we migrate to presets or just show title match.
+                
+                document.getElementById('paymentStepSortOrder').value = data.sort_order;
+            }
+        }
+
+        // Add listener for real-time description preview update
+        document.getElementById('paymentStepDescription').addEventListener('input', function() {
+            document.getElementById('paymentPreviewDesc').textContent = this.value;
+        });
+
+        // New function to update preview based on selection
+        function updatePaymentStepPreview() {
+            const select = document.getElementById('paymentStepPreset');
+            const option = select.options[select.selectedIndex];
+            
+            if (option && option.value) {
+                const title = option.getAttribute('data-title');
+                const desc = option.getAttribute('data-desc');
+                const iconClass = option.getAttribute('data-icon');
+                
+                // Update Description Field (only if empty or we force it? Let's populate it)
+                // Behavior: when changing preset, update default description.
+                document.getElementById('paymentStepDescription').value = desc;
+                
+                // Update Preview logic
+                document.getElementById('paymentPreviewTitle').textContent = title;
+                document.getElementById('paymentPreviewDesc').textContent = desc;
+                // Icons in payment settings use 'icon' prefix, e.g. 'icon-whatsapp'
+                // But check 'icon-lg' helper class usage in 'Why Choose Us'. I'll add 'icon' class for safety.
+                // Assuming standard icon font set (RemixIcon or FontAwesome via icon maps)
+                document.getElementById('paymentPreviewIcon').className = 'icon icon-lg ' + iconClass;
+                
+                document.getElementById('paymentPresetPreview').style.display = 'flex';
+            } else {
+                document.getElementById('paymentPresetPreview').style.display = 'none';
             }
         }
 
