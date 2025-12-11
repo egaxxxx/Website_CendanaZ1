@@ -69,13 +69,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // WHY CHOOSE US
     if ($module === 'why_choose') {
         if ($action === 'create') {
-            $icon_file = $_FILES['icon'] ?? null;
-            if (createWhyChooseUs($_POST, $icon_file)) {
-                $_SESSION['admin_message'] = 'Poin "Mengapa Memilih Kami" berhasil ditambahkan!';
-                $_SESSION['admin_message_type'] = 'success';
-            } else {
-                $_SESSION['admin_message'] = 'Gagal menambahkan poin!';
+            // Cek jumlah data terlebih dahulu
+            $count_sql = "SELECT COUNT(*) as total FROM why_choose_us";
+            $count_result = $conn->query($count_sql);
+            $count_row = $count_result->fetch_assoc();
+            
+            if ($count_row['total'] >= 4) {
+                $_SESSION['admin_message'] = 'Maksimal hanya 4 poin "Mengapa Memilih Kami" yang diperbolehkan!';
                 $_SESSION['admin_message_type'] = 'error';
+            } else {
+                $icon_file = $_FILES['icon'] ?? null;
+                $result = createWhyChooseUs($_POST, $icon_file);
+                
+                if ($result) {
+                    $_SESSION['admin_message'] = 'Poin "Mengapa Memilih Kami" berhasil ditambahkan!';
+                    $_SESSION['admin_message_type'] = 'success';
+                } else {
+                    $_SESSION['admin_message'] = 'Gagal menambahkan poin! Judul mungkin sudah ada atau terjadi kesalahan.';
+                    $_SESSION['admin_message_type'] = 'error';
+                }
             }
             header('Location: admin.php#konten-beranda');
             exit();
@@ -86,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['admin_message'] = 'Poin berhasil diperbarui!';
                 $_SESSION['admin_message_type'] = 'success';
             } else {
-                $_SESSION['admin_message'] = 'Gagal memperbarui poin!';
+                $_SESSION['admin_message'] = 'Gagal memperbarui poin! Judul mungkin sudah digunakan oleh poin lain.';
                 $_SESSION['admin_message_type'] = 'error';
             }
             header('Location: admin.php#konten-beranda');
@@ -663,6 +675,7 @@ $cacheKiller = time() . mt_rand(1000, 9999);
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+    <link rel="stylesheet" href="icons.css">
     <link rel="stylesheet" href="admin-enhancements.css">
     <script src="config.js"></script>
     
@@ -2063,13 +2076,291 @@ $cacheKiller = time() . mt_rand(1000, 9999);
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.75);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
             z-index: 9999;
+            /* Grid layout for foolproof centering that handles overflow */
+            display: grid;
+            place-items: center; /* Center horizontally/vertically */
+            overflow-y: auto; /* Allow scrolling the overlay */
+            padding: 20px;
+            box-sizing: border-box; /* Include padding in dimensions */
+        }
+        
+        /* Custom Notification Modal */
+        .notification-modal {
+            background: var(--admin-bg-primary);
+            border-radius: 16px;
+            padding: 0;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: notifSlideIn 0.3s ease-out;
+            border: 2px solid var(--admin-border);
+        }
+        
+        @keyframes notifSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .notification-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--admin-border);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .notification-header.success {
+            background: linear-gradient(135deg, rgba(46, 213, 115, 0.15), rgba(72, 219, 251, 0.15));
+            border-bottom-color: rgba(46, 213, 115, 0.3);
+        }
+        
+        .notification-header.error {
+            background: linear-gradient(135deg, rgba(255, 71, 87, 0.15), rgba(255, 107, 107, 0.15));
+            border-bottom-color: rgba(255, 71, 87, 0.3);
+        }
+        
+        .notification-header.warning {
+            background: linear-gradient(135deg, rgba(255, 168, 1, 0.15), rgba(252, 196, 25, 0.15));
+            border-bottom-color: rgba(255, 168, 1, 0.3);
+        }
+        
+        .notification-header.info {
+            background: linear-gradient(135deg, rgba(72, 219, 251, 0.15), rgba(118, 75, 162, 0.15));
+            border-bottom-color: rgba(72, 219, 251, 0.3);
+        }
+        
+        .notification-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(8px);
-            animation: fadeIn 0.3s ease;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .notification-icon.success {
+            background: #2ed573;
+            color: white;
+        }
+        
+        .notification-icon.error {
+            background: #ff4757;
+            color: white;
+        }
+        
+        .notification-icon.warning {
+            background: #ffa801;
+            color: white;
+        }
+        
+        .notification-icon.info {
+            background: #48dbfb;
+            color: white;
+        }
+        
+        .notification-body {
+            padding: 1.5rem;
+        }
+        
+        .notification-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--admin-text-primary);
+            margin: 0 0 0.5rem 0;
+        }
+        
+        .notification-message {
+            color: var(--admin-text-secondary);
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        .notification-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--admin-border);
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+        }
+        
+        /* Blur effect untuk background saat modal terbuka */
+        .modal-blur {
+            filter: blur(5px);
+            transition: filter 0.3s ease;
+            pointer-events: none;
+        }
+        
+        /* Toast Notification Style */
+        .toast-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 99999;
+            min-width: 320px;
+            max-width: 400px;
+            background: var(--admin-bg-primary);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--admin-border);
+            animation: toastSlideIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            overflow: hidden;
+        }
+        
+        @keyframes toastSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(400px) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+        }
+        
+        @keyframes toastSlideOut {
+            from {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(400px) scale(0.8);
+            }
+        }
+        
+        .toast-notification.hiding {
+            animation: toastSlideOut 0.3s ease-in forwards;
+        }
+        
+        .toast-header {
+            padding: 1rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            border-bottom: 1px solid var(--admin-border);
+        }
+        
+        .toast-header.success {
+            background: linear-gradient(135deg, rgba(46, 213, 115, 0.15), rgba(72, 219, 251, 0.15));
+            border-bottom-color: rgba(46, 213, 115, 0.3);
+        }
+        
+        .toast-header.error {
+            background: linear-gradient(135deg, rgba(255, 71, 87, 0.15), rgba(255, 107, 107, 0.15));
+            border-bottom-color: rgba(255, 71, 87, 0.3);
+        }
+        
+        .toast-header.warning {
+            background: linear-gradient(135deg, rgba(255, 168, 1, 0.15), rgba(252, 196, 25, 0.15));
+            border-bottom-color: rgba(255, 168, 1, 0.3);
+        }
+        
+        .toast-header.info {
+            background: linear-gradient(135deg, rgba(72, 219, 251, 0.15), rgba(118, 75, 162, 0.15));
+            border-bottom-color: rgba(72, 219, 251, 0.3);
+        }
+        
+        .toast-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            flex-shrink: 0;
+        }
+        
+        .toast-icon.success {
+            background: #2ed573;
+            color: white;
+        }
+        
+        .toast-icon.error {
+            background: #ff4757;
+            color: white;
+        }
+        
+        .toast-icon.warning {
+            background: #ffa801;
+            color: white;
+        }
+        
+        .toast-icon.info {
+            background: #48dbfb;
+            color: white;
+        }
+        
+        .toast-title {
+            flex: 1;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--admin-text-primary);
+            margin: 0;
+        }
+        
+        .toast-close {
+            background: transparent;
+            border: none;
+            color: var(--admin-text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        
+        .toast-close:hover {
+            background: var(--admin-bg-secondary);
+            color: var(--admin-text-primary);
+        }
+        
+        .toast-body {
+            padding: 1rem 1.25rem;
+        }
+        
+        .toast-message {
+            color: var(--admin-text-secondary);
+            line-height: 1.5;
+            margin: 0;
+            font-size: 0.9rem;
+        }
+        
+        .toast-progress {
+            height: 4px;
+            background: var(--admin-bg-secondary);
+            overflow: hidden;
+        }
+        
+        .toast-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--admin-accent-peach), var(--admin-accent-brown));
+            animation: toastProgress 5s linear forwards;
+        }
+        
+        @keyframes toastProgress {
+            from {
+                width: 100%;
+            }
+            to {
+                width: 0%;
+            }
         }
 
         @keyframes fadeIn {
@@ -2080,14 +2371,28 @@ $cacheKiller = time() . mt_rand(1000, 9999);
         .modal-content {
             background: var(--admin-bg-secondary);
             border-radius: 24px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 90vh;
+            width: 100%;
+            max-width: 550px;
+            max-height: 85vh;
             overflow-y: auto;
-            box-shadow: var(--admin-shadow-lg);
-            border: 1px solid var(--admin-border);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            border: 2px solid var(--admin-border);
             position: relative;
             margin: auto;
+            display: flex;
+            flex-direction: column;
+            animation: modalSlideUp 0.3s ease-out;
+        }
+        
+        @keyframes modalSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         .modal-header {
@@ -2456,6 +2761,85 @@ $cacheKiller = time() . mt_rand(1000, 9999);
             }
         }
     </style>
+    <script>
+        // Enhanced Navigation Functions with Checkpoint System
+        function showSection(sectionId) {
+            console.log("showSection called for:", sectionId);
+            
+            try {
+                // Hide all sections
+                const sections = document.querySelectorAll('.content-section');
+                
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                    section.style.display = 'none';
+                });
+                
+                // Deactivate all nav links
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                
+                // Show target section
+                const targetId = sectionId + '-section';
+                const targetSection = document.getElementById(targetId);
+                
+                if (targetSection) {
+                    targetSection.style.display = 'block';
+                    setTimeout(() => {
+                        targetSection.classList.add('active');
+                    }, 10);
+                } else {
+                    console.error("Target section not found:", targetId);
+                }
+                
+                // Activate current nav link
+                const navLink = document.querySelector(`.nav-link[href="#${sectionId}"]`) || 
+                               document.querySelector(`.nav-link[onclick*="'${sectionId}'"]`);
+                
+                if (navLink) {
+                    navLink.classList.add('active');
+                }
+                
+                // Update URL hash untuk checkpoint (tanpa reload page)
+                if (window.location.hash !== '#' + sectionId) {
+                    history.replaceState(null, null, '#' + sectionId);
+                }
+                
+                // Close sidebar on mobile
+                const sidebar = document.querySelector('.sidebar');
+                if (sidebar && window.innerWidth <= 768) {
+                    sidebar.classList.remove('active');
+                }
+                
+            } catch (e) {
+                console.error("Error in showSection:", e);
+            }
+        }
+        
+        // Auto-restore tab dari URL hash saat page load
+        function restoreActiveTab() {
+            const hash = window.location.hash.substring(1); // Remove # symbol
+            
+            if (hash) {
+                console.log("Restoring tab from hash:", hash);
+                // Gunakan setTimeout untuk memastikan DOM sudah ready
+                setTimeout(() => {
+                    showSection(hash);
+                }, 100);
+            } else {
+                // Default ke dashboard jika tidak ada hash
+                showSection('dashboard');
+            }
+        }
+        
+        // Initialize saat DOM ready
+        document.addEventListener('DOMContentLoaded', restoreActiveTab);
+        
+        // Expose to window explicitly
+        window.showSection = showSection;
+        window.restoreActiveTab = restoreActiveTab;
+    </script>
 </head>
 <body class="admin-body">
     <!-- Notifikasi Flash Message -->
@@ -2672,7 +3056,7 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                                         <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
                                             <img src="uploads/<?= htmlspecialchars($homepageSettings['hero_background']) ?>" alt="Current" style="max-width: 150px; border-radius: 4px; border: 1px solid var(--admin-border);">
                                             <button type="button" class="btn-danger" style="padding: 6px 12px; font-size: 0.85rem;"
-                                                    onclick="if(confirm('Yakin hapus background?')) window.location.href='?action=delete_background&module=homepage&field=hero_background'">
+                                                    onclick="showConfirm(event, 'Hapus Background Hero?', 'Background gambar hero beranda akan dihapus secara permanen. Tindakan ini tidak dapat dibatalkan.', function() { window.location.href='?action=delete_background&module=homepage&field=hero_background'; })">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </div>
@@ -2772,7 +3156,7 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                                             <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
                                                 <img src="uploads/<?= htmlspecialchars($homepageSettings['pemesanan_hero_background']) ?>" style="max-width: 100px; border-radius: 4px;">
                                                 <button type="button" class="btn-danger" style="padding: 4px 8px; font-size: 0.75rem;" 
-                                                        onclick="if(confirm('Yakin hapus?')) window.location.href='?action=delete_background&module=homepage&field=pemesanan_hero_background'">
+                                                        onclick="showConfirm(event, 'Hapus Background Pemesanan?', 'Background gambar hero halaman pemesanan akan dihapus secara permanen.', function() { window.location.href='?action=delete_background&module=homepage&field=pemesanan_hero_background'; })">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </div>
@@ -2806,7 +3190,7 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                                             <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
                                                 <img src="uploads/<?= htmlspecialchars($homepageSettings['galeri_hero_background']) ?>" style="max-width: 100px; border-radius: 4px;">
                                                 <button type="button" class="btn-danger" style="padding: 4px 8px; font-size: 0.75rem;" 
-                                                        onclick="if(confirm('Yakin hapus?')) window.location.href='?action=delete_background&module=homepage&field=galeri_hero_background'">
+                                                        onclick="showConfirm(event, 'Hapus Background Galeri?', 'Background gambar hero halaman galeri akan dihapus secara permanen.', function() { window.location.href='?action=delete_background&module=homepage&field=galeri_hero_background'; })">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </div>
@@ -2840,7 +3224,7 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                                             <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
                                                 <img src="uploads/<?= htmlspecialchars($homepageSettings['faq_hero_background']) ?>" style="max-width: 100px; border-radius: 4px;">
                                                 <button type="button" class="btn-danger" style="padding: 4px 8px; font-size: 0.75rem;" 
-                                                        onclick="if(confirm('Yakin hapus?')) window.location.href='?action=delete_background&module=homepage&field=faq_hero_background'">
+                                                        onclick="showConfirm(event, 'Hapus Background FAQ?', 'Background gambar hero halaman FAQ akan dihapus secara permanen.', function() { window.location.href='?action=delete_background&module=homepage&field=faq_hero_background'; })">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </div>
@@ -2874,7 +3258,7 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                                             <div style="display: flex; align-items: center; gap: 8px; margin-top: 8px;">
                                                 <img src="uploads/<?= htmlspecialchars($homepageSettings['kontak_hero_background']) ?>" style="max-width: 100px; border-radius: 4px;">
                                                 <button type="button" class="btn-danger" style="padding: 4px 8px; font-size: 0.75rem;" 
-                                                        onclick="if(confirm('Yakin hapus?')) window.location.href='?action=delete_background&module=homepage&field=kontak_hero_background'">
+                                                        onclick="showConfirm(event, 'Hapus Background Kontak?', 'Background gambar hero halaman kontak akan dihapus secara permanen.', function() { window.location.href='?action=delete_background&module=homepage&field=kontak_hero_background'; })">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </div>
@@ -3045,7 +3429,7 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <form method="POST" style="display: inline;" 
-                                              onsubmit="return confirm('Yakin ingin menghapus banner ini?')">
+                                              onsubmit="return showConfirm(event, 'Hapus Banner Jelajahi Dunia?', 'Banner ini akan dihapus secara permanen dari halaman beranda. Tindakan ini tidak dapat dibatalkan.')">
                                             <input type="hidden" name="action" value="delete">
                                             <input type="hidden" name="module" value="banner">
                                             <input type="hidden" name="id" value="<?= $banner['id'] ?>">
@@ -3186,7 +3570,7 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                                             <button class="btn btn-small btn-primary" onclick="editServiceCard(<?= $item['id'] ?>)" title="Edit" style="padding: 0.5rem 1rem;">
                                                 <i class="fas fa-edit"></i>
                                             </button>
-                                            <form method="POST" style="display: inline; margin: 0;" onsubmit="return confirm('Yakin ingin menghapus card ini?')">
+                                            <form method="POST" style="display: inline; margin: 0;" onsubmit="return showConfirm(event, 'Hapus Card Layanan?', 'Card layanan ini akan dihapus secara permanen dari halaman beranda. Tindakan ini tidak dapat dibatalkan.')">
                                                 <input type="hidden" name="action" value="delete">
                                                 <input type="hidden" name="module" value="service_cards">
                                                 <input type="hidden" name="id" value="<?= $item['id'] ?>">
@@ -3294,9 +3678,21 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                 <div class="section-card">
                     <div class="section-header">
                         <h2>Mengapa Memilih Kami</h2>
-                        <button class="btn btn-primary" onclick="openWhyChooseModal('add')">
+                        <button class="btn btn-primary" onclick="openWhyChooseModal('add')" 
+                            <?php if (count($whyChooseUs) >= 4): ?>disabled title="Maksimal 4 poin sudah tercapai"<?php endif; ?>>
                             <i class="fas fa-plus"></i> Tambah Poin Baru
                         </button>
+                    </div>
+                    
+                    <!-- Info box -->
+                    <div style="background: linear-gradient(135deg, #FBEFE6 0%, #F5E5D8 100%); color: #2A1F1A; padding: 1rem 1.5rem; border-radius: 12px; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border: 2px solid #D6A889;">
+                        <div style="font-size: 1.5rem; color: #8B6F47;">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <strong style="display: block; margin-bottom: 0.25rem; color: #2A1F1A; font-size: 1rem;">Batasan Data: Maksimal 4 Poin</strong>
+                            <small style="color: #4A3628; line-height: 1.5;">Saat ini: <strong style="color: #8B6F47;"><?= count($whyChooseUs) ?>/4</strong> poin telah digunakan. <?php if (count($whyChooseUs) >= 4): ?>Hapus salah satu poin untuk menambah yang baru.<?php else: ?>Anda dapat menambahkan <strong style="color: #8B6F47;"><?= 4 - count($whyChooseUs) ?></strong> poin lagi.<?php endif; ?></small>
+                        </div>
                     </div>
 
                     <!-- List of Items dengan tabel yang lebih rapi -->
@@ -3325,8 +3721,16 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                                 <?php foreach ($whyChooseUs as $item): ?>
                                 <tr style="border-bottom: 1px solid var(--admin-border); transition: background 0.2s;" onmouseover="this.style.background='var(--admin-bg-secondary)'" onmouseout="this.style.background='transparent'">
                                     <td style="padding: 1rem; text-align: center;">
-                                        <?php if ($item['icon'] && file_exists($item['icon'])): ?>
-                                        <img src="<?= htmlspecialchars($item['icon']) ?>?v=<?= time() ?>" alt="<?= htmlspecialchars($item['title']) ?>" 
+                                        <?php 
+                                        $icon = $item['icon'];
+                                        if ($icon && substr($icon, 0, 6) === 'class:'): 
+                                            $iconClass = substr($icon, 6);
+                                        ?>
+                                        <div style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; background: var(--admin-bg-secondary); border-radius: 8px; margin: 0 auto; color: var(--admin-accent-peach); font-size: 1.5rem;">
+                                            <i class="icon <?= htmlspecialchars($iconClass) ?>"></i>
+                                        </div>
+                                        <?php elseif ($icon && file_exists($icon)): ?>
+                                        <img src="<?= htmlspecialchars($icon) ?>?v=<?= time() ?>" alt="<?= htmlspecialchars($item['title']) ?>" 
                                              style="width: 60px; height: 60px; object-fit: contain; border-radius: 8px; background: var(--admin-bg-secondary); padding: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                                         <?php else: ?>
                                         <div style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; background: var(--admin-bg-secondary); border-radius: 8px; margin: 0 auto;">
@@ -3335,7 +3739,12 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                                         <?php endif; ?>
                                     </td>
                                     <td style="padding: 1rem;">
-                                        <strong style="color: var(--admin-text-primary); font-size: 1rem;"><?= htmlspecialchars($item['title']) ?></strong>
+                                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                            <strong style="color: var(--admin-text-primary); font-size: 1rem; flex: 1;"><?= htmlspecialchars($item['title']) ?></strong>
+                                            <button class="btn btn-small btn-primary" onclick="editWhyChoose(<?= $item['id'] ?>)" title="Edit" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </button>
+                                        </div>
                                     </td>
                                     <td style="padding: 1rem; color: var(--admin-text-secondary); line-height: 1.5;">
                                         <?= htmlspecialchars(substr($item['description'], 0, 120)) ?><?= strlen($item['description']) > 120 ? '...' : '' ?>
@@ -3352,10 +3761,7 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                                     </td>
                                     <td style="padding: 1rem;">
                                         <div style="display: flex; gap: 8px; justify-content: center;">
-                                            <button class="btn btn-small btn-primary" onclick="editWhyChoose(<?= $item['id'] ?>)" title="Edit" style="padding: 0.5rem 1rem;">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
-                                            <form method="POST" style="display: inline; margin: 0;" onsubmit="return confirm('Yakin ingin menghapus poin ini?')">
+                                            <form method="POST" style="display: inline; margin: 0;" onsubmit="return showConfirm(event, 'Hapus Poin Ini?', 'Poin \"' + '<?= htmlspecialchars($item['title']) ?>' + '\" akan dihapus secara permanen. Tindakan ini tidak dapat dibatalkan.')">
                                                 <input type="hidden" name="action" value="delete">
                                                 <input type="hidden" name="module" value="why_choose">
                                                 <input type="hidden" name="id" value="<?= $item['id'] ?>">
@@ -3376,47 +3782,69 @@ $cacheKiller = time() . mt_rand(1000, 9999);
 
             <!-- Modal Popup untuk Add/Edit -->
             <div id="whyChooseModal" class="modal-overlay" style="display: none;">
-                <div class="modal-content" style="max-width: 600px;">
-                    <div class="modal-header">
-                        <h3 id="whyChooseModalTitle">Tambah Poin Baru</h3>
+                <div class="modal-content" style="max-width: 520px;">
+                    <div class="modal-header" style="padding: 1.25rem 1.5rem;">
+                        <h3 id="whyChooseModalTitle" style="margin: 0; font-size: 1.25rem;">Tambah Poin Baru</h3>
                         <button class="modal-close" onclick="closeWhyChooseModal()">&times;</button>
                     </div>
-                    <form id="whyChooseForm" method="POST" enctype="multipart/form-data" style="padding: 1.5rem;">
+                    <form id="whyChooseForm" method="POST" enctype="multipart/form-data" style="padding: 1.25rem 1.5rem;" onsubmit="return validateWhyChooseForm()">
                         <input type="hidden" name="action" id="whyChooseAction" value="create">
                         <input type="hidden" name="module" value="why_choose">
                         <input type="hidden" name="id" id="whyChooseId">
                         
-                        <div class="form-group">
-                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Icon <span style="color: #e74c3c; font-size: 0.9rem;">(Opsional)</span></label>
-                            <div id="currentIconPreview" style="margin-bottom: 1rem; display: none;">
-                                <img id="currentIcon" src="" alt="Current Icon" style="width: 80px; height: 80px; object-fit: contain; border-radius: 8px; background: var(--admin-bg-secondary); padding: 8px;">
-                                <p style="margin: 0.5rem 0; font-size: 0.85rem; color: var(--admin-text-muted);">Icon saat ini</p>
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label style="display: block; margin-bottom: 0.4rem; font-weight: 600; font-size: 0.95rem;">Pilih Poin <span style="color: #e74c3c;">*</span></label>
+                            <select name="preset_key" id="whyChoosePreset" class="form-control" required style="width: 100%; padding: 0.65rem; border: 1px solid var(--admin-border); border-radius: 8px; font-size: 0.95rem; background: var(--admin-bg-secondary); color: var(--admin-text-primary);" onchange="updateWhyChoosePreview()">
+                                <option value="" disabled selected>-- Pilih Keunggulan --</option>
+                                <?php 
+                                $presets = getWhyChoosePresets();
+                                foreach ($presets as $key => $preset): 
+                                ?>
+                                <option value="<?= $key ?>" 
+                                    data-title="<?= htmlspecialchars($preset['title']) ?>"
+                                    data-desc="<?= htmlspecialchars($preset['description']) ?>"
+                                    data-icon="<?= htmlspecialchars($preset['icon_class']) ?>">
+                                    <?= htmlspecialchars($preset['title']) ?>
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <!-- Preview Section - More Compact -->
+                        <div id="presetPreview" style="margin-bottom: 1rem; padding: 0.85rem; background: var(--admin-bg-secondary); border-radius: 10px; display: none; align-items: center; gap: 0.85rem; border: 1px dashed var(--admin-border);">
+                            <div style="background: var(--admin-accent-peach); width: 42px; height: 42px; min-width: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem; flex-shrink: 0;">
+                                <i id="previewIcon" class=""></i>
                             </div>
-                            <input type="file" name="icon" id="whyChooseIcon" accept="image/*" style="width: 100%; padding: 0.75rem; border: 2px dashed var(--admin-border); border-radius: 8px; background: var(--admin-bg-secondary);">
-                            <small style="color: var(--admin-text-muted); display: block; margin-top: 0.5rem;">Format: JPG, PNG, SVG • Maksimal 2MB</small>
+                            <div style="flex: 1;">
+                                <h4 id="previewTitle" style="margin: 0 0 0.2rem 0; color: var(--admin-text-primary); font-size: 0.95rem;"></h4>
+                                <p id="previewDesc" style="margin: 0; font-size: 0.82rem; color: var(--admin-text-secondary); line-height: 1.35;"></p>
+                            </div>
                         </div>
                         
-                        <div class="form-group">
-                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Judul Poin <span style="color: #e74c3c;">*</span></label>
-                            <input type="text" name="title" id="whyChooseTitle" required placeholder="Contoh: Legal & Terpercaya" style="width: 100%; padding: 0.75rem; border: 1px solid var(--admin-border); border-radius: 8px; font-size: 1rem;">
+                        <div class="form-group" style="margin-bottom: 1rem;">
+                            <label style="display: block; margin-bottom: 0.4rem; font-weight: 600; font-size: 0.95rem;">Deskripsi (Otomatis)</label>
+                            <textarea name="description" id="whyChooseDescription" rows="2" style="width: 100%; padding: 0.65rem; border: 1px solid var(--admin-border); border-radius: 8px; font-size: 0.88rem; resize: none; background: var(--admin-bg-secondary); color: var(--admin-text-primary);"></textarea>
+                            <small style="color: var(--admin-text-muted); font-size: 0.8rem;">Deskripsi terisi otomatis, dapat diubah.</small>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 1.25rem;">
+                            <label style="display: block; margin-bottom: 0.4rem; font-weight: 600; font-size: 0.95rem;">Urutan Tampil <span style="color: #e74c3c;">*</span></label>
+                            <select name="sort_order" id="whyChooseSortOrder" required class="form-control" style="width: 100%; padding: 0.65rem; border: 1px solid var(--admin-border); border-radius: 8px; font-size: 0.95rem; background: var(--admin-bg-secondary); color: var(--admin-text-primary);">
+                                <option value="1">1 - Urutan Pertama</option>
+                                <option value="2">2 - Urutan Kedua</option>
+                                <option value="3">3 - Urutan Ketiga</option>
+                                <option value="4">4 - Urutan Keempat</option>
+                            </select>
+                            <small style="color: var(--admin-text-muted); display: block; margin-top: 0.35rem; font-size: 0.8rem; line-height: 1.4;">
+                                💡 Urutan 1 = posisi pertama (paling kiri/atas)
+                            </small>
                         </div>
                         
-                        <div class="form-group">
-                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Deskripsi <span style="color: #e74c3c;">*</span></label>
-                            <textarea name="description" id="whyChooseDescription" required rows="4" placeholder="Jelaskan keunggulan ini secara detail..." style="width: 100%; padding: 0.75rem; border: 1px solid var(--admin-border); border-radius: 8px; font-size: 1rem; resize: vertical;"></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Urutan Tampil</label>
-                            <input type="number" name="sort_order" id="whyChooseSortOrder" value="0" min="0" style="width: 100%; padding: 0.75rem; border: 1px solid var(--admin-border); border-radius: 8px; font-size: 1rem;">
-                            <small style="color: var(--admin-text-muted); display: block; margin-top: 0.5rem;">Semakin kecil angka, semakin atas urutannya</small>
-                        </div>
-                        
-                        <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                            <button type="submit" class="btn btn-primary" style="flex: 1; padding: 0.875rem; font-size: 1rem;">
+                        <div style="display: flex; gap: 0.75rem; padding-top: 0.5rem; border-top: 1px solid var(--admin-border);">
+                            <button type="submit" class="btn btn-primary" style="flex: 1; padding: 0.75rem; font-size: 0.95rem;" onclick="return validateWhyChooseForm()">
                                 <i class="fas fa-save"></i> Simpan
                             </button>
-                            <button type="button" class="btn btn-secondary" onclick="closeWhyChooseModal()" style="flex: 1; padding: 0.875rem; font-size: 1rem;">
+                            <button type="button" class="btn btn-secondary" onclick="closeWhyChooseModal()" style="flex: 1; padding: 0.75rem; font-size: 0.95rem;">
                                 <i class="fas fa-times"></i> Batal
                             </button>
                         </div>
@@ -3460,13 +3888,16 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                                 <?php foreach ($paymentSteps as $item): ?>
                                 <tr style="border-bottom: 1px solid var(--admin-border); transition: background 0.2s;" onmouseover="this.style.background='var(--admin-bg-secondary)'" onmouseout="this.style.background='transparent'">
                                     <td style="padding: 1rem; text-align: center;">
-                                        <?php if ($item['icon'] && file_exists($item['icon'])): ?>
+                                        <?php if ($item['icon'] && (strpos($item['icon'], 'class:') === 0 || strpos($item['icon'], 'fa-') !== false || strpos($item['icon'], 'icon-') !== false)): ?>
+                                            <?php 
+                                            $iconClass = strpos($item['icon'], 'class:') === 0 ? substr($item['icon'], 6) : $item['icon'];
+                                            ?>
+                                            <i class="<?= htmlspecialchars($iconClass) ?>" style="font-size: 2rem; color: #D4956E;"></i>
+                                        <?php elseif ($item['icon'] && file_exists($item['icon'])): ?>
                                         <img src="<?= htmlspecialchars($item['icon']) ?>?v=<?= time() ?>" alt="<?= htmlspecialchars($item['title']) ?>" 
-                                             style="width: 60px; height: 60px; object-fit: contain; border-radius: 8px; background: var(--admin-bg-secondary); padding: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                             style="width: 40px; height: 40px; object-fit: contain;">
                                         <?php else: ?>
-                                        <div style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; background: var(--admin-bg-secondary); border-radius: 8px; margin: 0 auto;">
-                                            <i class="fas fa-image" style="font-size: 1.5rem; color: var(--admin-text-muted); opacity: 0.5;"></i>
-                                        </div>
+                                            <i class="fas fa-image" style="font-size: 2rem; color: var(--admin-text-muted); opacity: 0.3;"></i>
                                         <?php endif; ?>
                                     </td>
                                     <td style="padding: 1rem;">
@@ -3490,7 +3921,7 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                                             <button class="btn btn-small btn-primary" onclick="editPaymentStep(<?= $item['id'] ?>)" title="Edit" style="padding: 0.5rem 1rem;">
                                                 <i class="fas fa-edit"></i>
                                             </button>
-                                            <form method="POST" style="display: inline; margin: 0;" onsubmit="return confirm('Yakin ingin menghapus langkah ini?')">
+                                            <form method="POST" style="display: inline; margin: 0;" onsubmit="return showConfirm(event, 'Hapus Langkah Pembayaran?', 'Langkah \"<?= htmlspecialchars($item['title']) ?>\" akan dihapus secara permanen. Tindakan ini tidak dapat dibatalkan.')">
                                                 <input type="hidden" name="action" value="delete">
                                                 <input type="hidden" name="module" value="payment_steps">
                                                 <input type="hidden" name="id" value="<?= $item['id'] ?>">
@@ -3522,19 +3953,37 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                         <input type="hidden" name="id" id="paymentStepId">
                         
                         <div class="form-group">
-                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Icon <span style="color: #e74c3c; font-size: 0.9rem;">(Opsional)</span></label>
-                            <div id="currentPaymentIconPreview" style="margin-bottom: 1rem; display: none;">
-                                <img id="currentPaymentIcon" src="" alt="Current Icon" style="width: 80px; height: 80px; object-fit: contain; border-radius: 8px; background: var(--admin-bg-secondary); padding: 8px;">
-                                <p style="margin: 0.5rem 0; font-size: 0.85rem; color: var(--admin-text-muted);">Icon saat ini</p>
-                            </div>
-                            <input type="file" name="icon" id="paymentStepIcon" accept="image/*" style="width: 100%; padding: 0.75rem; border: 2px dashed var(--admin-border); border-radius: 8px; background: var(--admin-bg-secondary);">
-                            <small style="color: var(--admin-text-muted); display: block; margin-top: 0.5rem;">Format: JPG, PNG, SVG • Maksimal 2MB</small>
+                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Pilih Langkah Pembayaran <span style="color: #e74c3c;">*</span></label>
+                            <select name="preset_key" id="paymentStepPreset" class="form-control" required style="width: 100%; padding: 0.75rem; border: 1px solid var(--admin-border); border-radius: 8px; font-size: 1rem; background: var(--admin-bg-secondary); color: var(--admin-text-primary);" onchange="updatePaymentStepPreview()">
+                                <option value="" disabled selected>-- Pilih Langkah --</option>
+                                <?php 
+                                $paymentPresets = getPaymentPresets();
+                                foreach ($paymentPresets as $key => $preset): 
+                                ?>
+                                <option value="<?= $key ?>" 
+                                    data-title="<?= htmlspecialchars($preset['title']) ?>"
+                                    data-desc="<?= htmlspecialchars($preset['description']) ?>"
+                                    data-icon="<?= htmlspecialchars($preset['icon_class']) ?>">
+                                    <?= htmlspecialchars($preset['title']) ?>
+                                </option>
+                                <?php endforeach; ?>
+                            </select>
+                            <small style="color: var(--admin-text-muted); display: block; margin-top: 0.5rem;">Judul dan Icon akan otomatis disesuaikan.</small>
                         </div>
                         
-                        <div class="form-group">
-                            <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Judul Langkah <span style="color: #e74c3c;">*</span></label>
-                            <input type="text" name="title" id="paymentStepTitle" required placeholder="Contoh: Pilih Layanan" style="width: 100%; padding: 0.75rem; border: 1px solid var(--admin-border); border-radius: 8px; font-size: 1rem;">
+                        <!-- Preview Section -->
+                        <div id="paymentPresetPreview" style="margin-bottom: 1.5rem; padding: 1rem; background: var(--admin-bg-secondary); border-radius: 12px; display: none; align-items: center; gap: 1rem; border: 1px dashed var(--admin-border);">
+                            <div style="background: var(--admin-accent-peach); width: 50px; height: 50px; min-width: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; flex-shrink: 0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                                <i id="paymentPreviewIcon" class=""></i>
+                            </div>
+                            <div style="flex: 1;">
+                                <h4 id="paymentPreviewTitle" style="margin: 0 0 0.25rem 0; color: var(--admin-text-primary);"></h4>
+                                <p id="paymentPreviewDesc" style="margin: 0; font-size: 0.9rem; color: var(--admin-text-secondary); line-height: 1.4;"></p>
+                            </div>
                         </div>
+
+                        <!-- Hidden Title Field (Optional, handled by backend from preset_key) -->
+                        <!-- But to be safe if backend expects title in $_POST for other logic, we can keep hidden or just rely on backend -->
                         
                         <div class="form-group">
                             <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Deskripsi <span style="color: #e74c3c;">*</span></label>
@@ -3597,9 +4046,9 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                                     <td style="padding: 1rem; text-align: center;">
                                         <?php if ($item['image'] && file_exists($item['image'])): ?>
                                         <img src="<?= htmlspecialchars($item['image']) ?>?v=<?= time() ?>" alt="<?= htmlspecialchars($item['title']) ?>" 
-                                             style="width: 110px; height: 75px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                             style="width: 120px; height: 80px; object-fit: cover; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                                         <?php else: ?>
-                                        <div style="width: 110px; height: 75px; display: flex; align-items: center; justify-content: center; background: var(--admin-bg-secondary); border-radius: 8px; margin: 0 auto;">
+                                        <div style="width: 120px; height: 80px; display: flex; align-items: center; justify-content: center; background: var(--admin-bg-secondary); border-radius: 8px; margin: 0 auto;">
                                             <i class="fas fa-image" style="font-size: 1.5rem; color: var(--admin-text-muted); opacity: 0.5;"></i>
                                         </div>
                                         <?php endif; ?>
@@ -3625,7 +4074,7 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                                             <button class="btn btn-small btn-primary" onclick="editOrderStep(<?= $item['id'] ?>)" title="Edit" style="padding: 0.5rem 1rem;">
                                                 <i class="fas fa-edit"></i>
                                             </button>
-                                            <form method="POST" style="display: inline; margin: 0;" onsubmit="return confirm('Yakin ingin menghapus langkah ini?')">
+                                            <form method="POST" style="display: inline; margin: 0;" onsubmit="return showConfirm(event, 'Hapus Langkah Pemesanan?', 'Langkah \"<?= htmlspecialchars($item['title']) ?>\" akan dihapus secara permanen. Tindakan ini tidak dapat dibatalkan.')">
                                                 <input type="hidden" name="action" value="delete">
                                                 <input type="hidden" name="module" value="order_steps">
                                                 <input type="hidden" name="id" value="<?= $item['id'] ?>">
@@ -3778,7 +4227,7 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                                 </p>
                                 <div style="display: flex; gap: 8px; justify-content: space-between; align-items: center;">
                                     <span style="font-size: 0.8rem; color: var(--admin-text-muted);">Urutan: <?= $item['sort_order'] ?></span>
-                                    <form method="POST" style="display: inline;" onsubmit="return confirm('Yakin ingin menghapus foto ini dari beranda?')">
+                                    <form method="POST" style="display: inline;" onsubmit="return showConfirm(event, 'Hapus Foto dari Beranda?', 'Foto ini akan dihapus dari galeri beranda. Tindakan ini tidak dapat dibatalkan.')">
                                         <input type="hidden" name="action" value="delete">
                                         <input type="hidden" name="module" value="gallery_home">
                                         <input type="hidden" name="id" value="<?= $item['id'] ?>">
@@ -4304,7 +4753,7 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <form method="POST" style="display: inline;" 
-                                              onsubmit="return confirm('Yakin ingin menghapus foto ini?')">
+                                              onsubmit="return showConfirm(event, 'Hapus Foto Galeri?', 'Foto ini akan dihapus secara permanen dari galeri. Tindakan ini tidak dapat dibatalkan.')">
                                             <input type="hidden" name="action" value="delete">
                                             <input type="hidden" name="module" value="gallery">
                                             <input type="hidden" name="id" value="<?= $gallery['id'] ?>">
@@ -4549,7 +4998,7 @@ $cacheKiller = time() . mt_rand(1000, 9999);
                                     <span>Edit</span>
                                 </button>
                                 <form method="POST" style="flex: 1;" 
-                                      onsubmit="return confirm('Yakin ingin menghapus FAQ ini?')">
+                                      onsubmit="return showConfirm(event, 'Hapus Pertanyaan FAQ?', 'Pertanyaan ini akan dihapus secara permanen dari halaman FAQ. Tindakan ini tidak dapat dibatalkan.')">
                                     <input type="hidden" name="action" value="delete">
                                     <input type="hidden" name="module" value="faq">
                                     <input type="hidden" name="id" value="<?= $faq['id'] ?>">
@@ -4580,7 +5029,7 @@ $cacheKiller = time() . mt_rand(1000, 9999);
         // JAVASCRIPT UNTUK ADMIN DASHBOARD
         // ============================================
         
-        /* Enhanced Navigation Functions */
+
         
         // Function untuk toggle sidebar mobile
         function toggleSidebar() {
@@ -5467,13 +5916,23 @@ $cacheKiller = time() . mt_rand(1000, 9999);
             
             // Reset form
             form.reset();
-            document.getElementById('currentIconPreview').style.display = 'none';
+            // Reset preview
+            document.getElementById('presetPreview').style.display = 'none';
+            document.getElementById('whyChoosePreset').selectedIndex = 0; // Reset select
             
             if (mode === 'add') {
+                // Cek jumlah data terlebih dahulu
+                const currentCount = <?= count($whyChooseUs) ?>;
+                if (currentCount >= 4) {
+                    showNotification('warning', 'Batas Maksimal Tercapai', 'Maksimal hanya 4 poin "Mengapa Memilih Kami" yang diperbolehkan. Silakan hapus salah satu poin terlebih dahulu untuk menambah yang baru.');
+                    return;
+                }
+                
                 title.textContent = 'Tambah Poin Baru';
                 action.value = 'create';
                 idField.value = '';
-                document.getElementById('whyChooseSortOrder').value = <?= getMaxSortOrder('why_choose_us') + 1 ?>;
+                // Set default ke urutan 1, user bisa ubah sesuai kebutuhan
+                document.getElementById('whyChooseSortOrder').value = '1';
             } else if (mode === 'edit' && id) {
                 title.textContent = 'Edit Poin';
                 action.value = 'update';
@@ -5485,25 +5944,127 @@ $cacheKiller = time() . mt_rand(1000, 9999);
             
             modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
+            
+            // Tambahkan blur effect ke main content
+            const mainContent = document.querySelector('.admin-container');
+            if (mainContent) {
+                mainContent.classList.add('modal-blur');
+            }
         }
         
         function closeWhyChooseModal() {
             document.getElementById('whyChooseModal').style.display = 'none';
             document.body.style.overflow = 'auto';
+            
+            // Hapus blur effect dari main content
+            const mainContent = document.querySelector('.admin-container');
+            if (mainContent) {
+                mainContent.classList.remove('modal-blur');
+            }
         }
         
         function loadWhyChooseData(id) {
             const data = whyChooseData[id];
             if (data) {
-                document.getElementById('whyChooseTitle').value = data.title;
-                document.getElementById('whyChooseDescription').value = data.description;
-                document.getElementById('whyChooseSortOrder').value = data.sort_order;
+                // Find preset that matches the title
+                const select = document.getElementById('whyChoosePreset');
+                let found = false;
                 
-                if (data.icon) {
-                    document.getElementById('currentIcon').src = data.icon;
-                    document.getElementById('currentIconPreview').style.display = 'block';
+                // Try to find matching preset by title
+                for (let i = 0; i < select.options.length; i++) {
+                    if (select.options[i].getAttribute('data-title') === data.title) {
+                        select.selectedIndex = i;
+                        found = true;
+                        break;
+                    }
+                }
+                
+                // If not found (legacy data), maybe reset selection or select first?
+                // For now, if not found, we don't select anything, user has to pick.
+                if (!found) {
+                    select.value = "";
+                }
+                
+                // Trigger change to update preview (this sets default desc)
+                updateWhyChoosePreview();
+                
+                // RESTORE original description from database
+                if (data.description) {
+                    document.getElementById('whyChooseDescription').value = data.description;
+                    document.getElementById('previewDesc').textContent = data.description;
+                }
+                
+                // Set sort_order, pastikan dalam range 1-4
+                let sortOrder = parseInt(data.sort_order);
+                if (sortOrder < 1) sortOrder = 1;
+                if (sortOrder > 4) sortOrder = 4;
+                document.getElementById('whyChooseSortOrder').value = sortOrder;
+            }
+        }
+        
+        // Add listener for real-time description preview update
+        document.getElementById('whyChooseDescription').addEventListener('input', function() {
+            document.getElementById('previewDesc').textContent = this.value;
+        });
+
+        // New function to update preview based on selection
+        function updateWhyChoosePreview() {
+            const select = document.getElementById('whyChoosePreset');
+            const option = select.options[select.selectedIndex];
+            
+            if (option && option.value) {
+                const title = option.getAttribute('data-title');
+                const desc = option.getAttribute('data-desc');
+                const iconClass = option.getAttribute('data-icon');
+                
+                // Update Description Field
+                document.getElementById('whyChooseDescription').value = desc;
+                
+                // Update Preview
+                document.getElementById('previewTitle').textContent = title;
+                document.getElementById('previewDesc').textContent = desc;
+                document.getElementById('previewIcon').className = 'icon icon-lg ' + iconClass; // Add 'icon' class for font-family
+                
+                document.getElementById('presetPreview').style.display = 'flex';
+            } else {
+                // Don't clear description if just unselecting, or maybe do?
+                // If they unselect, might be manual mode if we supported it. 
+                // But for now unselecting hides preview.
+                // document.getElementById('whyChooseDescription').value = ''; 
+                document.getElementById('presetPreview').style.display = 'none';
+            }
+        }
+        
+        // Validasi form Why Choose Us
+        function validateWhyChooseForm() {
+            const select = document.getElementById('whyChoosePreset');
+            const option = select.options[select.selectedIndex];
+            const action = document.getElementById('whyChooseAction').value;
+            const currentId = document.getElementById('whyChooseId').value;
+            
+            if (!option || !option.value) {
+                showNotification('warning', 'Pilihan Belum Dipilih', 'Silakan pilih salah satu poin keunggulan dari dropdown yang tersedia sebelum menyimpan.');
+                return false;
+            }
+            
+            const selectedTitle = option.getAttribute('data-title');
+            
+            // Cek duplikasi judul di data yang ada
+            const existingTitles = <?= json_encode(array_column($whyChooseUs, 'title', 'id')) ?>;
+            
+            // Jika edit, boleh menggunakan judul yang sama dengan data yang sedang diedit
+            for (const [id, title] of Object.entries(existingTitles)) {
+                if (action === 'update' && id == currentId) {
+                    continue; // Skip data yang sedang diedit
+                }
+                
+                if (title === selectedTitle) {
+                    showNotification('error', 'Judul Sudah Digunakan', 'Judul \"' + selectedTitle + '\" sudah digunakan pada poin lain. Silakan pilih poin yang berbeda untuk menghindari duplikasi.');
+                    return false;
                 }
             }
+            
+            return true;
         }
 
         // Payment Steps - Modal Functions
@@ -5515,7 +6076,9 @@ $cacheKiller = time() . mt_rand(1000, 9999);
             const idField = document.getElementById('paymentStepId');
             
             form.reset();
-            document.getElementById('currentPaymentIconPreview').style.display = 'none';
+            // Reset preview
+            document.getElementById('paymentPresetPreview').style.display = 'none';
+            document.getElementById('paymentStepPreset').selectedIndex = 0;
             
             if (mode === 'add') {
                 title.textContent = 'Tambah Langkah Baru';
@@ -5541,14 +6104,68 @@ $cacheKiller = time() . mt_rand(1000, 9999);
         function loadPaymentStepData(id) {
             const data = paymentStepsData[id];
             if (data) {
-                document.getElementById('paymentStepTitle').value = data.title;
-                document.getElementById('paymentStepDescription').value = data.description;
-                document.getElementById('paymentStepSortOrder').value = data.sort_order;
+                // Try to find matching preset by title
+                const select = document.getElementById('paymentStepPreset');
+                let found = false;
                 
-                if (data.icon) {
-                    document.getElementById('currentPaymentIcon').src = data.icon;
-                    document.getElementById('currentPaymentIconPreview').style.display = 'block';
+                for (let i = 0; i < select.options.length; i++) {
+                    if (select.options[i].getAttribute('data-title') === data.title) {
+                        select.selectedIndex = i;
+                        found = true;
+                        break;
+                    }
                 }
+                
+                if (!found) {
+                    select.value = "";
+                }
+                
+                // Trigger preview update
+                updatePaymentStepPreview();
+
+                // Restore description (allow override)
+                if (data.description) {
+                    document.getElementById('paymentStepDescription').value = data.description;
+                    document.getElementById('paymentPreviewDesc').textContent = data.description;
+                }
+
+                // Handle legacy or custom data without preset? 
+                // For now assuming we migrate to presets or just show title match.
+                
+                document.getElementById('paymentStepSortOrder').value = data.sort_order;
+            }
+        }
+
+        // Add listener for real-time description preview update
+        document.getElementById('paymentStepDescription').addEventListener('input', function() {
+            document.getElementById('paymentPreviewDesc').textContent = this.value;
+        });
+
+        // New function to update preview based on selection
+        function updatePaymentStepPreview() {
+            const select = document.getElementById('paymentStepPreset');
+            const option = select.options[select.selectedIndex];
+            
+            if (option && option.value) {
+                const title = option.getAttribute('data-title');
+                const desc = option.getAttribute('data-desc');
+                const iconClass = option.getAttribute('data-icon');
+                
+                // Update Description Field (only if empty or we force it? Let's populate it)
+                // Behavior: when changing preset, update default description.
+                document.getElementById('paymentStepDescription').value = desc;
+                
+                // Update Preview logic
+                document.getElementById('paymentPreviewTitle').textContent = title;
+                document.getElementById('paymentPreviewDesc').textContent = desc;
+                // Icons in payment settings use 'icon' prefix, e.g. 'icon-whatsapp'
+                // But check 'icon-lg' helper class usage in 'Why Choose Us'. I'll add 'icon' class for safety.
+                // Assuming standard icon font set (RemixIcon or FontAwesome via icon maps)
+                document.getElementById('paymentPreviewIcon').className = 'icon icon-lg ' + iconClass;
+                
+                document.getElementById('paymentPresetPreview').style.display = 'flex';
+            } else {
+                document.getElementById('paymentPresetPreview').style.display = 'none';
             }
         }
 
@@ -5745,6 +6362,169 @@ $cacheKiller = time() . mt_rand(1000, 9999);
         console.log('✅ Admin panel menggunakan data dari DATABASE');
         console.log('❌ Jika tampilan tidak sesuai, clear browser cache!');
         console.log('═══════════════════════════════════════════════════');
+        
+        // ===================================================
+        // PROFESSIONAL NOTIFICATION SYSTEM
+        // ===================================================
+        
+        let toastTimeout = null;
+        let toastId = 0;
+        
+        // Show toast notification (auto-dismiss after 5 seconds)
+        function showNotification(type, title, message, duration = 5000) {
+            const icons = {
+                success: 'fas fa-check-circle',
+                error: 'fas fa-times-circle',
+                warning: 'fas fa-exclamation-triangle',
+                info: 'fas fa-info-circle'
+            };
+            
+            const currentToastId = ++toastId;
+            const toast = document.createElement('div');
+            toast.id = 'toast-' + currentToastId;
+            toast.className = 'toast-notification';
+            
+            toast.innerHTML = `
+                <div class="toast-header ${type}">
+                    <div class="toast-icon ${type}">
+                        <i class="${icons[type]}"></i>
+                    </div>
+                    <h4 class="toast-title">${title}</h4>
+                    <button class="toast-close" onclick="closeToast(${currentToastId})">&times;</button>
+                </div>
+                <div class="toast-body">
+                    <p class="toast-message">${message}</p>
+                </div>
+                <div class="toast-progress">
+                    <div class="toast-progress-bar" style="animation-duration: ${duration}ms;"></div>
+                </div>
+            `;
+            
+            document.body.appendChild(toast);
+            
+            // Auto close after duration
+            setTimeout(() => {
+                closeToast(currentToastId);
+            }, duration);
+        }
+        
+        function closeToast(id) {
+            const toast = document.getElementById('toast-' + id);
+            if (toast) {
+                toast.classList.add('hiding');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }
+        }
+        
+        function closeNotification() {
+            // Legacy function for compatibility
+            const toasts = document.querySelectorAll('.toast-notification');
+            toasts.forEach(toast => {
+                toast.classList.add('hiding');
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            });
+                    if (notificationCallback) {
+                        notificationCallback();
+                        notificationCallback = null;
+                    }
+                }, 200);
+            }
+        }
+        
+        // Show confirmation dialog (confirm replacement) - Still uses modal with blur
+        function showConfirm(event, title, message, onConfirm = null) {
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
+            // Remove existing notification if any
+            const existing = document.getElementById('customNotification');
+            if (existing) {
+                existing.remove();
+            }
+            
+            const overlay = document.createElement('div');
+            overlay.id = 'customNotification';
+            overlay.className = 'modal-overlay';
+            overlay.style.display = 'flex';
+            overlay.style.zIndex = '99999';
+            
+            overlay.innerHTML = `
+                <div class="notification-modal">
+                    <div class="notification-header warning">
+                        <div class="notification-icon warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <div class="notification-title">${title}</div>
+                        </div>
+                    </div>
+                    <div class="notification-body">
+                        <p class="notification-message">${message}</p>
+                    </div>
+                    <div class="notification-footer">
+                        <button class="btn btn-secondary" onclick="closeConfirmModal()" style="padding: 0.625rem 1.5rem;">
+                            <i class="fas fa-times"></i> Batal
+                        </button>
+                        <button class="btn btn-danger" id="confirmBtn" style="padding: 0.625rem 1.5rem;">
+                            <i class="fas fa-trash"></i> Ya, Hapus
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(overlay);
+            
+            // Tambahkan blur effect ke main content
+            const mainContent = document.querySelector('.admin-container');
+            if (mainContent) {
+                mainContent.classList.add('modal-blur');
+            }
+            
+            // Handle confirm button
+            const confirmBtn = document.getElementById('confirmBtn');
+            confirmBtn.addEventListener('click', function() {
+                closeConfirmModal();
+                if (onConfirm) {
+                    onConfirm();
+                } else if (event && event.target) {
+                    // Submit the form
+                    const form = event.target.closest('form');
+                    if (form) {
+                        form.submit();
+                    }
+                }
+            });
+            
+            // Close on overlay click
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) {
+                    closeConfirmModal();
+                }
+            });
+            
+            return false;
+        }
+        
+        function closeConfirmModal() {
+            const notification = document.getElementById('customNotification');
+            if (notification) {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    notification.remove();
+                    // Hapus blur effect dari main content
+                    const mainContent = document.querySelector('.admin-container');
+                    if (mainContent) {
+                        mainContent.classList.remove('modal-blur');
+                    }
+                }, 200);
+            }
+        }
     </script>
 </body>
 </html>

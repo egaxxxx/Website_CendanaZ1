@@ -115,54 +115,57 @@
 .filter-tab {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 12px 24px;
-    background: white;
-    border: 2px solid #E5E7EB;
+    gap: 10px;
+    padding: 14px 28px;
+    background: #FFFFFF;
+    border: 2px solid rgba(212, 149, 110, 0.2);
     border-radius: 50px;
     font-weight: 600;
     font-size: 0.95rem;
-    color: #374151;
+    color: #6B7280;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-.filter-tab::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: -1;
+.filter-tab svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.filter-tab span {
+    font-weight: 600;
+    letter-spacing: 0.3px;
 }
 
 .filter-tab:hover {
-    border-color: var(--color-primary);
+    border-color: #D4956E;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(212, 149, 110, 0.2);
+    box-shadow: 0 6px 16px rgba(212, 149, 110, 0.2);
+    color: #D4956E;
+}
+
+.filter-tab:hover svg {
+    transform: scale(1.1);
 }
 
 .filter-tab.active {
-    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
-    border-color: var(--color-primary);
-    color: white;
-    box-shadow: 0 4px 16px rgba(212, 149, 110, 0.3);
+    background: linear-gradient(135deg, #D4956E 0%, #C08660 100%);
+    border-color: #D4956E;
+    color: #FFFFFF;
+    box-shadow: 0 4px 16px rgba(212, 149, 110, 0.35);
 }
 
-.filter-tab.active::before {
-    opacity: 1;
+.filter-tab.active svg {
+    stroke: #FFFFFF;
 }
 
-.filter-tab .icon {
-    font-size: 1.1rem;
-    transition: transform 0.3s ease;
-}
-
-.filter-tab:hover .icon {
-    transform: scale(1.1);
+.filter-tab:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(212, 149, 110, 0.2);
 }
 
 /* ============================================

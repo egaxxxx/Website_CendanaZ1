@@ -62,14 +62,28 @@ $companyInfoData = [
             </div>
         </div>
     </section>
+
+    <!-- Map Section - Full Width Above -->
+    <section class="map-section-full">
+        <div class="container">
+            <div class="map-section-header animate-on-scroll">
+                <h2>Lokasi Kantor Kami</h2>
+                <p>Kunjungi kantor kami untuk konsultasi langsung</p>
+            </div>
+
+            <!-- Full Width Map -->
+            <div class="map-container-large animate-on-scroll">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15958.669400860284!2d117.1119309625593!3d-0.4984343349722641!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2df67efeea5fd683%3A0x8810a875396e82ea!2sCendana%20MP%20Travel!5e0!3m2!1sid!2sid!4v1765470085940!5m2!1sid!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </section>
+
     <section class="contact-section-wrapper">
         <div class="container">
-            <!-- Glass / White Wrapper that contains both columns -->
-            <div class="contact-container-glass">
-                <div class="contact-content-grid">
-                    <!-- Left: Consolidated Contact Info Panel -->
-                    <aside class="contact-panel animate-on-scroll">
-                        <h2 class="panel-title">Informasi Kontak</h2>
+            <div class="contact-content-grid">
+                <!-- Left: Contact Info Card -->
+                <aside class="contact-info-col animate-on-scroll">
+                    <h2 class="contact-section-heading">Informasi Kontak</h2>
                         <div class="contact-panel-item">
                             <div class="contact-panel-icon"><i class="icon icon-whatsapp"></i></div>
                             <div class="contact-panel-text">
@@ -114,12 +128,12 @@ $companyInfoData = [
                                 <p><a href="https://tiktok.com/@<?php echo $tiktokUsername; ?>" target="_blank"><?php echo htmlspecialchars($tiktokDisplay); ?></a></p>
                             </div>
                         </div>
-                        <?php endif; ?>
-                    </aside>
+                    <?php endif; ?>
+                </aside>
 
-                    <!-- Right: Modern Form Card -->
-                    <article class="contact-form-card animate-on-scroll">
-                        <h2 class="form-card-title">Kirim Pesan</h2>
+                <!-- Right: Contact Form Card -->
+                <article class="contact-form-col animate-on-scroll">
+                    <h2 class="contact-section-heading">Kirim Pesan</h2>
                         <form id="contactForm" onsubmit="handleContactForm(event)">
                             <div class="form-group-modern">
                                 <label for="name">Nama Lengkap <span class="required">*</span></label>
@@ -139,28 +153,12 @@ $companyInfoData = [
                                 <label for="message">Pesan / Pertanyaan <span class="required">*</span></label>
                                 <textarea id="message" name="message" required placeholder="Tulis pesan atau pertanyaan Anda di sini..."></textarea>
                             </div>
-                            <button type="submit" class="btn-submit-modern">
-                                <i class="icon icon-send"></i>
-                                Kirim Pesan
-                            </button>
-                        </form>
-                    </article>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Map Section - Full Width Below -->
-    <section class="map-section-full">
-        <div class="container">
-            <div class="map-section-header animate-on-scroll">
-                <h2>Lokasi Kantor Kami</h2>
-                <p>Kunjungi kantor kami untuk konsultasi langsung</p>
-            </div>
-
-            <!-- Full Width Map -->
-            <div class="map-container-large animate-on-scroll">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3968.8158906435345!2d117.1451!3d-0.5144!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2df68d1e0a0a0a0b%3A0x0!2sCendana%20Travel!5e0!3m2!1sid!2sid!4v1234567890" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <button type="submit" class="btn-submit-modern">
+                            <i class="icon icon-send"></i>
+                            Kirim Pesan
+                        </button>
+                    </form>
+                </article>
             </div>
         </div>
     </section>

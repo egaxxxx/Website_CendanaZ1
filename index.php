@@ -47,15 +47,9 @@ $companyInfoData = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($companyInfoData['name']); ?> - Layanan Travel Terpercaya</title>
-    
-    <!-- Google Fonts - Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="icons.css">
-    <link rel="stylesheet" href="beranda-dynamic.css">
+    <link rel="stylesheet" href="beranda-dynamic.css?v=<?= rand(10000, 99999) ?>">
 </head>
 <body>
     <!-- Header Navigation -->
@@ -103,13 +97,13 @@ $companyInfoData = [
         <div class="hero-content-layer">
             <div class="container">
                 <div class="hero-content fade-in-up">
-                    <h1 class="hero-title hero-title-premium">
-                        <span class="hero-title-main"><?php echo htmlspecialchars($homepageSettings['hero_title'] ?? 'Jelajahi Dunia,'); ?></span><br>
-                        <span class="hero-title-accent"><?php echo htmlspecialchars($homepageSettings['hero_subtitle'] ?? 'Kapan Saja & Di Mana Saja'); ?></span>
+                    <h1 class="hero-title">
+                        <?php echo htmlspecialchars($homepageSettings['hero_title'] ?? 'Perjalanan Impian'); ?><br>
+                        <span class="hero-company"><?php echo htmlspecialchars($homepageSettings['hero_subtitle'] ?? 'Dimulai dari Sini'); ?></span>
                     </h1>
                     
-                    <p class="hero-description hero-description-premium">
-                        <?php echo htmlspecialchars($homepageSettings['hero_description'] ?? 'Pilih moda transportasi favorit Anda dengan pelayanan premium dan pengalaman perjalanan yang tak terlupakan.'); ?>
+                    <p class="hero-description">
+                        <?php echo htmlspecialchars($homepageSettings['hero_description'] ?? 'Layanan travel profesional dengan pengalaman lebih dari 10 tahun. Kami mengutamakan kenyamanan dan keamanan perjalanan Anda ke seluruh penjuru nusantara.'); ?>
                     </p>
                     
                     <div class="hero-cta">
@@ -148,98 +142,170 @@ $companyInfoData = [
     <section class="services-section services-dynamic">
         <div class="container">
             <div class="section-header fade-in-up">
-                <h2 class="section-title-premium">Jelajahi Dunia,<br><span style="color: #D4956E;">Kapan Saja & Dimana Saja</span></h2>
-                <p class="section-subtitle-premium">Pilih moda transportasi favorit Anda dengan pelayanan premium.</p>
+                <h2>Jelajahi Dunia,<br><span style="color: #D4956E;">Kapan Saja & Dimana Saja</span></h2>
+                <p>Pilih moda transportasi favorit Anda dengan pelayanan premium.</p>
             </div>
 
-            <div class="services-asymmetric-grid">
-                <?php 
-                $delay = 0.1;
-                foreach ($serviceCards as $card): 
-                    if (!$card['is_active']) continue; // Skip inactive cards
-                ?>
-                    <?php if ($card['is_featured']): ?>
-                        <!-- Featured Service Card (Large) -->
-                        <article class="service-card-featured fade-in-up" style="animation-delay: <?= $delay ?>s;">
-                            <?php if ($card['badge_text']): ?>
-                            <span class="popular-badge"><?= htmlspecialchars($card['badge_text']) ?></span>
-                            <?php endif; ?>
-                            <div class="service-image">
-                                <img src="<?= htmlspecialchars($card['image']) ?>" alt="<?= htmlspecialchars($card['title']) ?>">
-                            </div>
-                            <div class="service-content">
-                                <div class="service-icon-inline">
-                                    <h3><?= htmlspecialchars($card['title']) ?></h3>
-                                </div>
-                                <p><?= htmlspecialchars($card['description']) ?></p>
-                                <?php 
-                                $features = json_decode($card['features'], true);
-                                if (!empty($features) && is_array($features)): 
-                                ?>
-                                <ul class="service-features">
-                                    <?php foreach ($features as $feature): ?>
-                                    <li>✓ <?= htmlspecialchars($feature) ?></li>
-                                    <?php endforeach; ?>
-                                </ul>
+            <?php 
+            // Filter active cards
+            $activeCards = array_filter($serviceCards, function($card) {
+                return $card['is_active'];
+            });
+            $activeCards = array_values($activeCards); // Reindex array
+            $totalCards = count($activeCards);
+            
+            // Process cards in groups of 3
+            $cardIndex = 0;
+            $delay = 0.1;
+            
+            while ($cardIndex < $totalCards):
+                $remainingCards = $totalCards - $cardIndex;
+                
+                // Determine grid type based on remaining cards
+                if ($remainingCards >= 3) {
+                    // Group of 3: Asymmetric grid (1 featured + 2 regular)
+                    $gridClass = 'services-asymmetric-grid';
+                    $cardsToRender = 3;
+                } else {
+                    // Less than 3: Uniform grid (all regular)
+                    $gridClass = 'services-uniform-grid';
+                    $cardsToRender = $remainingCards;
+                }
+            ?>
+                <div class="<?= $gridClass ?>" style="margin-top: <?= ($cardIndex > 0) ? '3rem' : '4rem' ?>;">
+                    <?php 
+                    for ($i = 0; $i < $cardsToRender; $i++):
+                        $card = $activeCards[$cardIndex];
+                        $isFirstInGroup = ($i === 0);
+                        $shouldBeFeatured = ($remainingCards >= 3 && $isFirstInGroup);
+                    ?>
+                        <?php if ($shouldBeFeatured): ?>
+                            <!-- Featured Service Card (Large) -->
+                            <article class="service-card-featured fade-in-up" style="animation-delay: <?= $delay ?>s;">
+                                <?php if ($card['badge_text']): ?>
+                                <span class="popular-badge"><?= htmlspecialchars($card['badge_text']) ?></span>
                                 <?php endif; ?>
-                                <a href="<?= htmlspecialchars($card['button_link']) ?>" class="service-btn"><?= htmlspecialchars($card['button_text']) ?></a>
-                            </div>
-                        </article>
-                    <?php else: ?>
-                        <!-- Regular Service Card (Small) -->
-                        <article class="service-card-small fade-in-up" style="animation-delay: <?= $delay ?>s;">
-                            <div class="service-image-small">
-                                <img src="<?= htmlspecialchars($card['image']) ?>" alt="<?= htmlspecialchars($card['title']) ?>">
-                            </div>
-                            <div class="service-content-small">
-                                <div class="service-icon-inline">
-                                    <h3><?= htmlspecialchars($card['title']) ?></h3>
+                                <div class="service-image">
+                                    <img src="<?= htmlspecialchars($card['image']) ?>" alt="<?= htmlspecialchars($card['title']) ?>">
                                 </div>
-                                <p><?= htmlspecialchars($card['description']) ?></p>
-                                <a href="<?= htmlspecialchars($card['button_link']) ?>" class="service-btn-small"><?= htmlspecialchars($card['button_text']) ?></a>
-                            </div>
-                        </article>
-                    <?php endif; ?>
-                <?php 
-                    $delay += 0.1;
-                endforeach; 
-                ?>
-            </div>
+                                <div class="service-content">
+                                    <div class="service-icon-inline">
+                                        <h3><?= htmlspecialchars($card['title']) ?></h3>
+                                    </div>
+                                    <p><?= htmlspecialchars($card['description']) ?></p>
+                                    <?php 
+                                    $features = json_decode($card['features'], true);
+                                    if (!empty($features) && is_array($features)): 
+                                    ?>
+                                    <ul class="service-features">
+                                        <?php foreach ($features as $feature): ?>
+                                        <li>✓ <?= htmlspecialchars($feature) ?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                    <?php endif; ?>
+                                    <a href="<?= htmlspecialchars($card['button_link']) ?>" class="service-btn"><?= htmlspecialchars($card['button_text']) ?></a>
+                                </div>
+                            </article>
+                        <?php else: ?>
+                            <!-- Regular Service Card (Small) -->
+                            <article class="service-card-small fade-in-up" style="animation-delay: <?= $delay ?>s;">
+                                <div class="service-image-small">
+                                    <img src="<?= htmlspecialchars($card['image']) ?>" alt="<?= htmlspecialchars($card['title']) ?>">
+                                </div>
+                                <div class="service-content-small">
+                                    <div class="service-icon-inline">
+                                        <h3><?= htmlspecialchars($card['title']) ?></h3>
+                                    </div>
+                                    <p><?= htmlspecialchars($card['description']) ?></p>
+                                    <a href="<?= htmlspecialchars($card['button_link']) ?>" class="service-btn-small"><?= htmlspecialchars($card['button_text']) ?></a>
+                                </div>
+                            </article>
+                        <?php endif; ?>
+                    <?php 
+                        $delay += 0.1;
+                        $cardIndex++;
+                    endfor; 
+                    ?>
+                </div>
+            <?php endwhile; ?>
         </div>
     </section>
 
-    <!-- Why Us Section Split Screen -->
-    <section class="why-us-section why-us-split">
-        <div class="split-layout">
-            <!-- Left Side - Image/Color Block -->
-            <div class="split-image slide-in-left">
-                <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=800" alt="Travel Experience">
+    <!-- Why Choose Us Section - Exact Design Match -->
+    <section class="why-section-wrapper">
+        <div class="container">
+            <!-- Header Section - Full Width -->
+            <div class="why-header-fullwidth fade-in-up">
+                <span class="section-badge-orange">KEUNGGULAN KAMI</span>
+                <h2 class="why-main-title">
+                    Mengapa Memilih <span class="highlight-text-gradient">Cendana Travel?</span>
+                </h2>
+                <p class="why-description">
+                    Kami berkomitmen memberikan pengalaman perjalanan terbaik dengan standar keamanan dan kenyamanan tinggi untuk setiap penumpang.
+                </p>
             </div>
-            
-            <!-- Right Side - Content -->
-            <div class="split-content slide-in-right">
-                <h2 class="section-title-premium">Mengapa Memilih Kami?</h2>
-                <p class="section-subtitle-premium">Kepercayaan pelanggan adalah prioritas utama kami dalam memberikan layanan travel terbaik</p>
-                
-                <ul class="benefit-list">
-                    <?php foreach ($whyChooseUs as $item): ?>
-                    <?php if ($item['is_active']): ?>
-                    <li class="benefit-item">
-                        <div class="benefit-icon">
-                            <?php if ($item['icon'] && file_exists($item['icon'])): ?>
-                                <img src="<?= htmlspecialchars($item['icon']) ?>" alt="<?= htmlspecialchars($item['title']) ?>" style="width: 40px; height: 40px; object-fit: contain;">
-                            <?php else: ?>
-                                <i class="icon icon-check"></i>
-                            <?php endif; ?>
+
+            <!-- Content Grid: Image Left + Cards Right -->
+            <div class="why-main-grid">
+                <!-- Left Side: Large Image -->
+                <div class="why-content-left fade-in-up">
+                    <div class="why-large-image">
+                        <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80" alt="Travel Experience">
+                        <div class="image-overlay-badge">
+                            <span class="badge-number">10+</span>
+                            <span class="badge-text">Tahun<br>Pengalaman</span>
                         </div>
-                        <div class="benefit-text">
+                    </div>
+                </div>
+
+                <!-- Right Side: 4 Benefit Cards in 2×2 Grid -->
+                <div class="why-content-right">
+                    <!-- 4 Benefit Cards Grid Layout -->
+                    <div class="benefit-grid-2x2 fade-in-up">
+                        <?php 
+                        $benefitCount = 0;
+                        $delay = 0.1;
+                        $iconMap = [
+                            1 => 'check-circle',  // Legal & Terpercaya
+                            2 => 'clock',          // Layanan 24/7
+                            3 => 'shield-alt',     // Aman & Terjamin
+                            4 => 'tag'             // Harga Kompetitif
+                        ];
+                        
+                        foreach ($whyChooseUs as $item): 
+                            if ($item['is_active'] && $benefitCount < 4): 
+                                $benefitCount++;
+                                $iconClass = $iconMap[$benefitCount] ?? 'check-circle';
+                        ?>
+                        <div class="benefit-card-grid" style="animation-delay: <?= $delay ?>s;">
+                            <div class="benefit-icon-box">
+                                <i class="fas fa-<?= $iconClass ?>"></i>
+                            </div>
                             <h3><?= htmlspecialchars($item['title']) ?></h3>
                             <p><?= htmlspecialchars($item['description']) ?></p>
                         </div>
-                    </li>
-                    <?php endif; ?>
-                    <?php endforeach; ?>
-                </ul>
+                        <?php 
+                            $delay += 0.1;
+                            endif;
+                        endforeach; 
+                        
+                        // Jika kurang dari 4, tampilkan placeholder
+                        while ($benefitCount < 4):
+                            $benefitCount++;
+                        ?>
+                        <div class="benefit-card-grid benefit-placeholder" style="animation-delay: <?= $delay ?>s;">
+                            <div class="benefit-icon-box">
+                                <i class="fas fa-plus"></i>
+                            </div>
+                            <h3>Tambah Benefit</h3>
+                            <p>Kelola melalui admin panel</p>
+                        </div>
+                        <?php 
+                            $delay += 0.1;
+                        endwhile;
+                        ?>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -248,8 +314,8 @@ $companyInfoData = [
     <section class="payment-methods-section payment-carousel">
         <div class="container">
             <div class="section-header fade-in-up">
-                <h2 class="section-title-premium">Cara Pembayaran</h2>
-                <p class="section-subtitle-premium">Ikuti langkah berikut untuk menyelesaikan pembayaran dengan mudah dan aman.</p>
+                <h2>Cara Pembayaran</h2>
+                <p>Ikuti langkah berikut untuk menyelesaikan pembayaran dengan mudah dan aman.</p>
             </div>
 
             <div class="horizontal-scroll-wrapper">
@@ -259,7 +325,10 @@ $companyInfoData = [
                     <article class="payment-card-scroll">
                         <div class="payment-step-icon-wrapper">
                             <div class="payment-step-icon-background">
-                                <?php if ($step['icon'] && file_exists($step['icon'])): ?>
+                                <?php if ($step['icon'] && (strpos($step['icon'], 'class:') === 0 || strpos($step['icon'], 'fa-') !== false || strpos($step['icon'], 'icon-') !== false)): ?>
+                                    <?php $iconClass = strpos($step['icon'], 'class:') === 0 ? substr($step['icon'], 6) : $step['icon']; ?>
+                                    <i class="<?= htmlspecialchars($iconClass) ?>" style="font-size: 24px; color: #D4956E;"></i>
+                                <?php elseif ($step['icon'] && file_exists($step['icon'])): ?>
                                     <img src="<?= htmlspecialchars($step['icon']) ?>" alt="<?= htmlspecialchars($step['title']) ?>" style="width: 40px; height: 40px; object-fit: contain;">
                                 <?php else: ?>
                                     <i class="icon icon-check-circle"></i>
@@ -276,153 +345,133 @@ $companyInfoData = [
         </div>
     </section>
 
-    <!-- SECTION 2: TESTIMONI PELANGGAN - SLIDER FULL WIDTH -->
+    <!-- SECTION 2: TESTIMONI PELANGGAN - SLIDER -->
     <section class="testimonials-new-section testimonials-slider">
-        <div class="testimonial-section-header">
-            <div class="container">
-                <div class="section-header fade-in-up">
-                    <h2>Apa Kata Pelanggan Kami?</h2>
-                    <p>Ribuan pelanggan puas telah mempercayai layanan kami untuk perjalanan mereka</p>
-                </div>
+        <div class="container">
+            <div class="section-header fade-in-up">
+                <h2>Apa Kata Pelanggan Kami?</h2>
+                <p>Ribuan pelanggan puas telah mempercayai layanan kami untuk perjalanan mereka</p>
             </div>
-        </div>
 
-        <div class="testimonial-wrapper">
             <div class="testimonial-carousel">
                 <div class="testimonial-track" id="testimonialTrack">
-                    <!-- Testimonial Slide 1 -->
-                    <div class="testimonial-slide">
-                        <div class="testimonial-header">
-                            <div class="testimonial-avatar" style="background: linear-gradient(135deg, #D4956E 0%, #B8704D 100%);">
-                                <span>EB</span>
-                            </div>
-                            <div class="testimonial-info">
-                                <h4>Eddy Batuna</h4>
-                                <div class="testimonial-rating">
-                                    <i class="icon icon-star-fill"></i>
-                                    <i class="icon icon-star-fill"></i>
-                                    <i class="icon icon-star-fill"></i>
-                                    <i class="icon icon-star-fill"></i>
-                                    <i class="icon icon-star-fill"></i>
+                    <!-- Page 1 -->
+                    <div class="testimonial-page">
+                        <!-- Testimonial Slide 1 -->
+                        <div class="testimonial-slide">
+                            <div class="testimonial-header">
+                                <div class="testimonial-avatar" style="background: linear-gradient(135deg, #D4956E 0%, #B8704D 100%);">
+                                    <span>EB</span>
+                                </div>
+                                <div class="testimonial-info">
+                                    <h4>Eddy Batuna</h4>
+                                    <div class="testimonial-rating">
+                                        <i class="icon icon-star-fill"></i>
+                                        <i class="icon icon-star-fill"></i>
+                                        <i class="icon icon-star-fill"></i>
+                                        <i class="icon icon-star-fill"></i>
+                                        <i class="icon icon-star-fill"></i>
+                                    </div>
                                 </div>
                             </div>
+                            <p class="testimonial-text">"Pelayanan luar biasa! Proses pemesanan mudah dan respon admin sangat cepat. Rekomendasi terbaik untuk travel ke Indonesia. Sudah beberapa kali menggunakan jasa mereka dan tidak pernah mengecewakan."</p>
                         </div>
-                        <p class="testimonial-text">"Pelayanan luar biasa! Proses pemesanan mudah dan respon admin sangat cepat. Rekomendasi terbaik untuk travel ke Indonesia. Sudah beberapa kali menggunakan jasa mereka dan tidak pernah mengecewakan."</p>
+
+                        <!-- Testimonial Slide 2 -->
+                        <div class="testimonial-slide">
+                            <div class="testimonial-header">
+                                <div class="testimonial-avatar" style="background: linear-gradient(135deg, #F4A460 0%, #D4956E 100%);">
+                                    <span>AH</span>
+                                </div>
+                                <div class="testimonial-info">
+                                    <h4>Ali Harsyah</h4>
+                                    <div class="testimonial-rating">
+                                        <i class="icon icon-star-fill"></i>
+                                        <i class="icon icon-star-fill"></i>
+                                        <i class="icon icon-star-fill"></i>
+                                        <i class="icon icon-star-fill"></i>
+                                        <i class="icon icon-star-fill"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="testimonial-text">"Harga kompetitif dengan pelayanan terbaik. Tim sangat membantu dan responsif. Saya puas dengan layanan mereka! Proses booking cepat dan mudah, highly recommended untuk yang butuh tiket pesawat, kapal, atau bus."</p>
+                        </div>
                     </div>
 
-                    <!-- Testimonial Slide 2 -->
-                    <div class="testimonial-slide">
-                        <div class="testimonial-header">
-                            <div class="testimonial-avatar" style="background: linear-gradient(135deg, #F4A460 0%, #D4956E 100%);">
-                                <span>AH</span>
-                            </div>
-                            <div class="testimonial-info">
-                                <h4>Ali Harsyah</h4>
-                                <div class="testimonial-rating">
-                                    <i class="icon icon-star-fill"></i>
-                                    <i class="icon icon-star-fill"></i>
-                                    <i class="icon icon-star-fill"></i>
-                                    <i class="icon icon-star-fill"></i>
-                                    <i class="icon icon-star-fill"></i>
+                    <!-- Page 2 -->
+                    <div class="testimonial-page">
+                        <!-- Testimonial Slide 3 -->
+                        <div class="testimonial-slide">
+                            <div class="testimonial-header">
+                                <div class="testimonial-avatar" style="background: linear-gradient(135deg, #8B7355 0%, #6B5344 100%);">
+                                    <span>SA</span>
+                                </div>
+                                <div class="testimonial-info">
+                                    <h4>Siti Aminah</h4>
+                                    <div class="testimonial-rating">
+                                        <i class="icon icon-star-fill"></i>
+                                        <i class="icon icon-star-fill"></i>
+                                        <i class="icon icon-star-fill"></i>
+                                        <i class="icon icon-star-fill"></i>
+                                        <i class="icon icon-star-fill"></i>
+                                    </div>
                                 </div>
                             </div>
+                            <p class="testimonial-text">"Perjalanan pertama saya sangat memuaskan. Dari booking hingga sampai tujuan semuanya lancar. Terima kasih Cendana Travel!"</p>
                         </div>
-                        <p class="testimonial-text">"Harga kompetitif dengan pelayanan terbaik. Tim sangat membantu dan responsif. Saya puas dengan layanan mereka! Proses booking cepat dan mudah, highly recommended untuk yang butuh tiket pesawat, kapal, atau bus."</p>
+
+                        <!-- Testimonial Slide 4 -->
+                        <div class="testimonial-slide">
+                            <div class="testimonial-header">
+                                <div class="testimonial-avatar" style="background: linear-gradient(135deg, #2D3748 0%, #1A202C 100%);">
+                                    <span>BS</span>
+                                </div>
+                                <div class="testimonial-info">
+                                    <h4>Budi Santoso</h4>
+                                    <div class="testimonial-rating">
+                                        <i class="icon icon-star-fill"></i>
+                                        <i class="icon icon-star-fill"></i>
+                                        <i class="icon icon-star-fill"></i>
+                                        <i class="icon icon-star-fill"></i>
+                                        <i class="icon icon-star-fill"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="testimonial-text">"Sangat profesional dan terpercaya. Armada yang digunakan sangat nyaman dan bersih. Driver ramah dan tepat waktu. Pasti akan langganan terus."</p>
+                        </div>
                     </div>
 
-                    <!-- Testimonial Slide 3 -->
-                    <div class="testimonial-slide">
-                        <div class="testimonial-header">
-                            <div class="testimonial-avatar" style="background: linear-gradient(135deg, #8B7355 0%, #6B5344 100%);">
-                                <span>SA</span>
-                            </div>
-                            <div class="testimonial-info">
-                                <h4>Siti Aminah</h4>
-                                <div class="testimonial-rating">
-                                    <i class="icon icon-star-fill"></i>
-                                    <i class="icon icon-star-fill"></i>
-                                    <i class="icon icon-star-fill"></i>
-                                    <i class="icon icon-star-fill"></i>
-                                    <i class="icon icon-star-fill"></i>
+                    <!-- Page 3 -->
+                    <div class="testimonial-page">
+                        <!-- Testimonial Slide 5 -->
+                        <div class="testimonial-slide">
+                            <div class="testimonial-header">
+                                <div class="testimonial-avatar" style="background: linear-gradient(135deg, #059669 0%, #047857 100%);">
+                                    <span>RW</span>
+                                </div>
+                                <div class="testimonial-info">
+                                    <h4>Rina Wijaya</h4>
+                                    <div class="testimonial-rating">
+                                        <i class="icon icon-star-fill"></i>
+                                        <i class="icon icon-star-fill"></i>
+                                        <i class="icon icon-star-fill"></i>
+                                        <i class="icon icon-star-fill"></i>
+                                        <i class="icon icon-star-fill"></i>
+                                    </div>
                                 </div>
                             </div>
+                            <p class="testimonial-text">"Pengalaman yang luar biasa! Pelayanan ramah dan harga sangat terjangkau. Saya sangat merekomendasikan Cendana Travel untuk semua kebutuhan perjalanan Anda."</p>
                         </div>
-                        <p class="testimonial-text">"Perjalanan pertama saya sangat memuaskan. Dari booking hingga sampai tujuan semuanya lancar. Terima kasih Cendana Travel! Customer service yang ramah dan profesional, akan selalu menggunakan layanan ini."</p>
-                    </div>
-
-                    <!-- Testimonial Slide 4 -->
-                    <div class="testimonial-slide">
-                        <div class="testimonial-header">
-                            <div class="testimonial-avatar" style="background: linear-gradient(135deg, #E8A87A 0%, #D4956E 100%);">
-                                <span>RS</span>
-                            </div>
-                            <div class="testimonial-info">
-                                <h4>Rahma Sari</h4>
-                                <div class="testimonial-rating">
-                                    <i class="icon icon-star-fill"></i>
-                                    <i class="icon icon-star-fill"></i>
-                                    <i class="icon icon-star-fill"></i>
-                                    <i class="icon icon-star-fill"></i>
-                                    <i class="icon icon-star-fill"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="testimonial-text">"Pelayanan ramah dan informatif. Admin selalu sabar menjawab setiap pertanyaan saya. Tiket pesawat dan kapal semua beres tanpa kendala. Sangat membantu untuk yang sering bepergian."</p>
-                    </div>
-
-                    <!-- Testimonial Slide 5 -->
-                    <div class="testimonial-slide">
-                        <div class="testimonial-header">
-                            <div class="testimonial-avatar" style="background: linear-gradient(135deg, #C9A88A 0%, #B8704D 100%);">
-                                <span>DN</span>
-                            </div>
-                            <div class="testimonial-info">
-                                <h4>Dimas Nurhadi</h4>
-                                <div class="testimonial-rating">
-                                    <i class="icon icon-star-fill"></i>
-                                    <i class="icon icon-star-fill"></i>
-                                    <i class="icon icon-star-fill"></i>
-                                    <i class="icon icon-star-fill"></i>
-                                    <i class="icon icon-star-fill"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="testimonial-text">"Awalnya ragu menggunakan jasa travel baru, tetapi Cendana Travel terbukti profesional. Harga transparan, jadwal jelas, dan pengingat keberangkatan dikirim tepat waktu."</p>
-                    </div>
-
-                    <!-- Testimonial Slide 6 -->
-                    <div class="testimonial-slide">
-                        <div class="testimonial-header">
-                            <div class="testimonial-avatar" style="background: linear-gradient(135deg, #DEB887 0%, #C9A88A 100%);">
-                                <span>YL</span>
-                            </div>
-                            <div class="testimonial-info">
-                                <h4>Yulia Lestari</h4>
-                                <div class="testimonial-rating">
-                                    <i class="icon icon-star-fill"></i>
-                                    <i class="icon icon-star-fill"></i>
-                                    <i class="icon icon-star-fill"></i>
-                                    <i class="icon icon-star-fill"></i>
-                                    <i class="icon icon-star-fill"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="testimonial-text">"Saya memesan tiket bus untuk perjalanan keluarga besar. Prosesnya cepat, bus yang digunakan bersih dan nyaman. Anak-anak juga senang, perjalanan jadi terasa aman dan menyenangkan."</p>
                     </div>
                 </div>
 
+                <!-- Carousel Dots -->
+                <div class="carousel-dots" id="carouselDots">
+                    <span class="carousel-dot active" data-slide="0"></span>
+                    <span class="carousel-dot" data-slide="1"></span>
+                    <span class="carousel-dot" data-slide="2"></span>
                 </div>
             </div>
-        </div>
-
-        <!-- Carousel Dots -->
-        <div class="carousel-dots" id="carouselDots">
-            <span class="carousel-dot active" data-slide="0"></span>
-            <span class="carousel-dot" data-slide="1"></span>
-            <span class="carousel-dot" data-slide="2"></span>
-            <span class="carousel-dot" data-slide="3"></span>
-            <span class="carousel-dot" data-slide="4"></span>
-            <span class="carousel-dot" data-slide="5"></span>
         </div>
     </section>
 

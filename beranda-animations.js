@@ -65,22 +65,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const testimonialTrack = document.getElementById('testimonialTrack');
     const carouselDots = document.querySelectorAll('.carousel-dot');
-    const testimonialSlides = document.querySelectorAll('.testimonial-slide');
+    const testimonialPages = document.querySelectorAll('.testimonial-page');
 
-    if (testimonialTrack && carouselDots.length > 0 && testimonialSlides.length > 0) {
+    if (testimonialTrack && carouselDots.length > 0 && testimonialPages.length > 0) {
         let currentIndex = 0;
-        const totalSlides = testimonialSlides.length;
+        const totalPages = testimonialPages.length;
         let autoPlayInterval;
         let isTransitioning = false;
-        const gap = 24; // gap antar card
-
-        function calculateOffset() {
-            // Hitung offset berdasarkan offsetWidth card pertama + gap
-            const firstCard = testimonialSlides[0];
-            const cardWidth = firstCard.offsetWidth;
-            const slideStep = cardWidth + gap;
-            return currentIndex * slideStep;
-        }
 
         function goToSlide(slideIndex) {
             if (isTransitioning) return;
@@ -88,9 +79,9 @@ document.addEventListener('DOMContentLoaded', function () {
             isTransitioning = true;
             currentIndex = slideIndex;
             
-            // Calculate pixel-based offset
-            const offset = calculateOffset();
-            testimonialTrack.style.transform = `translateX(-${offset}px)`;
+            // Geser per page (100% width container)
+            const offset = currentIndex * 100;
+            testimonialTrack.style.transform = `translateX(-${offset}%)`;
 
             // Update dots
             carouselDots.forEach((dot, index) => {
@@ -108,12 +99,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         function nextSlide() {
-            const next = (currentIndex + 1) % totalSlides;
+            const next = (currentIndex + 1) % totalPages;
             goToSlide(next);
         }
 
         function prevSlide() {
-            const prev = (currentIndex - 1 + totalSlides) % totalSlides;
+            const prev = (currentIndex - 1 + totalPages) % totalPages;
             goToSlide(prev);
         }
 

@@ -180,20 +180,36 @@ $companyInfoData = [
             <!-- Filter Tabs -->
             <div class="filter-tabs" style="margin-bottom: var(--spacing-2xl);">
                 <button class="filter-tab active" data-filter="all" onclick="filterGallery('all')">
-                    <i class="icon icon-th"></i>
-                    Semua
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    <span>Semua</span>
                 </button>
                 <button class="filter-tab" data-filter="kantor" onclick="filterGallery('kantor')">
-                    <i class="icon icon-building"></i>
-                    Kantor
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                        <line x1="9" y1="6" x2="15" y2="6"></line>
+                        <line x1="9" y1="10" x2="15" y2="10"></line>
+                        <line x1="9" y1="14" x2="15" y2="14"></line>
+                    </svg>
+                    <span>Kantor</span>
                 </button>
                 <button class="filter-tab" data-filter="fasilitas" onclick="filterGallery('fasilitas')">
-                    <i class="icon icon-star"></i>
-                    Fasilitas
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    <span>Fasilitas</span>
                 </button>
                 <button class="filter-tab" data-filter="layanan" onclick="filterGallery('layanan')">
-                    <i class="icon icon-heart"></i>
-                    Layanan
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                    <span>Layanan</span>
                 </button>
             </div>
 
